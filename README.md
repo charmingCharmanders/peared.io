@@ -1,13 +1,13 @@
-# Project Name
+# Peared.io
 
-The project description
+Peared.io pairs two programmers together using video chat and a shared coding problem prompt.  They will take turns driving and navigating, submit solutions, record sessions, and have development guidance based on previous sessions.
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- dandersonstack
+- shindelus
+- davidvasset
+- weschoi
 
 ## Roadmap
 
