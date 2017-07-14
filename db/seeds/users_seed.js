@@ -1,28 +1,28 @@
+
 const models = require('../models');
 
 exports.seed = function (knex, Promise) {
 
-  return models.User.where({ email: 'jeff.shindelus@gmail.com' }).fetch()
-    .then((profile) => {
-      if (profile) {
-        throw profile;
+  return models.User.where({ emailAddress: 'admin@domain.com' }).fetch()
+    .then((user) => {
+      if (user) {
+        throw user;
       }
-      return models.Profile.forge({
-        firstName: 'jeff',
-        lastName: 'shindelus',
-        display: 'Administrator',
-        email: 'jeff.shindelus@gmail.com'
+      return models.User.forge({
+        firstName: 'System1',
+        lastName: 'Admin1',
+        emailAddress: 'admin@domain.com'
       }).save();
     })
     .error(err => {
-      console.error('ERROR: failed to create profile');
+      console.error('ERROR: failed to create user');
       throw err;
     })
-    .then((profile) => {
+    .then((user) => {
       return models.Auth.forge({
-        type: 'local',
-        password: 'admin123',
-        profile_id: profile.get('id')
+        type: 'local2',
+        password: 'admin1234',
+        profile_id: user.get('id')
       }).save();
     })
     .error(err => {
@@ -32,3 +32,5 @@ exports.seed = function (knex, Promise) {
       console.log('WARNING: defualt user already exists.');
     });
 };
+
+

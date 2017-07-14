@@ -54,11 +54,9 @@ describe('Users API', function () {
 
   it('accepts PUT requests to /api/users/:id', function () {
     let user = {
-      first: 'James',
-      last: 'Davenport',
-      display: 'James Davenport',
-      email: 'example@email.com',
-      phone: '415-555-1234'
+      firstName: 'James',
+      lastName: 'Davenport',
+      emailAddress: 'example@email.com'
     };
 
     return request(app)
@@ -70,11 +68,9 @@ describe('Users API', function () {
           .get('/api/users/1')
           .expect(res => {
             res.body = {
-              first: res.body.first,
-              last: res.body.last,
-              display: res.body.display,
-              email: res.body.email,
-              phone: res.body.phone
+              firstName: res.body.firstName,
+              lastName: res.body.lastName,
+              emailAddress: res.body.emailAddress
             };
           })
           .expect(200, user);
