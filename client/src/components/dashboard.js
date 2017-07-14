@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class View extends React.Component {
+class DashBoard extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
       <div>
-        <h2>Should work</h2>
+        <h2>DashBoard Page</h2>
       </div>
     )
   }
 }
 
-export default View;
+export default DashBoard;
