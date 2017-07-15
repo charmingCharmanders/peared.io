@@ -24,6 +24,7 @@ app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/api/prompts', routes.prompts);
+app.use('/api/sessions', routes.sessions);
 app.use('/api/users', routes.users);
 
 module.exports = app;
