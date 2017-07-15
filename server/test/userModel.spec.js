@@ -32,14 +32,14 @@ describe('User model tests', function () {
         expect(result.get('id')).to.equal(1);
       })
       .then(function () {
-        return User.where({ id: 1 }).save({ first: 'James', last: 'Davenport' }, { method: 'update' });
+        return User.where({ id: 1 }).save({ firstName: 'James', lastName: 'Davenport' }, { method: 'update' });
       })
       .then(function () {
         return User.where({ id: 1 }).fetch();
       })
       .then(function (result) {
-        expect(result.get('first')).to.equal('James');
-        expect(result.get('last')).to.equal('Davenport');
+        expect(result.get('firstName')).to.equal('James');
+        expect(result.get('lastName')).to.equal('Davenport');
         done();
       })
       .catch(function (err) {
