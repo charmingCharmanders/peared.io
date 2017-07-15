@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
-const Prompt = require('../../db/models/prompt.js');
+const Session = require('../../db/models/sessions.js');
 const dbUtils = require('../../db/lib/utils.js');
 
-describe('Prompt model tests', function () {
+describe('Session model tests', function () {
   // Deletes all tables, creates new tables, and seeds tables with test data
   beforeEach(function (done) {
     dbUtils.rollbackMigrate(done);
@@ -14,7 +14,7 @@ describe('Prompt model tests', function () {
   });
 
   it('Should be able to retrieve test data', function (done) {
-    Prompt.forge().fetchAll()
+    Session.forge().fetchAll()
       .then(function (results) {
         expect(results.length).to.equal(1);
         expect(results.at(0).get('id')).to.equal(1);
@@ -27,19 +27,23 @@ describe('Prompt model tests', function () {
   });
 
   it('Should be able to update an already existing record', function (done) {
-    Prompt.where({ id: 1 }).fetch()
+    Session.where({ id: 1 }).fetch()
       .then(function (result) {
         expect(result.get('id')).to.equal(1);
       })
       .then(function () {
-        return Prompt.where({ id: 1 }).save({ name: 'prime numbers', description: 'prime numbers description...' }, { method: 'update' });
+        return Session.where({ id: 1 }).save({
+          userId1: 1, userId2: 1, promptId: 1,
+          skeletonCode: 'sample skeleton code...' }, { method: 'update' });
       })
       .then(function () {
-        return Prompt.where({ id: 1 }).fetch();
+        return Session.where({ id: 1 }).fetch();
       })
       .then(function (result) {
-        expect(result.get('name')).to.equal('prime numbers');
-        expect(result.get('description')).to.equal('prime numbers description...');
+        // expect(result.get('userId1')).to.equal(1);
+        // expect(result.get('userId2')).to.equal(1);
+        // expect(result.get('promptId')).to.equal(1);
+        expect(result.get('skeletonCode')).to.equal('sample skeleton code...');
         done();
       })
       .catch(function (err) {
@@ -49,3 +53,4 @@ describe('Prompt model tests', function () {
   });
 
 });
+
