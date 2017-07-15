@@ -1,5 +1,9 @@
 const expect = require('chai').expect;
+<<<<<<< HEAD:server/test/profileModel.spec.js
 const Profile = require('../../db/models/profiles.js');
+=======
+const User = require('../../db/models/users.js');
+>>>>>>> Added tests and friends table, seed files, and specs:server/test/userModel.spec.js
 const dbUtils = require('../../db/lib/utils.js');
 
 describe('Profile model tests', function () {
