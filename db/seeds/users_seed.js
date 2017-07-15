@@ -2,7 +2,6 @@
 const models = require('../models');
 
 exports.seed = function (knex, Promise) {
-
   return models.User.where({ emailAddress: 'admin@domain.com' }).fetch()
     .then((user) => {
       if (user) {
@@ -29,7 +28,7 @@ exports.seed = function (knex, Promise) {
       console.error('ERROR: failed to create auth');
     })
     .catch(() => {
-      console.log('WARNING: defualt user already exists.');
+      console.log('WARNING: default user already exists.');
     });
 };
 
