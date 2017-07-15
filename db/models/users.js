@@ -4,6 +4,9 @@ const User = db.Model.extend({
   tableName: 'users',
   auths: function() {
     return this.hasMany('Auth');
+  },
+  session: function() {
+    return this.hasOne('Session');
   }
 });
 
