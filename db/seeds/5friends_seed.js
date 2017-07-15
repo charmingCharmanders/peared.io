@@ -17,7 +17,7 @@ exports.seed = function (knex, Promise) {
       throw err;
     })
     .catch(err => {
-      console.log(err)
+      console.log(err);
       console.log('WARNING: default friend already exists.');
     });
 };
