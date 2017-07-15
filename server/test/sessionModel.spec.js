@@ -33,7 +33,11 @@ describe('Session model tests', function () {
       })
       .then(function () {
         return Session.where({ id: 1 }).save({
+<<<<<<< HEAD
           profileId1: 1, profileId1: 1, promptId: 1,
+=======
+          userId1: 1, userId2: 1, promptId: 1,
+>>>>>>> Added tests and friends table, seed files, and specs
           skeletonCode: 'sample skeleton code...' }, { method: 'update' });
       })
       .then(function () {
