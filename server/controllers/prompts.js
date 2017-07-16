@@ -55,22 +55,3 @@ module.exports.update = (req, res) => {
       res.sendStatus(404);
     });
 };
-
-module.exports.deleteOne = (req, res) => {
-  models.Prompt.where({ id: req.params.id }).fetch()
-    .then(prompt => {
-      if (!prompt) {
-        throw prompt;
-      }
-      return prompt.destroy();
-    })
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .error(err => {
-      res.status(500).send(err);
-    })
-    .catch(() => {
-      res.sendStatus(404);
-    });
-};

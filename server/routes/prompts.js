@@ -11,7 +11,6 @@ router.route('/')
 router.route('/:id')
   .get(PromptsController.getOne)
   .put(PromptsController.update)
-  .delete(PromptsController.deleteOne)
   ;
 
 module.exports = router;

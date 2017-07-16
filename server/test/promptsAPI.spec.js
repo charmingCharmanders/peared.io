@@ -120,18 +120,4 @@ describe('Prompts API', function () {
       .expect(404)
       .end(done);
   });
-
-  it('accepts DELETE requests to /api/prompts/:id', function (done) {
-    request(app)
-      .delete('/api/prompts/1')
-      .expect(200)
-      .end(done);
-  });
-
-  it('sends 404 if id on DELETE requests to /api/prompts/:id does not exist', function (done) {
-    request(app)
-      .delete('/api/prompts/123')
-      .expect(404)
-      .end(done);
-  });
 });
