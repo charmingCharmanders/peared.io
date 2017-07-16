@@ -9,7 +9,8 @@ exports.up = function(knex, Promise) {
       table.string('skeletonCode');
       table.string('solutionCode');
       table.integer('rating').nullable();
-      table.timestamps(true, true);
+      table.timestamp('createdAt').defaultTo(knex.fn.now());
+      table.timestamp('updatedAt').defaultTo(knex.fn.now());
     })
   ]);
 };
