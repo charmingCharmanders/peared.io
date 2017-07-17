@@ -52,24 +52,24 @@ class HistoryTable extends React.Component {
     let index = 0;
 
     return (
-        <Table responsive bordered condensed hover striped>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Partner</th>
-              <th>Toy Problem</th>
-              <th>Time</th>
-              <th>Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dummyData.map(row => {
-              index++;
-              return <TableRow id={index} partner={row.partner} name={row.name} time={row.time} category={row.category} />;
-            })}
-          </tbody>
-        </Table>
-    )
+      <Table responsive bordered condensed hover striped>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Partner</th>
+            <th>Toy Problem</th>
+            <th>Time</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dummyData.map(row => {
+            index++;
+            return <TableRow id={index} partner={row.partner} name={row.name} time={row.time} category={row.category} />;
+          })}
+        </tbody>
+      </Table>
+    );
   }
 }
 

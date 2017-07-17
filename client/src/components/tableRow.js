@@ -11,6 +11,6 @@ const TableRow = ({id, partner, name, time, category}) => (
     <td>{time}</td>
     <td>{category}</td>
   </tr>
-)
+);
 
 export default TableRow;

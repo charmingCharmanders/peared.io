@@ -14,10 +14,10 @@ class ConsoleAndTest extends React.Component {
   render() {
     return (
       <Tabs defaultActiveKey={1} animation={true} id="noanim-tab-example">
-          <Tab eventKey={1} title="Console" style={{padding: '20px'}}>HIHIHI</Tab>
+        <Tab eventKey={1} title="Console" style={{padding: '20px'}}>HIHIHI</Tab>
       </Tabs>
-    )
+    );
   }
 }
 
-export default ConsoleAndTest
+export default ConsoleAndTest;

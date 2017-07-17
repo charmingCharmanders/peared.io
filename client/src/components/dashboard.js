@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
           <Stats />
         </Grid>
       </div>
-    )
+    );
   }
 }
 

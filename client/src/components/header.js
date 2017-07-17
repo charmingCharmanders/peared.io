@@ -11,7 +11,6 @@ class Header extends React.Component {
     super(props);
   }
   render() {
-
     return (
       <Navbar>
         <Navbar.Header>
@@ -41,71 +40,8 @@ class Header extends React.Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    )
+    );
   }
-            // <Button type="button" className="btn btn-default navbar-btn">Log out</Button>
-
-      //   <Nav pullRight>
-      // <ButtonToolBar>
-      //   <Button bsStyle="primary">Primary</Button>
-      //   <Button bsStyle="success">Success</Button>
-      // </ButtonToolBar>
-      // </Nav>
 }
-// <Nav pullRight>
-//     <Button bsStyle="info">Start Session</Button>
-//     <Button>Logout</Button>
-// </Nav>
 
 export default Header;
-
-// <NavItem eventKey={1} href="#"><Button bsStyle="info">Start Session</Button></NavItem>
-            // <NavItem eventKey={2} href="#"><Button>Logout</Button></NavItem>
-
-// <Navbar inverse collapseOnSelect>
-  // <Navbar.Header>
-  //   <Navbar.Brand>
-      // <a href="/">Peared.io</a>
-    // </Navbar.Brand>
-    // <Navbar.Toggle />
-  // </Navbar.Header>
-  // <Navbar.Collapse>
-
-    // <Nav pullRight>
-        // <NavItem eventKey={1} href="#">Start Session</NavItem>
-        // <NavItem eventKey={2} >Log Out</NavItem>
-    // </Nav>
-  // </Navbar.Collapse>
-// </Navbar>
-
-// <Nav>
-//   <NavItem eventKey={1} href="#">Link</NavItem>
-//   <NavItem eventKey={2} href="#">Link</NavItem>
-//   <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-//     <MenuItem eventKey={3.1}>Action</MenuItem>
-//     <MenuItem eventKey={3.2}>Another action</MenuItem>
-//     <MenuItem eventKey={3.3}>Something else here</MenuItem>
-//     <MenuItem divider />
-//     <MenuItem eventKey={3.3}>Separated link</MenuItem>
-//   </NavDropdown>
-// </Nav>
-
-
-
-      // <Navbar>
-
-      //   <Navbar.Header pullLeft>
-      //     <Navbar.Brand>
-      //       <a href="#">Paired.io</a>
-      //     </Navbar.Brand>
-
-      //   </Navbar.Header>
-      //   <Navbar.Collapse>
-      //     <Nav pullRight>
-      //       <NavItem eventKey={1} href="#">New Session</NavItem>
-      //       <NavItem eventKey={2} href="#">LogOut</NavItem>
-      //     </Nav>
-      //   </Navbar.Collapse>
-        
-        
-      // </Navbar>

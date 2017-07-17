@@ -11,21 +11,21 @@ class App extends React.Component {
     super(props);
     this.state = {
       isDashboard: true
-    }
+    };
   }
 
   toggleView() {
-    this.setState({isDashboard: !this.state.isDashboard})
+    this.setState({isDashboard: !this.state.isDashboard});
   }
 
   render() {
     return (
-    <div>
-      <Navigation isDashboard={this.state.isDashboard} toggleView={this.toggleView.bind(this)}/>
-      <Route exact path='/' component={Dashboard} />
-      <Route path='/session' component={Session} />
-    </div>
-    )
+      <div>
+        <Navigation isDashboard={this.state.isDashboard} toggleView={this.toggleView.bind(this)}/>
+        <Route exact path='/' component={Dashboard} />
+        <Route path='/session' component={Session} />
+      </div>
+    );
   }
 }
 

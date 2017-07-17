@@ -33,7 +33,7 @@ class FriendsList extends React.Component {
       <Panel collapsible defaultExpanded header="Friends List">
         {friends.map(friend => <ListGroupItem fill>{friend.name}<Badge>{friend.ranking}</Badge></ListGroupItem> )}
       </Panel>
-    )
+    );
   }
 }
 

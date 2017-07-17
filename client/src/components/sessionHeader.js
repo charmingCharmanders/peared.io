@@ -27,7 +27,7 @@ class sessionHeader extends React.Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    )
+    );
   }
 
 }

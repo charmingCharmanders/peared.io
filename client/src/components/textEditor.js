@@ -17,13 +17,13 @@ class TextEditor extends React.Component {
     super(props);
     this.state = {
       code: dummyData
-    }
+    };
   }
 
   updateCode (newCode) {
     this.setState({
       code: js_beautify(newCode)
-    })
+    });
   }
 
   render() {
@@ -35,7 +35,7 @@ class TextEditor extends React.Component {
         var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
         cm.replaceSelection(spaces);
       }
-    }
+    };
 
     var setSizing = function(cm) {
       if (cm.somethingSelected()) {
@@ -44,7 +44,7 @@ class TextEditor extends React.Component {
         var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
         cm.replaceSelection(spaces);
       }
-    }
+    };
 
     var options = {
       lineNumbers: true,
@@ -64,15 +64,14 @@ class TextEditor extends React.Component {
         height: '70%'
       }
     };
-// style={{height: '50%'}}
     return (
       <CodeMirror value={js_beautify(this.state.code, {indent_size: 2})} onChange={this.updateCode} options={options} />           
-    )
-        // <Video />
+    );
   }
 }
 
-export default TextEditor
+export default TextEditor;
+// <Video />
 
 
 

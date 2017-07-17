@@ -19,7 +19,7 @@ class TextEditorAndConsole extends React.Component {
           <ConsoleAndTest />
         </div>
       </Col>
-    )
+    );
   }
 }
 

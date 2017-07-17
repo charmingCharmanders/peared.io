@@ -20,12 +20,8 @@ class Session extends React.Component {
           <TextEditorAndConsole />
         </Row>
       </Grid>
-    )
+    );
   }
 }
-
-// <Row className='show-grid'>
-  // <Col md={12}><h6>Let's Start the session</h6></Col>
-// </Row>
 
 export default Session;

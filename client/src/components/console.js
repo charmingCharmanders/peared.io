@@ -12,8 +12,8 @@ class Console extends React.Component {
   render() {
     return (
       <div>Console</div>
-    )
+    );
   }
 }
 
-export default Console
+export default Console;

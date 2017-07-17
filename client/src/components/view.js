@@ -15,7 +15,7 @@ class View extends React.Component {
           <li><Link to='/roster'>Go to /Roster</Link></li>
         </ul>
       </div>
-    )
+    );
   }
 }
 

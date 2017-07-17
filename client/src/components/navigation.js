@@ -18,7 +18,7 @@ class Navigation extends React.Component {
             <Button bsStyle="info" onClick={this.props.toggleView}>Start Session</Button>
           </LinkContainer>
           <Button href="/logout">Log out</Button>
-        </ButtonToolbar>
+        </ButtonToolbar>;
     } else {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
@@ -26,7 +26,7 @@ class Navigation extends React.Component {
           <LinkContainer to='/'>
             <Button bsStyle="info" onClick={this.props.toggleView}>End Session</Button>
           </LinkContainer>
-        </ButtonToolbar>
+        </ButtonToolbar>;
     }
 
     return (
@@ -43,7 +43,7 @@ class Navigation extends React.Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    )
+    );
   }
 
 }

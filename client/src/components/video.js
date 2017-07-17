@@ -12,8 +12,8 @@ class Video extends React.Component {
   render() {
     return (
       <div style={{float: 'right', margin: '70px', width: '230px', height: '180px', backgroundColor: 'yellow'}}></div>
-    )
+    );
   }
 }
 
-export default Video
+export default Video;

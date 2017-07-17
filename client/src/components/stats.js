@@ -21,6 +21,6 @@ const Stats = () => (
       </Panel>
     </Col>
   </Row>
-)
+);
 
 export default Stats;
