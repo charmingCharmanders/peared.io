@@ -30,12 +30,12 @@ describe('Authentication', () => {
       });
       request.flash = fakeFlash;
       let response = httpMocks.createResponse();
-      models.Profile.where({ email: 'admin@domain.com' }).fetch()
+      models.Profile.where({ emailAddress: 'admin@domain.com' }).fetch()
         .then(profile => {
           passport.authenticate('local-login', {}, (err, user, info) => {
             expect(user).to.be.an('object');
             expect(user.id).to.equal(profile.get('id'));
-            expect(user.email).to.equal(profile.get('email'));
+            expect(user.emailAddress).to.equal(profile.get('emailAddress'));
             done(err);
           })(request, response);
         });
@@ -85,11 +85,11 @@ describe('Authentication', () => {
       request.flash = fakeFlash;
       let response = httpMocks.createResponse();
       passport.authenticate('local-signup', {}, (err, user, info) => {
-        models.Profile.where({ email: 'TestUser4@mail.com' }).fetch()
+        models.Profile.where({ emailAddress: 'TestUser4@mail.com' }).fetch()
           .then(profile => {
             expect(user).to.be.an('object');
             expect(user.id).to.equal(profile.get('id'));
-            expect(user.email).to.equal(profile.get('email'));
+            expect(user.emailAddress).to.equal(profile.get('emailAddress'));
             done(err);
           });
       })(request, response);

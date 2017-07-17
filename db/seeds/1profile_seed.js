@@ -1,17 +1,15 @@
-
 const models = require('../models');
 
 exports.seed = function (knex, Promise) {
-  return models.Profile.where({ email: 'admin@domain.com' }).fetch()
+  return models.Profile.where({ emailAddress: 'admin@domain.com' }).fetch()
     .then((profile) => {
       if (profile) {
         throw profile;
       }
       return models.Profile.forge({
-        first: 'System',
-        last: 'Admin',
-        display: 'Administrator',
-        email: 'admin@domain.com'
+        emailAddress: 'admin@domain.com',
+        firstName: 'System',
+        lastName: 'Admin'
       }).save();
     })
     .error(err => {
@@ -22,7 +20,14 @@ exports.seed = function (knex, Promise) {
       return models.Auth.forge({
         type: 'local',
         password: 'admin123',
-        profile_id: profile.get('id')
+        profileId: profile.get('id')
+      }).save();
+    })
+    .then(() => {
+      return models.Profile.forge({
+        emailAddress: 'admin@example.com',
+        firstName: 'System',
+        lastName: 'Admin'
       }).save();
     })
     .error(err => {

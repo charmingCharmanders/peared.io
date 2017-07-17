@@ -32,13 +32,13 @@ passport.use('local-signup', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 },
-  (req, email, password, done) => {
+  (req, emailAddress, password, done) => {
     // check to see if there is any account with this email address
-    return models.Profile.where({ email }).fetch()
+    return models.Profile.where({ emailAddress }).fetch()
       .then(profile => {
         // create a new profile if a profile does not exist
         if (!profile) {
-          return models.Profile.forge({ email }).save();
+          return models.Profile.forge({ emailAddress }).save();
         }
         // throw if any auth account already exists
         if (profile) {
@@ -52,7 +52,7 @@ passport.use('local-signup', new LocalStrategy({
         return models.Auth.forge({
           password,
           type: 'local',
-          profile_id: profile.get('id')
+          profileId: profile.get('id')
         }).save();
       })
       .then(profile => {
@@ -72,9 +72,9 @@ passport.use('local-login', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 },
-  (req, email, password, done) => {
+  (req, emailAddress, password, done) => {
     // fetch any profiles that have a local auth account with this email address
-    return models.Profile.where({ email }).fetch({
+    return models.Profile.where({ emailAddress }).fetch({
       withRelated: [{
         auths: query => query.where({ type: 'local' })
       }]
@@ -102,7 +102,7 @@ passport.use('local-login', new LocalStrategy({
       .error(err => {
         done(err, null);
       })
-      .catch(() => {
+      .catch((err) => {
         done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
       });
   }));
@@ -135,7 +135,7 @@ passport.use('twitter', new TwitterStrategy({
 );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
+  return models.Auth.where({ type, oauthId: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
     .then(oauthAccount => {
@@ -148,15 +148,14 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         // FB users can register with a phone number, which is not exposed by Passport
         throw null;
       }
-      return models.Profile.where({ email: oauthProfile.emails[0].value }).fetch();
+      return models.Profile.where({ emailAddress: oauthProfile.emails[0].value }).fetch();
     })
     .then(profile => {
 
       let profileInfo = {
-        first: oauthProfile.name.givenName,
-        last: oauthProfile.name.familyName,
-        display: oauthProfile.displayName || `${oauthProfile.name.givenName} ${oauthProfile.name.familyName}`,
-        email: oauthProfile.emails[0].value
+        emailAddress: oauthProfile.emails[0].value,
+        firstName: oauthProfile.name.givenName,
+        lastName: oauthProfile.name.familyName
       };
 
       if (profile) {
@@ -169,8 +168,8 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     .tap(profile => {
       return models.Auth.forge({
         type,
-        profile_id: profile.get('id'),
-        oauth_id: oauthProfile.id
+        profileId: profile.get('id'),
+        oauthId: oauthProfile.id
       }).save();
     })
     .error(err => {

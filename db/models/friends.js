@@ -2,8 +2,8 @@ const db = require('../');
 
 const Friend = db.Model.extend({
   tableName: 'friends',
-  user: function() {
-    return this.belongsTo('User');
+  profile: function() {
+    return this.belongsTo('Profile');
   }
 });
 

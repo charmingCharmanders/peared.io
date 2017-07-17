@@ -2,8 +2,8 @@ const db = require('../');
 
 const Session = db.Model.extend({
   tableName: 'sessions',
-  user: function() {
-    return this.belongsTo('User');
+  profile: function() {
+    return this.belongsTo('Profile');
   },
   prompt: function() {
     return this.belongsTo('Prompt');
