@@ -1,32 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import View from './components/view';
-import Header from './components/header';
-import DashBoard from './components/dashboard';
-import {BrowserRouter} from 'react-router-dom';
+import Session from './components/session';
+import Dashboard from './components/dashboard';
+import Navigation from './components/navigation';
+import {BrowserRouter as Router, browserHistory, Switch, Route, Link} from 'react-router-dom';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      isDashboard: true
     }
+  }
+
+  toggleView() {
+    this.setState({isDashboard: !this.state.isDashboard})
   }
 
   render() {
     return (
-      <div>
-        <Header/>
-        <BrowserRouter>
-          <DashBoard/>
-        </BrowserRouter>
-      </div>
+    <div>
+      <Navigation isDashboard={this.state.isDashboard} toggleView={this.toggleView.bind(this)}/>
+      <Route exact path='/' component={Dashboard} />
+      <Route path='/session' component={Session} />
+    </div>
     )
   }
-
-
 }
 
-
-
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<Router history={browserHistory}><App /></Router>, document.getElementById('root'));
