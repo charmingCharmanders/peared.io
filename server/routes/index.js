@@ -1,4 +1,6 @@
 module.exports.api = require('./api');
 module.exports.auth = require('./auth');
 module.exports.profiles = require('./profiles');
+module.exports.prompts = require('./prompts');
+module.exports.sessions = require('./sessions');
 module.exports.users = require('./users');

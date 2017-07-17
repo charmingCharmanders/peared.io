@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
       table.foreign('promptId').references('id').inTable('prompts');
       table.string('skeletonCode').nullable();
       table.string('solutionCode').nullable();
-      table.dateTime('startedAt').nullable();
+      table.dateTime('startedAt').defaultTo(knex.fn.now());
       table.dateTime('endedAt').nullable();
     })
   ]);

@@ -24,7 +24,7 @@ describe('Users API', function () {
         };
       })
       .expect(200, {
-        length: 1
+        length: 2
       })
       .end(done);
   });
