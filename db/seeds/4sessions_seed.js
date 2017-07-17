@@ -1,4 +1,3 @@
-
 const models = require('../models');
 
 exports.seed = function (knex, Promise) {
@@ -8,8 +7,8 @@ exports.seed = function (knex, Promise) {
         throw session;
       }
       return models.Session.forge({
-        userId1: 1,
-        userId2: 2,
+        profileId1: 1,
+        profileId2: 2,
         promptId: 1,
         skeletonCode: 'skeleton code goes here...',
         solutionCode: 'solution code goes here...'
@@ -23,6 +22,3 @@ exports.seed = function (knex, Promise) {
       console.log('WARNING: default session already exists.');
     });
 };
-
-
-

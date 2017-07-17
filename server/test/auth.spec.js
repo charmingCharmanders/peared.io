@@ -24,18 +24,18 @@ describe('Authentication', () => {
     it('passport passes user if email and password match', done => {
       let request = httpMocks.createRequest({
         body: {
-          email: 'admin@domain.com',
+          emailAddress: 'admin@domain.com',
           password: 'admin123'
         }
       });
       request.flash = fakeFlash;
       let response = httpMocks.createResponse();
-      models.Profile.where({ email: 'admin@domain.com' }).fetch()
+      models.Profile.where({ emailAddress: 'admin@domain.com' }).fetch()
         .then(profile => {
           passport.authenticate('local-login', {}, (err, user, info) => {
             expect(user).to.be.an('object');
             expect(user.id).to.equal(profile.get('id'));
-            expect(user.email).to.equal(profile.get('email'));
+            expect(user.emailAddress).to.equal(profile.get('emailAddress'));
             done(err);
           })(request, response);
         });
@@ -44,7 +44,7 @@ describe('Authentication', () => {
     it('passport passes false if email and password do not match', done => {
       let request = httpMocks.createRequest({
         body: {
-          email: 'admin@domain.com',
+          emailAddress: 'admin@domain.com',
           password: 'incorrect'
         }
       });
@@ -62,7 +62,7 @@ describe('Authentication', () => {
     it('passport passes false if email already exists', done => {
       let request = httpMocks.createRequest({
         body: {
-          email: 'admin@domain.com',
+          emailAddress: 'admin@domain.com',
           password: 'admin123'
         }
       });
@@ -78,18 +78,18 @@ describe('Authentication', () => {
     it('passport passes user if email does not already exist', done => {
       let request = httpMocks.createRequest({
         body: {
-          email: 'TestUser4@mail.com',
+          emailAddress: 'TestUser4@mail.com',
           password: '101112'
         }
       });
       request.flash = fakeFlash;
       let response = httpMocks.createResponse();
       passport.authenticate('local-signup', {}, (err, user, info) => {
-        models.Profile.where({ email: 'TestUser4@mail.com' }).fetch()
+        models.Profile.where({ emailAddress: 'TestUser4@mail.com' }).fetch()
           .then(profile => {
             expect(user).to.be.an('object');
             expect(user.id).to.equal(profile.get('id'));
-            expect(user.email).to.equal(profile.get('email'));
+            expect(user.emailAddress).to.equal(profile.get('emailAddress'));
             done(err);
           });
       })(request, response);

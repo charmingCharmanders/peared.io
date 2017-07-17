@@ -54,8 +54,8 @@ describe('Sessions API', function () {
 
   it('accepts POST requests to /api/sessions', function (done) {
     const session = {
-      userId1: 1,
-      userId2: 2,
+      profileId1: 1,
+      profileId2: 2,
       promptId: 1,
       solutionCode: 'Solution code goes here'
     };
@@ -65,8 +65,8 @@ describe('Sessions API', function () {
       .send(session)
       .expect(res => {
         res.body = {
-          userId1: res.body.userId1,
-          userId2: res.body.userId2,
+          profileId1: res.body.profileId1,
+          profileId2: res.body.profileId2,
           promptId: res.body.promptId,
           solutionCode: res.body.solutionCode
         };
