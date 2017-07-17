@@ -62,7 +62,7 @@ describe('Profiles API', function () {
     return request(app)
       .put('/api/profiles/1')
       .send(profile)
-      .expect(201)
+      .expect(200)
       .then(() => {
         return request(app)
           .get('/api/profiles/1')
