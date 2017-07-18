@@ -11,7 +11,9 @@ class Navigation extends React.Component {
 
   startSession() {
     console.log("About to start a session");
-    this.props.handleOpenModal();
+    this.props.toggleView();
+    //redirect to the homepage and open a model
+    //this.props.handleOpenModal();
   }
   
   render() {
@@ -20,7 +22,9 @@ class Navigation extends React.Component {
     if (this.props.isDashboard) {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
-          <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
+          <LinkContainer to='/session'>
+            <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
+          </LinkContainer>
           <Button href="/logout">Log out</Button>
         </ButtonToolbar>;
     } else {
