@@ -1,20 +1,20 @@
 module.exports = [
   {
-    firstName: 'Juliette',
-    lastName: 'Krollman',
-    emailAddress: 'juliette_krollman@example.com'
+    firstName: 'Dan',
+    lastName: 'Anderson',
+    emailAddress: 'danieltanders@gmail.com'
   }, {
-    firstName: 'Dukey',
-    lastName: 'Abbatucci',
-    emailAddress: 'dukey_abbatucci@example.com'
+    firstName: 'David',
+    lastName: 'Vassett',
+    emailAddress: 'david@davidvassett.com.au'
   }, {
-    firstName: 'Edwina',
-    lastName: 'Hardinge',
-    emailAddress: 'edwina_hardinge@example.com'
+    firstName: 'Jeff',
+    lastName: 'Shindelus',
+    emailAddress: 'jeff.shindelus@gmail.com'
   }, {
-    firstName: 'Crysta',
-    lastName: 'Rimington',
-    emailAddress: 'crysta_rimington@example.com'
+    firstName: 'Wes',
+    lastName: 'Choi',
+    emailAddress: 'weschoi.creative@gmail.com'
   }, {
     firstName: 'Hunfredo',
     lastName: 'Flounders',
