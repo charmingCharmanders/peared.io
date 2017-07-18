@@ -173,9 +173,11 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       }).save();
     })
     .error(err => {
+      console.log(err) //--------------------------------------
       done(err, null);
     })
     .catch(oauthAccount => {
+      console.log(oauthAccount) // -------------------------------
       if (!oauthAccount) {
         throw oauthAccount;
       }
@@ -186,7 +188,8 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         done(null, profile.serialize());
       }
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err) //----------------------------------------
       // TODO: This is not working because redirect to login uses req.flash('loginMessage')
       // and there is no access to req here
       done(null, null, {
