@@ -25,7 +25,7 @@ describe('Authentication', () => {
       let request = httpMocks.createRequest({
         body: {
           email: 'admin@domain.com',
-          password: 'admin123'
+          password: 'password'
         }
       });
       request.flash = fakeFlash;
@@ -63,7 +63,7 @@ describe('Authentication', () => {
       let request = httpMocks.createRequest({
         body: {
           email: 'admin@domain.com',
-          password: 'admin123'
+          password: 'password'
         }
       });
       request.flash = fakeFlash;
@@ -78,14 +78,14 @@ describe('Authentication', () => {
     it('passport passes user if email does not already exist', done => {
       let request = httpMocks.createRequest({
         body: {
-          email: 'TestUser4@mail.com',
-          password: '101112'
+          email: 'test@domain.com',
+          password: 'password'
         }
       });
       request.flash = fakeFlash;
       let response = httpMocks.createResponse();
       passport.authenticate('local-signup', {}, (err, user, info) => {
-        models.Profile.where({ emailAddress: 'TestUser4@mail.com' }).fetch()
+        models.Profile.where({ emailAddress: 'test@domain.com' }).fetch()
           .then(profile => {
             expect(user).to.be.an('object');
             expect(user.id).to.equal(profile.get('id'));
