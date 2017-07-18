@@ -35,6 +35,7 @@ describe('Friend model tests', function () {
         return Friend.where({ id: 1 }).save({
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           status: 'approved' }, { method: 'update' });
 =======
 =======
@@ -51,11 +52,15 @@ describe('Friend model tests', function () {
           profileId1: 1, profileId2: 2 }, { method: 'update' });
 >>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
 >>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
+=======
+          profileId1: 1, profileId2: 2 }, { method: 'update' });
+>>>>>>> merging commits with rebase
       })
       .then(function () {
         return Friend.where({ id: 1 }).fetch();
       })
       .then(function (result) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         expect(result.get('status')).to.equal('approved');
@@ -77,6 +82,10 @@ describe('Friend model tests', function () {
         expect(result.get('profileId2')).to.equal(2);
 >>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
 >>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
+=======
+        expect(result.get('profileId1')).to.equal(1);
+        expect(result.get('profileId2')).to.equal(2);
+>>>>>>> merging commits with rebase
         done();
       })
       .catch(function (err) {

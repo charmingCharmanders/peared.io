@@ -26,9 +26,7 @@ app.use('/api/friends', routes.friends);
 app.use('/api/profiles', routes.profiles);
 app.use('/api/prompts', routes.prompts);
 app.use('/api/sessions', routes.sessions);
-<<<<<<< HEAD
-=======
-app.use('/api/users', routes.users);
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
+// app.use('/api/users', routes.users);
+// app.use('/', middleware.auth.verify);
 
 module.exports = app;
