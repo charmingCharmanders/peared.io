@@ -50,7 +50,7 @@ class Session extends React.Component {
       });
       this.socket.on('edit', (code)=>{
         //TODO
-      })
+      });
     });
   }
 
