@@ -13,15 +13,18 @@ class TextEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: dummyData
+      code: ''
     };
+    this.updateCode = this.updateCode.bind(this);
   }
 
-  updateCode (newCode) {
+  updateCode(newCode) {
     console.log('running updateCode', newCode);
-    this.setState({
-      code: js_beautify(newCode)
-    });
+    // this.setState({
+    //   code: js_beautify(newCode)
+    // });
+    console.log(this);
+    this.props.emitEdits(newCode);
   }
 
   render() {
@@ -63,13 +66,12 @@ class TextEditor extends React.Component {
       }
     };
     return (
-      <CodeMirror value={js_beautify(this.state.code, {indent_size: 2})} onChange={this.updateCode} options={options} />           
+      <CodeMirror value={js_beautify(this.props.code, {indent_size: 2})} onChange={this.updateCode} options={options} />           
     );
   }
 }
 
 export default TextEditor;
-// <Video />
 
 
 
