@@ -14,7 +14,9 @@ class Session extends React.Component {
     super(props);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.emitEdits = this.emitEdits.bind(this);
     this.state = {};
+    // socket = io.connect('http://127.0.0.1:3001');
   }
 
   handleOpenModal () {
@@ -24,24 +26,44 @@ class Session extends React.Component {
   handleCloseModal () {
     this.setState({ showModal: false });
   }
-  startSession() {
-    console.log("starting a session");
-    var socket = io.connect('http://127.0.0.1:3001');
+
+  openConnection() {
+    console.log("opening a connection");
+    this.socket = io.connect('http://127.0.0.1:3001');
     // socket.connect('http://127.0.0.1:3001');
     // this.socket.emit('start session', true);
-    socket.on('connect', ()=>{
+    this.socket.on('connect', ()=>{
       console.log('we connected to the socket server');
-    })
-    // socket.on('session started', (roomId) => {
-    //   console.log('lets play: ', roomId);
-    //   this.handleCloseModal();
-    //   //Update the state, and close the modal.
-    // });
+      this.socket.on('room id', (roomId) =>{
+        console.log('recieving a roomId');
+        this.handleCloseModal();
+        this.setState({
+          roomId: roomId
+        });
+      });
+      this.socket.on('prompt', (prompt) =>{
+        console.log('recieving a prompt');
+        this.handleCloseModal();
+        this.setState({
+          prompt: prompt
+        });
+      });
+      this.socket.on('edit', (code)=>{
+        //TODO
+      })
+    });
+  }
+
+  emitEdits(code, roomId) {
+    this.socket.emit('edit', (code, roomId) =>{
+      //TODO
+    });
   }
 
   componentDidMount() {
     this.handleOpenModal();
-    this.startSession();
+    this.openConnection();
+
   }
 
   render() {
@@ -49,7 +71,7 @@ class Session extends React.Component {
       <Grid fluid>
         <Row className='show-grid'>
           <Col md={3}><Description /></Col>
-          <TextEditorAndConsole />
+          <TextEditorAndConsole emitEdits={this.emitEdits}/>
         </Row>
         <ReactModal
             isOpen={this.state.showModal}
