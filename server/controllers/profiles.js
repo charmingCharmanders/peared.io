@@ -44,3 +44,17 @@ module.exports.update = (req, res) => {
       res.sendStatus(404);
     });
 };
+
+module.exports.getFriends = (req, res) => {
+  models.Friend
+    .where({ profileId: req.params.id })
+    .fetchAll({
+      withRelated: ['friend']
+    })
+    .then(friends => {
+      res.status(200).send(friends);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+};

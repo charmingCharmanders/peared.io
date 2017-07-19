@@ -5,13 +5,15 @@ const ProfilesController = require('../controllers').Profiles;
 
 router.route('/')
   .get(ProfilesController.getAll)
-  // .post(ProfileController.create)
   ;
 
 router.route('/:id')
   .get(ProfilesController.getOne)
   .put(ProfilesController.update)
-  // .delete(ProfileController.deleteOne)
+  ;
+
+router.route('/:id/friends')
+  .get(ProfilesController.getFriends)
   ;
 
 module.exports = router;

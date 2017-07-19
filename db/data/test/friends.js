@@ -1,6 +1,8 @@
 module.exports = [
   {
-    profileId1: 1,
-    profileId2: 2
+    profileId: 1,
+    friendId: 2,
+    status: 'pending',
+    updatedBy: 1
   }
 ];
