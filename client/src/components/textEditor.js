@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Video from './video';
-// import CodeMirror from 'codemirror/lib/codemirror';
 import CodeMirror from 'react-codemirror';
-import CodeMirrorJS from 'codemirror/mode/javascript/javascript';
-// import CodeMirrorCSS from "codemirror/lib/codemirror.css";
 import { LinkContainer } from 'react-router-bootstrap';
 import js_beautify from 'js-beautify';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
@@ -21,6 +18,7 @@ class TextEditor extends React.Component {
   }
 
   updateCode (newCode) {
+    console.log('running updateCode', newCode);
     this.setState({
       code: js_beautify(newCode)
     });

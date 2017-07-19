@@ -19,7 +19,7 @@ class Description extends React.Component {
   render() {
     return (
       <Tabs defaultActiveKey={1} animation={true} id="noanim-tab-example">
-        <Tab eventKey={1} title="Question" style={{padding: '20px'}}>{question.question}</Tab>
+        <Tab eventKey={1} title="Question" style={{padding: '20px'}}>{this.props.prompt['description']}</Tab>
         <Tab eventKey={2} title="Hints" style={{padding: '20px'}}>{question.hints}</Tab>
         <Tab eventKey={3} title="Tests" style={{padding: '20px'}}>{question.tests.map(test => <div>{test}</div>)}</Tab>
       </Tabs>

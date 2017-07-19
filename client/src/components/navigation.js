@@ -6,6 +6,14 @@ import { LinkContainer } from 'react-router-bootstrap';
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
+    this.startSession = this.startSession.bind(this);
+  }
+
+  startSession() {
+    console.log("About to start a session");
+    this.props.toggleView();
+    //redirect to the homepage and open a model
+    //this.props.handleOpenModal();
   }
   
   render() {
@@ -15,7 +23,7 @@ class Navigation extends React.Component {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
           <LinkContainer to='/session'>
-            <Button bsStyle="info" onClick={this.props.toggleView}>Start Session</Button>
+            <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
           </LinkContainer>
           <Button href="/logout">Log out</Button>
         </ButtonToolbar>;

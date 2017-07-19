@@ -4,29 +4,37 @@ import View from './components/view';
 import Session from './components/session';
 import Dashboard from './components/dashboard';
 import Navigation from './components/navigation';
-import {BrowserRouter as Router, browserHistory, Switch, Route, Link} from 'react-router-dom';
-
+import browserHistory from 'react-router';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isDashboard: true
     };
+    this.toggleView = this.toggleView.bind(this);
   }
 
   toggleView() {
     this.setState({isDashboard: !this.state.isDashboard});
   }
 
+  //need to toggle the view when we get a response form the socket.io connection toggleView={this.toggleView.bind(this)
+
   render() {
     return (
-      <div>
-        <Navigation isDashboard={this.state.isDashboard} toggleView={this.toggleView.bind(this)}/>
-        <Route exact path='/' component={Dashboard} />
-        <Route path='/session' component={Session} />
-      </div>
+      <Router history={browserHistory}>
+        <div>
+          <Navigation isDashboard={this.state.isDashboard} toggleView={this.toggleView}/>
+          <Switch>
+            <Route exact path='/' component={Dashboard} />
+            <Route path='/session' component={Session} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
 
-ReactDOM.render(<Router history={browserHistory}><App /></Router>, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
