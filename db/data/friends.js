@@ -1,15 +1,23 @@
 module.exports = [
   {
-    profileId1: 1,
-    profileId2: 2
+    profileId: 1,
+    friendId: 2,
+    status: 'pending',
+    updatedBy: 1
   }, {
-    profileId1: 3,
-    profileId2: 4
+    profileId: 3,
+    friendId: 4,
+    status: 'pending',
+    updatedBy: 3
   }, {
-    profileId1: 1,
-    profileId2: 3
+    profileId: 1,
+    friendId: 3,
+    status: 'pending',
+    updatedBy: 1
   }, {
-    profileId1: 2,
-    profileId2: 4
+    profileId: 2,
+    friendId: 4,
+    status: 'pending',
+    updatedBy: 2
   }
 ];
