@@ -108,17 +108,17 @@ passport.use('local-login', new LocalStrategy({
   }));
 
 passport.use('google', new GoogleStrategy({
-  clientID: config.Google.clientID,
-  clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
+  clientID: process.env.GOOGLE_CLIENT_ID || config.Google.clientID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.Google.clientSecret,
+  callbackURL: process.env.GOOGLE_CALLBACK_URL || config.Google.callbackURL
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
 passport.use('facebook', new FacebookStrategy({
-  clientID: config.Facebook.clientID,
-  clientSecret: config.Facebook.clientSecret,
-  callbackURL: config.Facebook.callbackURL,
+  clientID: process.env.FACEBOOK_CLIENT_ID || config.Facebook.clientID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET || config.Facebook.clientSecret,
+  callbackURL: process.env.FACEBOOK_CALLBACK_URL || config.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
@@ -126,9 +126,9 @@ passport.use('facebook', new FacebookStrategy({
 
 // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
 passport.use('twitter', new TwitterStrategy({
-  consumerKey: config.Twitter.consumerKey,
-  consumerSecret: config.Twitter.consumerSecret,
-  callbackURL: config.Twitter.callbackURL,
+  consumerKey: process.env.TWITTER_CONSUMER_KEY || config.Twitter.consumerKey,
+  consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.Twitter.consumerSecret,
+  callbackURL: process.env.TWITTER_CALLBACK_URL || config.Twitter.callbackURL,
   userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('twitter', profile, done))
@@ -186,7 +186,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         done(null, profile.serialize());
       }
     })
-    .catch(() => {
+    .catch((err) => {
       // TODO: This is not working because redirect to login uses req.flash('loginMessage')
       // and there is no access to req here
       done(null, null, {

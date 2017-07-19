@@ -1,9 +1,14 @@
 {
   "name": "course.thesis",
   "version": "1.0.0",
+  "engines": {
+    "node": "^6.10.1"
+  },
   "scripts": {
-    "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
-    "start": "nodemon server",
+    "postinstall": "webpack -p",
+    "heroku-postbuild": "knex migrate:latest",
+    "pomander-test":  "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
+    "start": "node server/index.js",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
@@ -11,6 +16,10 @@
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
+    "babel-preset-latest": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
@@ -23,8 +32,8 @@
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "express-session": "^1.15.1",
-    "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "js-beautify": "^1.6.14",
+    "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "knex": "^0.12.9",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
@@ -42,6 +51,8 @@
     "react-router-dom": "^4.1.1",
     "redis": "^2.7.1",
     "socket.io": "^2.0.3"
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
   },
   "devDependencies": {
     "babel-loader": "^7.0.0",
