@@ -13,15 +13,21 @@ class TextEditor extends React.Component {
   constructor(props) {
     super(props);
     this.updateCode = this.updateCode.bind(this);
+    this.state = {
+      text: ''
+    }
   }
 
-  // componentDidMount() {
-  //   this.setState = {
-  //     code: this.props.code
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      text: nextProps.code
+    });
+  }
 
   updateCode(newCode) {
+    // this.setState({
+    //   text: newCode
+    // });
     this.props.emitEdits(newCode);
   }
 
@@ -46,23 +52,31 @@ class TextEditor extends React.Component {
 
     var options = {
       lineNumbers: true,
-      autofocus: true,
-      extraKeys: {
-        Tab: convertToSoftTabs
-      },
       mode: 'text/javascript',
-      tabSize: 2,
-      theme: 'material',
-      indentUnit: 2,
-      tabSize: 2,
-      fixedGutter: false,
-      coverGutterNextToScrollbar: true,
-      setSize: {
-        height: '70%'
-      }
+      theme: 'material'
     };
+
+    // var options = {
+    //   lineNumbers: true,
+    //   autofocus: true,
+    //   extraKeys: {
+    //     Tab: convertToSoftTabs
+    //   },
+    //   mode: 'text/javascript',
+    //   tabSize: 2,
+    //   theme: 'material',
+    //   indentUnit: 2,
+    //   fixedGutter: false,
+    //   coverGutterNextToScrollbar: true,
+    //   setSize: {
+    //     height: '70%'
+    //   }
+    // };
     return (
-      <CodeMirror value={js_beautify(this.props.code, {indent_size: 2})} onChange={this.updateCode} options={options} />           
+      <CodeMirror 
+        value={this.state.text}
+        onChange={this.updateCode}
+        options={options} />           
     );
   }
 }
