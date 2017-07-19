@@ -1,9 +1,14 @@
 {
   "name": "course.thesis",
   "version": "1.0.0",
+  "engines": {
+    "node": "^6.10.1"
+  },
   "scripts": {
-    "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
-    "start": "nodemon server",
+    "postinstall": "webpack -p",
+    "heroku-postbuild": "knex migrate:latest",
+    "pomander-test":  "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
+    "start": "node server/index.js",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
@@ -23,8 +28,8 @@
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "express-session": "^1.15.1",
-    "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "js-beautify": "^1.6.14",
+    "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "knex": "^0.12.9",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
