@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
-const User = require('../../db/models/user.js');
+const Friend = require('../../db/models/friends.js');
 const dbUtils = require('../../db/lib/utils.js');
 
-describe('User model tests', function () {
+describe('Friend model tests', function () {
   // Deletes all tables, creates new tables, and seeds tables with test data
   beforeEach(function (done) {
     dbUtils.rollbackMigrate(done);
@@ -14,7 +14,7 @@ describe('User model tests', function () {
   });
 
   it('Should be able to retrieve test data', function (done) {
-    User.forge().fetchAll()
+    Friend.forge().fetchAll()
       .then(function (results) {
         expect(results.length).to.equal(1);
         expect(results.at(0).get('id')).to.equal(1);
@@ -27,19 +27,20 @@ describe('User model tests', function () {
   });
 
   it('Should be able to update an already existing record', function (done) {
-    User.where({ id: 1 }).fetch()
+    Friend.where({ id: 1 }).fetch()
       .then(function (result) {
         expect(result.get('id')).to.equal(1);
       })
       .then(function () {
-        return User.where({ id: 1 }).save({ first: 'James', last: 'Davenport' }, { method: 'update' });
+        return Friend.where({ id: 1 }).save({
+          profileId1: 1, profileId2: 2 }, { method: 'update' });
       })
       .then(function () {
-        return User.where({ id: 1 }).fetch();
+        return Friend.where({ id: 1 }).fetch();
       })
       .then(function (result) {
-        expect(result.get('first')).to.equal('James');
-        expect(result.get('last')).to.equal('Davenport');
+        expect(result.get('profileId1')).to.equal(1);
+        expect(result.get('profileId2')).to.equal(2);
         done();
       })
       .catch(function (err) {
@@ -49,3 +50,4 @@ describe('User model tests', function () {
   });
 
 });
+

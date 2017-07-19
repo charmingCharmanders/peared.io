@@ -46,7 +46,7 @@ router.get('/auth/google', middleware.passport.authenticate('google', {
 }));
 
 router.get('/auth/google/callback', middleware.passport.authenticate('google', {
-  successRedirect: '/profile',
+  successRedirect: '/',
   failureRedirect: '/login'
 }));
 
@@ -55,7 +55,7 @@ router.get('/auth/facebook', middleware.passport.authenticate('facebook', {
 }));
 
 router.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', {
-  successRedirect: '/profile',
+  successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
 }));
@@ -63,8 +63,12 @@ router.get('/auth/facebook/callback', middleware.passport.authenticate('facebook
 router.get('/auth/twitter', middleware.passport.authenticate('twitter'));
 
 router.get('/auth/twitter/callback', middleware.passport.authenticate('twitter', {
-  successRedirect: '/profile',
+  successRedirect: '/',
   failureRedirect: '/login'
 }));
+
+router.use(middleware.auth.verify, (req, res)=>{ res.render('index'); });
+
+// router.get(middleware.auth.verify);
 
 module.exports = router;

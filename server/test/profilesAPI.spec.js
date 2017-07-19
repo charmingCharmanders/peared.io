@@ -24,7 +24,7 @@ describe('Profiles API', function () {
         };
       })
       .expect(200, {
-        length: 1
+        length: 2
       })
       .end(done);
   });
@@ -35,12 +35,12 @@ describe('Profiles API', function () {
       .expect(res => {
         res.body = {
           id: res.body.id,
-          created_at: !!Date.parse(res.body.created_at)
+          createdAt: !!Date.parse(res.body.createdAt)
         };
       })
       .expect(200, {
         id: 1,
-        created_at: true
+        createdAt: true
       })
       .end(done);
   });
@@ -52,49 +52,25 @@ describe('Profiles API', function () {
       .end(done);
   });
 
-  // it('accepts POST requests to /api/profiles', function (done) {
-  //   request(app)
-  //     .post('/api/profiles')
-  //     .send({
-  //       username: 'TestUser4',
-  //       password: 'happy'
-  //     })
-  //     .expect(res => {
-  //       res.body = {
-  //         username: res.body.username,
-  //         password: res.body.password
-  //       };
-  //     })
-  //     .expect(201, {
-  //       username: 'TestUser4',
-  //       password: undefined
-  //     })
-  //     .end(done);
-  // });
-
   it('accepts PUT requests to /api/profiles/:id', function () {
     let profile = {
-      first: 'James',
-      last: 'Davenport',
-      display: 'James Davenport',
-      email: 'example@email.com',
-      phone: '415-555-1234'
+      emailAddress: 'example@email.com',
+      firstName: 'James',
+      lastName: 'Davenport'
     };
 
     return request(app)
       .put('/api/profiles/1')
       .send(profile)
-      .expect(201)
+      .expect(200)
       .then(() => {
         return request(app)
           .get('/api/profiles/1')
           .expect(res => {
             res.body = {
-              first: res.body.first,
-              last: res.body.last,
-              display: res.body.display,
-              email: res.body.email,
-              phone: res.body.phone
+              emailAddress: res.body.emailAddress,
+              firstName: res.body.firstName,
+              lastName: res.body.lastName
             };
           })
           .expect(200, profile);
@@ -107,18 +83,4 @@ describe('Profiles API', function () {
       .expect(404)
       .end(done);
   });
-
-  // it('accepts DELETE requests to /api/profiles/:id', function (done) {
-  //   request(app)
-  //     .delete('/api/profiles/1')
-  //     .expect(200)
-  //     .end(done);
-  // });
-
-  // it('sends 404 if id on DELETE requests to /api/profiles/:id does not exist', function (done) {
-  //   request(app)
-  //     .delete('/api/profiles/123')
-  //     .expect(404)
-  //     .end(done);
-  // });
 });
