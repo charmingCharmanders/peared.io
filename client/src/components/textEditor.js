@@ -15,7 +15,7 @@ class TextEditor extends React.Component {
     this.updateCode = this.updateCode.bind(this);
     this.state = {
       text: ''
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
