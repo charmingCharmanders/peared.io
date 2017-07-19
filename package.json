@@ -5,7 +5,7 @@
     "node": "^6.10.1"
   },
   "scripts": {
-    "postinstall": "webpack -p",
+    // "postinstall": "webpack -p",
     "heroku-postbuild": "knex migrate:latest",
     "pomander-test": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "node server/index.js",
