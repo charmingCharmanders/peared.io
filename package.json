@@ -15,6 +15,7 @@
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
+    "babel-core": "^6.24.1",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
@@ -27,11 +28,6 @@
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "express-session": "^1.15.1",
-<<<<<<< HEAD
-=======
-    "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
-    "js-beautify": "^1.6.14",
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "js-beautify": "^1.6.14",
     "knex": "^0.12.9",
