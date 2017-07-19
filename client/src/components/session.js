@@ -15,8 +15,14 @@ class Session extends React.Component {
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.emitEdits = this.emitEdits.bind(this);
-    this.state = {};
-    // socket = io.connect('http://127.0.0.1:3001');
+    this.state = {
+      prompt: {
+        description: '',
+        name: '',
+        hints: '',
+      },
+      code: ''
+    };
   }
 
   handleOpenModal () {
@@ -36,7 +42,6 @@ class Session extends React.Component {
       console.log('we connected to the socket server');
       this.socket.on('room id', (roomId) =>{
         console.log('recieving a roomId');
-        this.handleCloseModal();
         this.setState({
           roomId: roomId
         });
@@ -44,8 +49,10 @@ class Session extends React.Component {
       this.socket.on('prompt', (prompt) =>{
         console.log('recieving a prompt');
         this.handleCloseModal();
+        console.log(JSON.parse(prompt).skeletonCode);
         this.setState({
-          prompt: prompt
+          prompt: JSON.parse(prompt),
+          code: JSON.parse(prompt).skeletonCode
         });
       });
       this.socket.on('edit', (code)=>{
@@ -63,15 +70,14 @@ class Session extends React.Component {
   componentDidMount() {
     this.handleOpenModal();
     this.openConnection();
-
   }
 
   render() {
     return (
       <Grid fluid>
         <Row className='show-grid'>
-          <Col md={3}><Description /></Col>
-          <TextEditorAndConsole emitEdits={this.emitEdits}/>
+          <Col md={3}><Description prompt={this.state.prompt}/></Col>
+          <TextEditorAndConsole emitEdits={this.emitEdits} code={this.state.code}/>
         </Row>
         <ReactModal
             isOpen={this.state.showModal}

@@ -21,6 +21,7 @@ class TextEditor extends React.Component {
   }
 
   updateCode (newCode) {
+    console.log('running updateCode', newCode);
     this.setState({
       code: js_beautify(newCode)
     });

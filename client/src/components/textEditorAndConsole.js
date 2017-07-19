@@ -15,8 +15,8 @@ class TextEditorAndConsole extends React.Component {
     return (
       <Col md={9}>
         <div style={{height: '100%'}}>
-          <TextEditor />
-          <ConsoleAndTest />
+          <TextEditor code={this.props.code}/>
+          <ConsoleAndTest prompt={this.props.prompt}/>
         </div>
       </Col>
     );
