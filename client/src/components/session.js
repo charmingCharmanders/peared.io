@@ -47,26 +47,26 @@ class Session extends React.Component {
       this.socket.on('prompt', (prompt) =>{
         console.log('recieving a prompt');
         this.handleCloseModal();
-        console.log(JSON.parse(prompt).skeletonCode);
         this.setState({
           prompt: JSON.parse(prompt),
           code: JSON.parse(prompt).skeletonCode
         });
       });
       this.socket.on('edit', (code)=>{
-        //TODO
+        console.log('recieving an edit: ', code);
+        this.setState({
+          code: code
+        });
       });
     });
   }
 
   emitEdits(code) {
     var roomId = this.state.roomId;
-    console.log('emitting the edits: ', code);
     this.setState({
       code: code
     });
-
-    this.socket.emit('edit', {});
+    this.socket.emit('edit', code, this.state.roomId);
   }
 
   componentDidMount() {

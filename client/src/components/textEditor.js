@@ -12,23 +12,20 @@ var dummyData = 'const addTwoNumbers = function(num1, num2) { \n// YOUR CODE HER
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      code: ''
-    };
     this.updateCode = this.updateCode.bind(this);
   }
 
+  // componentDidMount() {
+  //   this.setState = {
+  //     code: this.props.code
+  //   }
+  // }
+
   updateCode(newCode) {
-    console.log('running updateCode', newCode);
-    // this.setState({
-    //   code: js_beautify(newCode)
-    // });
-    console.log(this);
     this.props.emitEdits(newCode);
   }
 
   render() {
-
     var convertToSoftTabs = function(cm) {
       if (cm.somethingSelected()) {
         cm.indentSelection();
@@ -53,7 +50,6 @@ class TextEditor extends React.Component {
       extraKeys: {
         Tab: convertToSoftTabs
       },
-      lineNumbers: true,
       mode: 'text/javascript',
       tabSize: 2,
       theme: 'material',
