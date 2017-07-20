@@ -9,6 +9,7 @@
     "heroku-postbuild": "knex migrate:latest",
     "pomander-test": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "node server/index.js",
+    "start:dev": "nodemon server/index.js",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
