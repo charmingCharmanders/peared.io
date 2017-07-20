@@ -79,7 +79,7 @@ class Session extends React.Component {
       <Grid fluid>
         <Row className='show-grid'>
           <Col md={3}><Description prompt={this.state.prompt}/></Col>
-          <TextEditorAndConsole emitEdits={this.emitEdits} code={this.state.code}/>
+          <TextEditorAndConsole emitEdits={this.emitEdits} roomId={this.state.roomId} code={this.state.code}/>
         </Row>
         <ReactModal
             isOpen={this.state.showModal}

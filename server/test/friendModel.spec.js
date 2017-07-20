@@ -49,4 +49,3 @@ describe('Friend model tests', function () {
   });
 
 });
-

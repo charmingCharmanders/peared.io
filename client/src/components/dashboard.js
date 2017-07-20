@@ -10,12 +10,13 @@ import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdo
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+
   }
 
   render() {
     return (
       <div>
-        <Grid>      
+        <Grid>
           <Row className='show-grid'>
             <Col md={12} ><h6>Dashboard</h6></Col>
           </Row>
