@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
         <Modal.Footer>
           <Button onClick={() => this.props.closeModal()}>Close</Button>
           <LinkContainer to='/session'>
-            <Button bsStyle='primary' onClick={() => this.props.dashboardToSession()}>Join Session!</Button>
+            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={() => this.props.dashboardToSession()}>Join Session!</Button>
           </LinkContainer>
         </Modal.Footer>
       </Modal>
@@ -54,7 +54,8 @@ class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    modal: state.modal
+    modal: state.modal,
+    buttonStatus: state.buttonStatus
   }
 }
 

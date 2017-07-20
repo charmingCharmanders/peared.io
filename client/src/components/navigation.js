@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import {dashboardToSession, updateRoomId, openModal, closeModal, sessionToDashboard, updatePrompt, updateCode} from '../actions';
+import {updateButtonStatus, dashboardToSession, updateRoomId, openModal, closeModal, sessionToDashboard, updatePrompt, updateCode} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
@@ -26,7 +26,7 @@ class Navigation extends React.Component {
         this.props.updatePrompt(prompt);
         this.props.updateCode(prompt.skeletonCode);
         // Trigger the navbar to Change
-        this.props.dashboardToSession();
+        this.props.updateButtonStatus();
         // Trigger route change
 
       });
@@ -94,7 +94,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({dashboardToSession: dashboardToSession, updateRoomId: updateRoomId, updateCode: updateCode, updatePrompt: updatePrompt, openModal: openModal, sessionToDashboard: sessionToDashboard, closeModal: closeModal}, dispatch);
+  return bindActionCreators({updateButtonStatus: updateButtonStatus, dashboardToSession: dashboardToSession, updateRoomId: updateRoomId, updateCode: updateCode, updatePrompt: updatePrompt, openModal: openModal, sessionToDashboard: sessionToDashboard, closeModal: closeModal}, dispatch);
 }
 
 
