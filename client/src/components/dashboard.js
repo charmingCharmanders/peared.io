@@ -12,7 +12,6 @@ import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 
 class Dashboard extends React.Component {
-
   render() {
     let modal =
       <Modal show={this.props.modal} onHide={ () => this.props.closeModal() }>

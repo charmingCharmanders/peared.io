@@ -11,7 +11,10 @@ class Video extends React.Component {
 
   render() {
     return (
-      <div style={{float: 'right', margin: '70px', width: '230px', height: '180px', backgroundColor: 'yellow'}}></div>
+      <div style={{float: 'right', margin: '0', width: '350px', height: '350px'}}>
+        <iframe src={`https://tokbox.com/embed/embed/ot-embed.js?embedId=f9ef23c6-1579-4b77-9f1f-8380c10fcbc0&room=${this.props.roomId}&iframe=true`} width='350' height='350' >
+        </iframe>
+      </div>
     );
   }
 }

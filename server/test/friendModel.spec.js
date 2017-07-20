@@ -33,14 +33,13 @@ describe('Friend model tests', function () {
       })
       .then(function () {
         return Friend.where({ id: 1 }).save({
-          profileId1: 1, profileId2: 2 }, { method: 'update' });
+          status: 'approved' }, { method: 'update' });
       })
       .then(function () {
         return Friend.where({ id: 1 }).fetch();
       })
       .then(function (result) {
-        expect(result.get('profileId1')).to.equal(1);
-        expect(result.get('profileId2')).to.equal(2);
+        expect(result.get('status')).to.equal('approved');
         done();
       })
       .catch(function (err) {
@@ -50,4 +49,3 @@ describe('Friend model tests', function () {
   });
 
 });
-

@@ -2,11 +2,14 @@ const db = require('../');
 
 const Session = db.Model.extend({
   tableName: 'sessions',
-  profile: function() {
-    return this.belongsTo('Profile');
+  profile1: function() {
+    return this.belongsTo('Profile', 'profileId1');
+  },
+  profile2: function() {
+    return this.belongsTo('Profile', 'profileId2');
   },
   prompt: function() {
-    return this.belongsTo('Prompt');
+    return this.belongsTo('Prompt', 'promptId');
   },
 });
 

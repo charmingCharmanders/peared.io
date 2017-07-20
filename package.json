@@ -9,6 +9,7 @@
     "heroku-postbuild": "knex migrate:latest",
     "pomander-test": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "node server/index.js",
+    "start:dev": "nodemon server/index.js",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch"
   },
@@ -45,7 +46,7 @@
     "pg": "^6.1.5",
     "react": "^15.4.2",
     "react-bootstrap": "^0.31.1",
-    "react-codemirror": "^1.0.0",
+    "react-codemirror": "^0.2.6",
     "react-dom": "^15.4.2",
     "react-modal": "^2.2.2",
     "react-redux": "^5.0.5",
