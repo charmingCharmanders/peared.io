@@ -23,8 +23,8 @@ class Navigation extends React.Component {
       });
       this.socket.on('prompt', (prompt) =>{
 
-        this.props.updatePrompt(JSON.parse(prompt));
-        this.props.updateCode(JSON.parse(prompt).skeletonCode);
+        this.props.updatePrompt(prompt);
+        this.props.updateCode(prompt.skeletonCode);
         // Trigger the navbar to Change
         this.props.dashboardToSession();
         // Trigger route change
