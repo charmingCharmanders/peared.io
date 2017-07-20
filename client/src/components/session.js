@@ -36,8 +36,6 @@ class Session extends React.Component {
   openConnection() {
     console.log("opening a connection");
     this.socket = io.connect('http://127.0.0.1:3001');
-    // socket.connect('http://127.0.0.1:3001');
-    // this.socket.emit('start session', true);
     this.socket.on('connect', ()=>{
       console.log('we connected to the socket server');
       this.socket.on('room id', (roomId) =>{
@@ -49,22 +47,26 @@ class Session extends React.Component {
       this.socket.on('prompt', (prompt) =>{
         console.log('recieving a prompt');
         this.handleCloseModal();
-        console.log(JSON.parse(prompt).skeletonCode);
         this.setState({
-          prompt: JSON.parse(prompt),
-          code: JSON.parse(prompt).skeletonCode
+          prompt: prompt,
+          code: prompt.skeletonCode
         });
       });
       this.socket.on('edit', (code)=>{
-        //TODO
+        console.log('recieving an edit: ', code);
+        this.setState({
+          code: code
+        });
       });
     });
   }
 
-  emitEdits(code, roomId) {
-    this.socket.emit('edit', (code, roomId) =>{
-      //TODO
+  emitEdits(code) {
+    var roomId = this.state.roomId;
+    this.setState({
+      code: code
     });
+    this.socket.emit('edit', code, this.state.roomId);
   }
 
   componentDidMount() {
