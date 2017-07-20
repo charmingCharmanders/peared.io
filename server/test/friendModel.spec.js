@@ -33,59 +33,13 @@ describe('Friend model tests', function () {
       })
       .then(function () {
         return Friend.where({ id: 1 }).save({
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
           status: 'approved' }, { method: 'update' });
-=======
-=======
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
-<<<<<<< HEAD
-          profileId1: 1, profileId2: 2 }, { method: 'update' });
-=======
-          userId1: 1, userId2: 1 }, { method: 'update' });
->>>>>>> Added tests and friends table, seed files, and specs
-<<<<<<< HEAD
->>>>>>> Added tests and friends table, seed files, and specs
-=======
-=======
-          profileId1: 1, profileId2: 2 }, { method: 'update' });
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
-=======
-          profileId1: 1, profileId2: 2 }, { method: 'update' });
->>>>>>> merging commits with rebase
       })
       .then(function () {
         return Friend.where({ id: 1 }).fetch();
       })
       .then(function (result) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         expect(result.get('status')).to.equal('approved');
-=======
-=======
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
-<<<<<<< HEAD
-        expect(result.get('profileId1')).to.equal(1);
-        expect(result.get('profileId2')).to.equal(2);
-=======
-        expect(result.get('userId1')).to.equal(1);
-        expect(result.get('userId2')).to.equal(1);
->>>>>>> Added tests and friends table, seed files, and specs
-<<<<<<< HEAD
->>>>>>> Added tests and friends table, seed files, and specs
-=======
-=======
-        expect(result.get('profileId1')).to.equal(1);
-        expect(result.get('profileId2')).to.equal(2);
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
->>>>>>> multiple commits to change environment variables and small changes for delpoying to heroku.
-=======
-        expect(result.get('profileId1')).to.equal(1);
-        expect(result.get('profileId2')).to.equal(2);
->>>>>>> merging commits with rebase
         done();
       })
       .catch(function (err) {
@@ -95,4 +49,3 @@ describe('Friend model tests', function () {
   });
 
 });
-
