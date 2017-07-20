@@ -16,4 +16,8 @@ router.route('/:id/friends')
   .get(ProfilesController.getFriends)
   ;
 
+router.route('/:id/sessions')
+  .get(ProfilesController.getSessions)
+  ;
+
 module.exports = router;
