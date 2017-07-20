@@ -19,15 +19,19 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount() {
-    Axios({
-      url: '/api/sessions',
-      type: 'GET',
-      success: function(data) {
-        console.log(data);
-      },
-      error: function(err) {
-        console.error(err);
-      }
+    Axios.get('api/sessions')
+    .then(function (response) {
+      let userSessions1 = response.data.filter((entry) => {
+        return entry.profileId1 === 1;
+      })
+      let userSessions2 = response.data.filter((entry) => {
+        return entry.profileId2 === 1;
+      })
+      console.log(userSessions1);
+      console.log(userSessions2);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
   }
 
