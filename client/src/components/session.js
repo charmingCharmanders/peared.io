@@ -10,7 +10,6 @@ import TextEditorAndConsole from './textEditorAndConsole';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {openModal, closeModal} from '../actions';
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 
 class Session extends React.Component {
   constructor(props) {
@@ -26,40 +25,10 @@ class Session extends React.Component {
     };
   }
 
-  // openConnection() {
-  //   // console.log('opening a connection');
-  //   this.socket = io.connect('http://127.0.0.1:3001');
-  //   this.socket.on('connect', ()=>{
-  //     // console.log('we connected to the socket server');
-  //     this.socket.on('room id', (roomId) =>{
-  //       // console.log('recieving a roomId');
-  //       this.setState({
-  //         roomId: roomId
-  //       });
-  //     });
-  //     this.socket.on('prompt', (prompt) =>{
-  //       // console.log('recieving a prompt');
-  //       // this.handleCloseModal();
-  //       // console.log(JSON.parse(prompt).skeletonCode);
-  //       this.setState({
-  //         prompt: prompt,
-  //         code: prompt.skeletonCode
-  //       });
-  //     });
-  //     this.socket.on('edit', (code)=>{
-  //       console.log('recieving an edit: ', code);
-  //       this.setState({
-  //         code: code
-  //       });
-  //     });
-  //   });
-  // }
 
   emitEdits(code) {
+    console.log('emmitting an edit');
     // var roomId = this.state.roomId;
-    // this.setState({
-    //   code: code
-    // });
     // this.socket.emit('edit', code, this.state.roomId);
   }
 
