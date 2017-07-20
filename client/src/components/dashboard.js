@@ -4,7 +4,6 @@ import Header from './header';
 import HistoryTable from './historyTable';
 import FriendsList from './friendsList';
 import Stats from './stats';
-import Video from './video';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 
