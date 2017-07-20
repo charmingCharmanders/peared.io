@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import {updateRoomId, openModal, closeModal, sessionToDashboard, updatePrompt, updateCode} from '../actions';
+import {dashboardToSession, updateRoomId, openModal, closeModal, sessionToDashboard, updatePrompt, updateCode} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
@@ -11,24 +11,24 @@ import io from 'socket.io-client';
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
-    this.startSession = this.startSession.bind(this);
+    // this.startSession = this.startSession.bind(this);
   }
 
   openConnection() {
     this.socket = io.connect('http://127.0.0.1:3001');
     this.socket.on('connect', ()=>{
-      console.log('we connected to the socket server');
+
       this.socket.on('room id', (roomId) =>{
-        // console.log('recieving a roomId');
         this.props.updateRoomId(roomId);
-        // this.setState({
-        //   roomId: roomId
-        // });
       });
       this.socket.on('prompt', (prompt) =>{
 
         this.props.updatePrompt(JSON.parse(prompt));
         this.props.updateCode(JSON.parse(prompt).skeletonCode);
+        // Trigger the navbar to Change
+        this.props.dashboardToSession();
+        // Trigger route change
+
       });
       this.socket.on('edit', (code)=>{
         //TODO
@@ -36,12 +36,12 @@ class Navigation extends React.Component {
     });
   }
 
-  startSession() {
-    // console.log("About to start a session");
-    this.props.toggleView();
-    //redirect to the homepage and open a model
-    //this.props.handleOpenModal();
-  }
+  // startSession() {
+  //   // console.log("About to start a session");
+  //   this.props.toggleView();
+  //   //redirect to the homepage and open a model
+  //   //this.props.handleOpenModal();
+  // }
   
   render() {
     let buttonSet = null;
@@ -94,7 +94,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({updateRoomId: updateRoomId, updateCode: updateCode, updatePrompt: updatePrompt, openModal: openModal, sessionToDashboard: sessionToDashboard, closeModal: closeModal}, dispatch);
+  return bindActionCreators({dashboardToSession: dashboardToSession, updateRoomId: updateRoomId, updateCode: updateCode, updatePrompt: updatePrompt, openModal: openModal, sessionToDashboard: sessionToDashboard, closeModal: closeModal}, dispatch);
 }
 
 
