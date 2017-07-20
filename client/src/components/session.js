@@ -8,6 +8,9 @@ import ReactModal from 'react-modal';
 import io from 'socket.io-client';
 import TextEditorAndConsole from './textEditorAndConsole';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
+import {openModal, closeModal} from '../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class Session extends React.Component {
   constructor(props) {
@@ -26,11 +29,14 @@ class Session extends React.Component {
   }
 
   handleOpenModal () {
-    this.setState({ showModal: true });
+    openModal();
+    // this.setState({ showModal: true });
+
   }
 
   handleCloseModal () {
-    this.setState({ showModal: false });
+    closeModal();
+    // this.setState({ showModal: false });
   }
 
   openConnection() {
@@ -73,6 +79,7 @@ class Session extends React.Component {
   }
 
   render() {
+    console.log('this.props.modal render', this.props.modal);
     return (
       <Grid fluid>
         <Row className='show-grid'>
@@ -80,7 +87,7 @@ class Session extends React.Component {
           <TextEditorAndConsole emitEdits={this.emitEdits} code={this.state.code}/>
         </Row>
         <ReactModal
-          isOpen={this.state.showModal}
+          // isOpen={this.state.showModal}
           contentLabel="Inline Styles Modal Example"
           style={{
             overlay: {
@@ -101,4 +108,20 @@ class Session extends React.Component {
   }
 }
 
-export default Session;
+function mapStateToProps(store) {
+  return {
+    modal: store.modal
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({openModal: openModal, closeModal: closeModal}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Session);
+
+
+
+
+
+
