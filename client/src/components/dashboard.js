@@ -9,6 +9,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {closeModal, dashboardToSession} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
+import io from 'socket.io-client';
 
 class Dashboard extends React.Component {
 

@@ -41,7 +41,7 @@ class Session extends React.Component {
       });
       this.socket.on('prompt', (prompt) =>{
         // console.log('recieving a prompt');
-        this.handleCloseModal();
+        // this.handleCloseModal();
         // console.log(JSON.parse(prompt).skeletonCode);
         this.setState({
           prompt: JSON.parse(prompt),
@@ -84,7 +84,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({openModal: openModal, closeModal: closeModal}, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Session);

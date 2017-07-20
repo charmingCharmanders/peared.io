@@ -23,8 +23,35 @@ const sessionToDashboard = () => {
   }
 }
 
+const updatePrompt = (prompt) => {
+  return {
+    type: 'UPDATE_PROMPT',
+    payload: prompt
+  }
+}
+
+const updateCode = (code) => {
+  return {
+    type: 'UPDATE_CODE',
+    payload: code
+  }
+}
+
+const updateRoomId = (roomId) => {
+  return {
+    type: 'UPDATE_ROOM_ID',
+    payload: roomId
+  }
+}
+
 export {
-  openModal, closeModal, dashboardToSession, sessionToDashboard
+  openModal, 
+  closeModal, 
+  dashboardToSession, 
+  sessionToDashboard, 
+  updatePrompt, 
+  updateCode,
+  updateRoomId
 }
 
 // Action Creator Function
