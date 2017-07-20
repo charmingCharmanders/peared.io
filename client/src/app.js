@@ -11,10 +11,6 @@ import store from './index';
 import { Provider } from 'react-redux';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Router history={browserHistory}>

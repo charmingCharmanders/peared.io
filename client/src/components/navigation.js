@@ -9,15 +9,9 @@ import io from 'socket.io-client';
 
 
 class Navigation extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.startSession = this.startSession.bind(this);
-  }
-
   openConnection() {
     this.socket = io.connect('http://127.0.0.1:3001');
     this.socket.on('connect', ()=>{
-
       this.socket.on('room id', (roomId) =>{
         this.props.updateRoomId(roomId);
       });
@@ -69,15 +63,15 @@ class Navigation extends React.Component {
 
 }
 
-function mapStateToProps(state) {
+var mapStateToProps = function(state) {
   return {
     nav: state.nav
   }
-}
+};
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = function(dispatch) {
   return bindActionCreators({updateButtonStatus: updateButtonStatus, dashboardToSession: dashboardToSession, updateRoomId: updateRoomId, updateCode: updateCode, updatePrompt: updatePrompt, openModal: openModal, sessionToDashboard: sessionToDashboard, closeModal: closeModal}, dispatch);
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

@@ -15,14 +15,6 @@ class Session extends React.Component {
   constructor(props) {
     super(props);
     this.emitEdits = this.emitEdits.bind(this);
-    this.state = {
-      prompt: {
-        description: '',
-        name: '',
-        hints: '',
-      },
-      code: ''
-    };
   }
 
 
