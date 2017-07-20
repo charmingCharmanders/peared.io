@@ -48,8 +48,8 @@ class Session extends React.Component {
         console.log('recieving a prompt');
         this.handleCloseModal();
         this.setState({
-          prompt: JSON.parse(prompt),
-          code: JSON.parse(prompt).skeletonCode
+          prompt: prompt,
+          code: prompt.skeletonCode
         });
       });
       this.socket.on('edit', (code)=>{
