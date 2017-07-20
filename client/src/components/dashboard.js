@@ -10,8 +10,27 @@ import {connect} from 'react-redux';
 import {closeModal, dashboardToSession} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
+import Axios from 'axios';
 
 class Dashboard extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    Axios({
+      url: '/api/sessions',
+      type: 'GET',
+      success: function(data) {
+        console.log(data);
+      },
+      error: function(err) {
+        console.error(err);
+      }
+    });
+  }
+
 
   render() {
     let modal =
@@ -19,7 +38,7 @@ class Dashboard extends React.Component {
         <Modal.Header closeButton>
           <Modal.Title>Our servers are searching for a partner!</Modal.Title>
         </Modal.Header>
-        <Modal.Body> 
+        <Modal.Body>
           <h5>Please be Patient...</h5>
         </Modal.Body>
         <Modal.Footer>
