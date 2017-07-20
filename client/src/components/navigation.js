@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import {openModal, closeModal, sessionToDashboard} from '../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -10,7 +13,7 @@ class Navigation extends React.Component {
   }
 
   startSession() {
-    console.log("About to start a session");
+    // console.log("About to start a session");
     this.props.toggleView();
     //redirect to the homepage and open a model
     //this.props.handleOpenModal();
@@ -19,12 +22,16 @@ class Navigation extends React.Component {
   render() {
     let buttonSet = null;
 
-    if (this.props.isDashboard) {
+              // <LinkContainer to='/session'>
+            // <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
+          // </LinkContainer>
+                    // <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
+          // <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
+
+    if (this.props.nav) {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
-          <LinkContainer to='/session'>
-            <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
-          </LinkContainer>
+          <Button bsStyle="info" onClick={ () => this.props.openModal() }>Start Session</Button>
           <Button href="/logout">Log out</Button>
         </ButtonToolbar>;
     } else {
@@ -32,7 +39,7 @@ class Navigation extends React.Component {
         <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
           <Button>Swap Roles</Button>
           <LinkContainer to='/'>
-            <Button bsStyle="info" onClick={this.props.toggleView}>End Session</Button>
+            <Button bsStyle="info" onClick={() => {this.props.sessionToDashboard(); this.props.closeModal() }}>End Session</Button>
           </LinkContainer>
         </ButtonToolbar>;
     }
@@ -41,7 +48,7 @@ class Navigation extends React.Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">Peared.io</a>
+            <a href="/">Peared.io</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
@@ -56,4 +63,15 @@ class Navigation extends React.Component {
 
 }
 
-export default Navigation;
+function mapStateToProps(state) {
+  return {
+    nav: state.nav
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({openModal: openModal, sessionToDashboard: sessionToDashboard, closeModal: closeModal}, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

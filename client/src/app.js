@@ -10,20 +10,9 @@ import { withRouter } from 'react-router-dom';
 import store from './index';
 import { Provider } from 'react-redux';
 
-console.log('store', store);
-console.log('store.getState', store.getState());
-
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isDashboard: true
-    };
-    this.toggleView = this.toggleView.bind(this);
-  }
-
-  toggleView() {
-    this.setState({ isDashboard: !this.state.isDashboard });
   }
 
   //need to toggle the view when we get a response form the socket.io connection toggleView={this.toggleView.bind(this)
@@ -32,7 +21,7 @@ class App extends React.Component {
     return (
       <Router history={browserHistory}>
         <div>
-          <Navigation isDashboard={this.state.isDashboard} toggleView={this.toggleView}/>
+          <Navigation />
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route path='/session' component={Session} />

@@ -9,6 +9,9 @@ export default function(store = null, action) {
   return store;
 }
 
+
+
+
 // var a = Object.assign({}, state, {
 //   visibilityFilter: action.filter
 // }
@@ -16,3 +19,11 @@ export default function(store = null, action) {
 // b.things = a.things.concat(value);
 
 // state = {..state, age: action.payload}
+
+
+
+// Change object value:
+  // return Object.assign({}, state, {prop: 'value'})
+
+// Change Array value:
+  // return store.array.concat(val);

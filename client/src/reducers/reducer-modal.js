@@ -1,13 +1,13 @@
-function toggleModal(store = false, action) {
+function toggleModal(state = false, action) {
   switch(action.type) {
     case 'OPEN_MODAL':
-      store = true;
+      state = true;
+      break;
     case 'CLOSE_MODAL':
-      store = false;
-    default:
-      return store;
+      state = false;
+      break;
   }
-  return store
+  return state
 }
 
 export {

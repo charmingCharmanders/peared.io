@@ -1,13 +1,3 @@
-// const selectUser = () => {
-//   console.log('You clicked on');
-//   return {
-//     // Type can be anything you want
-//     type:  "USER_SELECTED",
-//     // payload can be anything. you can call it 'data' if you want.
-//     payload: 'payload'
-//   }
-// }
-
 const openModal = () => {
   console.log('inside openModal');
   return {
@@ -21,8 +11,20 @@ const closeModal = () => {
   }
 }
 
+const dashboardToSession = () => {
+  return {
+    type: 'DASHBOARD_TO_SESSION'
+  }
+}
+
+const sessionToDashboard = () => {
+  return {
+    type: 'SESSION_TO_DASHBOARD'
+  }
+}
+
 export {
-  openModal, closeModal
+  openModal, closeModal, dashboardToSession, sessionToDashboard
 }
 
 // Action Creator Function
