@@ -8,12 +8,13 @@ import ReactModal from 'react-modal';
 import io from 'socket.io-client';
 import TextEditorAndConsole from './textEditorAndConsole';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
+import {openModal, closeModal} from '../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class Session extends React.Component {
   constructor(props) {
     super(props);
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.emitEdits = this.emitEdits.bind(this);
     this.state = {
       prompt: {
@@ -25,28 +26,21 @@ class Session extends React.Component {
     };
   }
 
-  handleOpenModal () {
-    this.setState({ showModal: true });
-  }
-
-  handleCloseModal () {
-    this.setState({ showModal: false });
-  }
-
   openConnection() {
-    console.log("opening a connection");
+    // console.log('opening a connection');
     this.socket = io.connect('http://127.0.0.1:3001');
     this.socket.on('connect', ()=>{
-      console.log('we connected to the socket server');
+      // console.log('we connected to the socket server');
       this.socket.on('room id', (roomId) =>{
-        console.log('recieving a roomId');
+        // console.log('recieving a roomId');
         this.setState({
           roomId: roomId
         });
       });
       this.socket.on('prompt', (prompt) =>{
-        console.log('recieving a prompt');
-        this.handleCloseModal();
+        // console.log('recieving a prompt');
+        // this.handleCloseModal();
+        // console.log(JSON.parse(prompt).skeletonCode);
         this.setState({
           prompt: prompt,
           code: prompt.skeletonCode
@@ -70,7 +64,7 @@ class Session extends React.Component {
   }
 
   componentDidMount() {
-    this.handleOpenModal();
+    // this.handleOpenModal();
     this.openConnection();
   }
 
@@ -81,26 +75,24 @@ class Session extends React.Component {
           <Col md={3}><Description prompt={this.state.prompt}/></Col>
           <TextEditorAndConsole emitEdits={this.emitEdits} roomId={this.state.roomId} code={this.state.code}/>
         </Row>
-        <ReactModal
-            isOpen={this.state.showModal}
-            contentLabel="Inline Styles Modal Example"
-            style={{
-              overlay: {
-                zIndex: 1000,
-                backgroundColor: 'papayawhip'
-              },
-              content: {
-                color: 'lightsteelblue'
-              }
-            }}
-          >
-            <p>Our servers our currently trying to Pair You!</p>
-            <p>Please be Patient...</p>
-            <button>This button does nothing! Lol.</button>
-          </ReactModal>
       </Grid>
     );
   }
 }
 
-export default Session;
+function mapStateToProps(state) {
+  return {
+    modal: state.modal
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Session);
+
+
+
+
+

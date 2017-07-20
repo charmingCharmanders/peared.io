@@ -6,11 +6,11 @@ const PromptsController = require('../controllers').Prompts;
 router.route('/')
   .get(PromptsController.getAll)
   .post(PromptsController.create)
-  ;
+;
 
 router.route('/:id')
   .get(PromptsController.getOne)
   .put(PromptsController.update)
-  ;
+;
 
 module.exports = router;

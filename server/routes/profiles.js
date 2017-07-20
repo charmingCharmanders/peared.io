@@ -5,7 +5,7 @@ const ProfilesController = require('../controllers').Profiles;
 
 router.route('/')
   .get(ProfilesController.getAll)
-  ;
+;
 
 router.route('/:id')
   .get(ProfilesController.getOne)
