@@ -15,8 +15,6 @@ class App extends React.Component {
     super(props);
   }
 
-  //need to toggle the view when we get a response form the socket.io connection toggleView={this.toggleView.bind(this)
-
   render() {
     return (
       <Router history={browserHistory}>

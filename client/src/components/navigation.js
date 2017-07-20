@@ -22,36 +22,18 @@ class Navigation extends React.Component {
         this.props.updateRoomId(roomId);
       });
       this.socket.on('prompt', (prompt) =>{
-
         this.props.updatePrompt(prompt);
         this.props.updateCode(prompt.skeletonCode);
-        // Trigger the navbar to Change
         this.props.updateButtonStatus();
-        // Trigger route change
-
       });
       this.socket.on('edit', (code)=>{
-        //TODO
+        this.props.updateCode(code);
       });
     });
   }
-
-  // startSession() {
-  //   // console.log("About to start a session");
-  //   this.props.toggleView();
-  //   //redirect to the homepage and open a model
-  //   //this.props.handleOpenModal();
-  // }
   
   render() {
     let buttonSet = null;
-
-              // <LinkContainer to='/session'>
-            // <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
-          // </LinkContainer>
-                    // <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
-          // <Button bsStyle="info" onClick={this.startSession}>Start Session</Button>
-
     if (this.props.nav) {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
