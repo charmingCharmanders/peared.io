@@ -9,7 +9,6 @@ import io from 'socket.io-client';
 import {updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode} from './actions';
 import {bindActionCreators} from 'redux';
 
-
 class App extends React.Component {
 
   openConnection() {
@@ -36,18 +35,20 @@ class App extends React.Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <div>
+        <div className="app-container">
           <Navigation
             openConnection={this.openConnection.bind(this)}
             closeConnection={this.closeConnection.bind(this)}
           />
-          <Switch>
-            <Route exact path='/' component={Dashboard} />
-            <Route 
-              path='/session'
-              render={ ()=>{ return(<Session socketConnection={this.socket}/>); }}
-            />
-          </Switch>
+          <div className="main-container">
+            <Switch>
+              <Route exact path='/' component={Dashboard} />
+              <Route 
+                path='/session'
+                render={()=>{ return (<Session socketConnection={this.socket}/>); }}
+              />
+            </Switch>
+          </div>
         </div>
       </Router>
     );

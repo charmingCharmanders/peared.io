@@ -20,22 +20,24 @@ class Description extends React.Component {
 
   render() {
     return (
-      <Tabs defaultActiveKey={1} animation={true} id="noanim-tab-example">
-        <Tab eventKey={1} title="Question" style={{padding: '20px'}}>{this.props.prompt.description}</Tab>
-        <Tab eventKey={2} title="Hint" style={{padding: '20px'}}>{this.props.prompt.hint}</Tab>
-      </Tabs>
+      <div className="session-description">
+        <Tabs defaultActiveKey={1} animation={true} id="noanim-tab-example">
+          <Tab eventKey={1} title="Question" style={{padding: '20px'}}>{this.props.prompt.description}</Tab>
+          <Tab eventKey={2} title="Hint" style={{padding: '20px'}}>{this.props.prompt.hint}</Tab>
+        </Tabs>
+      </div>
     );
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = function(state) {
   return {
     prompt: state.prompt
-  }
-}
+  };
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = function(dispatch) {
   return bindActionCreators({}, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Description);
