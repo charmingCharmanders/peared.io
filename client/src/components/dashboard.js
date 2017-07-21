@@ -19,16 +19,21 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount() {
-    Axios.get('api/sessions')
+    Axios.get('/api/profiles/3/sessions')// ******** insert user profile id from redux here
     .then(function (response) {
-      let userSessions1 = response.data.filter((entry) => {
-        return entry.profileId1 === 1;
+      let sessionInfo = [];
+      response.data.forEach((session) => {
+        if (session.profile1.id === 3) { // ******** insert user profile id from redux here
+          let name = session.profile2.firstName + " " + session.profile2.lastName
+          sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
+        } else {
+          let name = session.profile1.firstName + " " + session.profile1.lastName
+          sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
+        }
       })
-      let userSessions2 = response.data.filter((entry) => {
-        return entry.profileId2 === 1;
+      sessionInfo.forEach((session) => {
+        console.log('session info from dashboard.js', session);
       })
-      console.log(userSessions1);
-      console.log(userSessions2);
     })
     .catch(function (error) {
       console.log(error);
