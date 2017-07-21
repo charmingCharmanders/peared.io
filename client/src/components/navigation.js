@@ -20,7 +20,7 @@ class Navigation extends React.Component {
         <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
           <Button>Swap Roles</Button>
           <LinkContainer to='/'>
-            <Button bsStyle="info" onClick={() => {this.props.sessionToDashboard(); this.props.closeModal();}}>End Session</Button>
+            <Button bsStyle="info" onClick={() => {this.props.sessionToDashboard(); this.props.closeModal(); this.props.closeConnection();}}>End Session</Button>
           </LinkContainer>
         </ButtonToolbar>;
     }
