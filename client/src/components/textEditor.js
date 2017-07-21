@@ -13,11 +13,9 @@ import {connect} from 'react-redux';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.codeChange = this.codeChange.bind(this);
   }
 
   codeChange(newCode) {
-    console.log('this is the new code', newCode);
     this.props.updateCode(newCode);
     this.props.socketConnection.emit('edit', newCode, this.props.roomId);
   }
