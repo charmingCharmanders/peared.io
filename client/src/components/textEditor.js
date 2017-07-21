@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
+    this.codeChange = this.codeChange.bind(this);
   }
 
   codeChange(newCode) {
