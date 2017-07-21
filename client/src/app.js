@@ -1,24 +1,42 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import View from './components/view';
 import Session from './components/session';
 import Dashboard from './components/dashboard';
 import Navigation from './components/navigation';
 import browserHistory from 'react-router';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-import store from './index';
-import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {connect} from 'react-redux';
+import io from 'socket.io-client';
+import {updateButtonStatus, dashboardToSession, updateRoomId, openModal, closeModal, sessionToDashboard, updatePrompt, updateCode} from './actions';
+import {bindActionCreators} from 'redux';
+
 
 class App extends React.Component {
+
+  openConnection() {
+    this.socket = io.connect('http://127.0.0.1:3001');
+    this.socket.on('connect', ()=>{
+      this.socket.on('room id', (roomId) =>{
+        this.props.updateRoomId(roomId);
+      });
+      this.socket.on('prompt', (prompt) =>{
+        this.props.updatePrompt(prompt);
+        this.props.updateCode(prompt.skeletonCode);
+        this.props.updateButtonStatus();
+      });
+      this.socket.on('edit', (code)=>{
+        this.props.updateCode(code);
+      });
+    });
+  }
+
   render() {
     return (
       <Router history={browserHistory}>
         <div>
-          <Navigation />
+          <Navigation openConnection={this.openConnection.bind(this)}/>
           <Switch>
             <Route exact path='/' component={Dashboard} />
-            <Route path='/session' component={Session} />
+            <Route path='/session' component={Session} socketConnection={this.socket}/>
           </Switch>
         </div>
       </Router>
@@ -26,4 +44,24 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+var mapStateToProps = function(state) {
+  return {
+    nav: state.nav
+  };
+};
+
+var mapDispatchToProps = function(dispatch) {
+  return bindActionCreators(
+    {
+      updateButtonStatus: updateButtonStatus,
+      dashboardToSession: dashboardToSession,
+      updateRoomId: updateRoomId,
+      updateCode: updateCode,
+      updatePrompt: updatePrompt,
+      openModal: openModal,
+      sessionToDashboard: sessionToDashboard,
+      closeModal: closeModal
+    }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

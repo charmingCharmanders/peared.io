@@ -21,7 +21,7 @@ class Session extends React.Component {
   emitEdits(code) {
     console.log('emmitting an edit');
     // var roomId = this.state.roomId;
-    // this.socket.emit('edit', code, this.state.roomId);
+    this.socket.emit('edit', code, this.state.roomId);
   }
 
   render() {
