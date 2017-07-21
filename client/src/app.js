@@ -11,10 +11,6 @@ import {bindActionCreators} from 'redux';
 
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.socket = null;
-  }
 
   openConnection() {
     this.socket = io.connect('http://127.0.0.1:3001');
