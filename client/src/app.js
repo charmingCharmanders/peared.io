@@ -11,6 +11,7 @@ import {bindActionCreators} from 'redux';
 
 
 class App extends React.Component {
+
   openConnection() {
     this.socket = io.connect('http://127.0.0.1:3001');
     this.socket.on('connect', ()=>{
@@ -23,7 +24,6 @@ class App extends React.Component {
         this.props.updateButtonStatus();
       });
       this.socket.on('edit', (code)=>{
-        console.log('we should be updating the code', code);
         this.props.updateCode(code);
       });
     });
@@ -45,7 +45,7 @@ class App extends React.Component {
             <Route exact path='/' component={Dashboard} />
             <Route 
               path='/session'
-              render={()=>{return(<Session socketConnection={this.socket}/>);}}
+              render={ ()=>{ return(<Session socketConnection={this.socket}/>); }}
             />
           </Switch>
         </div>

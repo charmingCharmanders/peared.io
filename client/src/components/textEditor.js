@@ -9,6 +9,7 @@ import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav
 import {updateCode} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+require('codemirror/mode/javascript/javascript');
 
 class TextEditor extends React.Component {
   constructor(props) {
@@ -21,38 +22,33 @@ class TextEditor extends React.Component {
     this.props.socketConnection.emit('edit', newCode, this.props.roomId);
   }
 
-  convertToSoftTabs (cm) {
-    if (cm.somethingSelected()) {
-      cm.indentSelection();
-    } else {
-      var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
-      cm.replaceSelection(spaces);
-    }
-  }
-
   render() {
-    var options = {
-      autofocus: true,
-      coverGutterNextToScrollbar: true,
-      extraKeys: {
-        Tab: this.convertToSoftTabs
-      },
-      fixedGutter: false,
-      indentUnit: 2,
-      lineNumbers: true,
-      mode: 'text/javascript',
-      setSize: {
-        height: '70%'
-      },
-      tabSize: 2,
-      theme: 'material'
+    var convertToSoftTabs = function(cm) {
+      if (cm.somethingSelected()) {
+        cm.indentSelection();
+      } else {
+        var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
+        cm.replaceSelection(spaces);
+      }
     };
+ 
+    var options = {
+      lineNumbers: true,
+      theme: 'material',
+      extraKeys: {
+        Tab: convertToSoftTabs
+      },
+      mode: 'javascript',
+    };
+
     return ( 
       <CodeMirror 
         value={this.props.code}
         onChange={this.codeChange}
-        options={options} />
+        options={options} 
+      />
     );
+     
   }
 }
 
