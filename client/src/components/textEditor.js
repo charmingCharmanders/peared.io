@@ -1,29 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Video from './video';
-import CodeMirror from 'react-codemirror';
+import CodeMirror from '@skidding/react-codemirror';
 import { LinkContainer } from 'react-router-bootstrap';
 import js_beautify from 'js-beautify';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
+import {updateCode} from '../actions';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.updateCode = this.updateCode.bind(this);
-    this.state = {
-      text: ''
-    };
+    this.codeChange = this.codeChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      text: nextProps.code
-    });
-  }
-
-  updateCode(newCode) {
-    this.props.emitEdits(newCode);
+  codeChange(newCode) {
+    this.props.updateCode(newCode);
+    this.props.socketConnection.emit('edit', newCode, this.props.roomId);
   }
 
   convertToSoftTabs (cm) {
@@ -54,11 +49,22 @@ class TextEditor extends React.Component {
     };
     return ( 
       <CodeMirror 
-        value={this.state.text}
-        onChange={this.updateCode}
+        value={this.props.code}
+        onChange={this.codeChange}
         options={options} />
     );
   }
 }
 
-export default TextEditor;
+var mapStateToProps = function (state) {
+  return {
+    code: state.code,
+    roomId: state.roomId
+  };
+};
+
+var mapDispatchToProps = function(dispatch) {
+  return bindActionCreators({updateCode: updateCode}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextEditor);
