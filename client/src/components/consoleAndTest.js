@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import {Tabs, Tab} from 'react-bootstrap';
 
-var tests = {}
 class ConsoleAndTest extends React.Component {
   render() {
     return (
