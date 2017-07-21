@@ -28,11 +28,11 @@ class App extends React.Component {
         this.props.updateButtonStatus();
       });
       this.socket.on('edit', (code)=>{
-        console.log('we should be updating the code', code);
         this.props.updateCode(code);
       });
     });
   }
+
   render() {
     return (
       <Router history={browserHistory}>
