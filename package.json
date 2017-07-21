@@ -16,6 +16,7 @@
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
+    "@skidding/react-codemirror": "^1.0.1",
     "axios": "^0.16.2",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",

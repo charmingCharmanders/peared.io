@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Video from './video';
-import CodeMirror from 'react-codemirror';
+import CodeMirror from '@skidding/react-codemirror';
 import { LinkContainer } from 'react-router-bootstrap';
 import js_beautify from 'js-beautify';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
@@ -9,6 +9,7 @@ import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav
 import {updateCode} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+require('codemirror/mode/javascript/javascript');
 
 class TextEditor extends React.Component {
   constructor(props) {
@@ -17,42 +18,37 @@ class TextEditor extends React.Component {
   }
 
   codeChange(newCode) {
-    console.log('this is the new code', newCode);
+    this.props.updateCode(newCode);
     this.props.socketConnection.emit('edit', newCode, this.props.roomId);
   }
 
-  convertToSoftTabs (cm) {
-    if (cm.somethingSelected()) {
-      cm.indentSelection();
-    } else {
-      var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
-      cm.replaceSelection(spaces);
-    }
-  }
-
   render() {
-    var options = {
-      autofocus: true,
-      coverGutterNextToScrollbar: true,
-      extraKeys: {
-        Tab: this.convertToSoftTabs
-      },
-      fixedGutter: false,
-      indentUnit: 2,
-      lineNumbers: true,
-      mode: 'text/javascript',
-      setSize: {
-        height: '70%'
-      },
-      tabSize: 2,
-      theme: 'material'
+    var convertToSoftTabs = function(cm) {
+      if (cm.somethingSelected()) {
+        cm.indentSelection();
+      } else {
+        var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
+        cm.replaceSelection(spaces);
+      }
     };
+ 
+    var options = {
+      lineNumbers: true,
+      theme: 'material',
+      extraKeys: {
+        Tab: convertToSoftTabs
+      },
+      mode: 'javascript',
+    };
+
     return ( 
       <CodeMirror 
         value={this.props.code}
         onChange={this.codeChange}
-        options={options} />
+        options={options} 
+      />
     );
+     
   }
 }
 

@@ -11,7 +11,7 @@ import {bindActionCreators} from 'redux';
 
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.socket = null;
   }
@@ -28,7 +28,6 @@ class App extends React.Component {
         this.props.updateButtonStatus();
       });
       this.socket.on('edit', (code)=>{
-        console.log('we should be updating the code', code);
         this.props.updateCode(code);
       });
     });
@@ -43,7 +42,7 @@ class App extends React.Component {
             <Route exact path='/' component={Dashboard} />
             <Route 
               path='/session'
-              render={()=>{return(<Session socketConnection={this.socket}/>);}}
+              render={ ()=>{ return(<Session socketConnection={this.socket}/>); }}
             />
           </Switch>
         </div>

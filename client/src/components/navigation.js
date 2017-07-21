@@ -5,8 +5,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 import {dashboardToSession, openModal, closeModal, sessionToDashboard} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-// import io from 'socket.io-client';
-
 
 class Navigation extends React.Component {
   render() {
