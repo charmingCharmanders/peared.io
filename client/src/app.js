@@ -6,11 +6,15 @@ import browserHistory from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {updateButtonStatus, dashboardToSession, updateRoomId, openModal, closeModal, sessionToDashboard, updatePrompt, updateCode} from './actions';
+import {updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode} from './actions';
 import {bindActionCreators} from 'redux';
 
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.socket = null;
+  }
 
   openConnection() {
     this.socket = io.connect('http://127.0.0.1:3001');
@@ -36,7 +40,10 @@ class App extends React.Component {
           <Navigation openConnection={this.openConnection.bind(this)}/>
           <Switch>
             <Route exact path='/' component={Dashboard} />
-            <Route path='/session' component={Session} socketConnection={this.socket}/>
+            <Route 
+              path='/session'
+              render={()=>{return(<Session socketConnection={this.socket}/>);}}
+            />
           </Switch>
         </div>
       </Router>
@@ -58,9 +65,7 @@ var mapDispatchToProps = function(dispatch) {
       updateRoomId: updateRoomId,
       updateCode: updateCode,
       updatePrompt: updatePrompt,
-      openModal: openModal,
       sessionToDashboard: sessionToDashboard,
-      closeModal: closeModal
     }, dispatch);
 };
 
