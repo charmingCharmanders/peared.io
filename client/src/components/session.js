@@ -12,24 +12,12 @@ import {openModal, closeModal} from '../actions';
 import {bindActionCreators} from 'redux';
 
 class Session extends React.Component {
-  constructor(props) {
-    super(props);
-    this.emitEdits = this.emitEdits.bind(this);
-  }
-
-
-  emitEdits(code) {
-    console.log('emmitting an edit');
-    // var roomId = this.state.roomId;
-    this.socket.emit('edit', code, this.state.roomId);
-  }
-
   render() {
     return (
       <Grid fluid>
         <Row className='show-grid'>
           <Col md={3}><Description /></Col>
-          <TextEditorAndConsole emitEdits={this.emitEdits}/>
+          <TextEditorAndConsole socketConnection={this.props.socketConnection}/>
         </Row>
       </Grid>
     );

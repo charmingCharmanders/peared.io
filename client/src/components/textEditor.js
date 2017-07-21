@@ -17,11 +17,8 @@ class TextEditor extends React.Component {
   }
 
   codeChange(newCode) {
-    console.log('updating the Code');
-    this.props.updateCode(newCode);
-    //need to generate something on the socket
-    
-    this.props.emitEdits(newCode);
+    console.log('this is the new code', newCode);
+    this.props.socketConnection.emit('edit', newCode, this.state.roomId);
   }
 
   convertToSoftTabs (cm) {
