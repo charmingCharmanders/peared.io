@@ -18,7 +18,7 @@ class TextEditor extends React.Component {
 
   codeChange(newCode) {
     console.log('this is the new code', newCode);
-    this.props.socketConnection.emit('edit', newCode, this.state.roomId);
+    this.props.socketConnection.emit('edit', newCode, this.props.roomId);
   }
 
   convertToSoftTabs (cm) {
@@ -58,7 +58,8 @@ class TextEditor extends React.Component {
 
 var mapStateToProps = function (state) {
   return {
-    code: state.code
+    code: state.code,
+    roomId: state.roomId
   };
 };
 
