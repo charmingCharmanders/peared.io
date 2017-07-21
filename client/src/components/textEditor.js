@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Video from './video';
-import CodeMirror from 'react-codemirror';
+import CodeMirror from '@skidding/react-codemirror';
 import { LinkContainer } from 'react-router-bootstrap';
 import js_beautify from 'js-beautify';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
@@ -17,7 +17,7 @@ class TextEditor extends React.Component {
   }
 
   codeChange(newCode) {
-    console.log('this is the new code', newCode);
+    this.props.updateCode(newCode);
     this.props.socketConnection.emit('edit', newCode, this.props.roomId);
   }
 
