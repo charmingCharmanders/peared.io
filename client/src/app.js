@@ -29,11 +29,18 @@ class App extends React.Component {
     });
   }
 
+  closeConnection() {
+    this.socket.disconnect();
+  }
+
   render() {
     return (
       <Router history={browserHistory}>
         <div>
-          <Navigation openConnection={this.openConnection.bind(this)}/>
+          <Navigation
+            openConnection={this.openConnection.bind(this)}
+            closeConnection={this.closeConnection.bind(this)}
+          />
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route 
