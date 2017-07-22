@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 class ConsoleAndTest extends React.Component {
+  
   render() {
     return (
       <div className="console">

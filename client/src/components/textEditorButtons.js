@@ -5,16 +5,13 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 class TextEditorButtons extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   minifyString(string) {
     return string.replace(/\s+/g, ' ');
   }
 
   codeTest() {
-    this.props.socketConnection.emit('test', 1, this.minifyString(this.props.code), this.props.roomId);
+    this.props.socketConnection.emit('test', this.props.promptId, this.minifyString(this.props.code), this.props.roomId);
   }
 
   render() {
@@ -30,7 +27,7 @@ class TextEditorButtons extends React.Component {
 var mapStateToProps = function (state) {
   return {
     code: state.code,
-    prompt: state.prompt,
+    promptId: state.prompt.id,
     roomId: state.roomId
   };
 };

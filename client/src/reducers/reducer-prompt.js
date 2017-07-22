@@ -1,8 +1,10 @@
 function updatePrompt(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'UPDATE_PROMPT':
-      return Object.assign({}, state, {
+      return Object.assign({}, state, 
+      {
         name: action.payload.name,
+        id: action.payload.id,
         category: action.payload.category,
         description: action.payload.description,
         hint: action.payload.hint,

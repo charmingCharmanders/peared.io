@@ -12,6 +12,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 
 class Dashboard extends React.Component {
+
   render() {
     let modal =
       <Modal show={this.props.modal} onHide={ () => this.props.closeModal() }>
@@ -27,7 +28,7 @@ class Dashboard extends React.Component {
             <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={() => this.props.dashboardToSession()}>Join Session!</Button>
           </LinkContainer>
         </Modal.Footer>
-      </Modal>
+      </Modal>;
 
     return (
       <div>
@@ -51,16 +52,16 @@ class Dashboard extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     modal: state.modal,
     buttonStatus: state.buttonStatus
-  }
-}
+  };
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession}, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
