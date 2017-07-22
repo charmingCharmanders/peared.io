@@ -50,6 +50,26 @@ body {
   width: 75%;
 }
 
+.editor-container {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.editor-buttons {
+  position: absolute;
+  right: 20px;
+  bottom: 25px;
+}
+
+.editor-buttons button {
+  margin: 0 10px 0 0;
+}
+
+.editor-buttons button:last-child {
+  margin-right: 0;
+}
+
 .video-container {
   position: absolute;
   right: 20px;
