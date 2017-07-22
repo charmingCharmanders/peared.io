@@ -10,10 +10,19 @@ class ConsoleAndTest extends React.Component {
   render() {
     return (
       <div className="console">
+        <div className="testContainer">
         {this.props.testResults.map((test, index) => {
-          return <div key={index}>{test.description} <br />{test.result}</div>;
-        })
-      }
+
+          return (
+            <div key={index}>
+              <span className="testDescription">{index}: {test.description}</span>
+              <br />
+              <span className={(test.result ==='test passed' ? 'testPass' : 'testFail')}>   {test.result}</span>
+            </div>
+          );
+
+        })}
+        </div>
       </div>
     );
   }
