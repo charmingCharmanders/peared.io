@@ -6,25 +6,6 @@ import Axios from 'axios';
 import {Badge, ListGroup, ListGroupItem, Panel, Table, ButtonToolbar, Button, Navbar,
 CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 
-let friends = [
-  {
-    name: 'David',
-    ranking: '1'
-  },
-  {
-    name: 'Jeff',
-    ranking: '2'
-  },
-  {
-    name: 'Daniel',
-    ranking: '44'
-  },
-  {
-    name: 'Wes',
-    ranking: '12'
-  }
-];
-
 class FriendsList extends React.Component {
   constructor(props) {
     super(props);
@@ -34,11 +15,7 @@ class FriendsList extends React.Component {
     Axios.get('/api/friends?profileId=1')
     .then(function (response) {
       response.data.forEach(friend => {
-<<<<<<< HEAD
-        // console.log(`user friends from friendList.js ${friend.friend.firstName} ${friend.friend.lastName}, ranking: ${friend.friend.ranking}`)
-=======
         console.log(`user friends from friendList.js ${friend.friend.firstName} ${friend.friend.lastName}, ranking: ${friend.friend.ranking}`)
->>>>>>> api calls for session and friend data to populate dashboard
       })
     })
     .catch(function (error) {

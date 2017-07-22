@@ -67,6 +67,7 @@ const mapStateToProps = (state) => {
     modal: state.modal,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
+    userProfileData:  state.userProfileData,
     userProfileData:  state.userProfileData
   };
 };
