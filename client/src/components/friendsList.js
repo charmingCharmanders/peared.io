@@ -34,7 +34,7 @@ class FriendsList extends React.Component {
     Axios.get('/api/friends?profileId=1')
     .then(function (response) {
       response.data.forEach(friend => {
-        console.log(`user friends from friendList.js ${friend.friend.firstName} ${friend.friend.lastName}, ranking: ${friend.friend.ranking}`)
+        // console.log(`user friends from friendList.js ${friend.friend.firstName} ${friend.friend.lastName}, ranking: ${friend.friend.ranking}`)
       })
     })
     .catch(function (error) {

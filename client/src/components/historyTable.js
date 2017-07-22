@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import TableRow from './tableRow';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
+import {closeModal, dashboardToSession, populateUserSessions, populateUserProfileData} from '../actions';
 
 let dummyData = [
   {
@@ -61,6 +64,7 @@ class HistoryTable extends React.Component {
           </tr>
         </thead>
         <tbody>
+<<<<<<< HEAD
           {dummyData.map((row, index) =>
             <TableRow 
               key={index} 
@@ -71,10 +75,37 @@ class HistoryTable extends React.Component {
               category={row.category} 
             />
           )}
+=======
+          {this.props.sessionData.sessionArray ? this.props.sessionData.sessionArray.map((row, index) =>
+            <TableRow
+              key={index}
+              id={index+1}
+              partner={row[0]}
+              name={row[1]}
+              time={row[2]}
+              category={row[3]}
+            />
+          ) : ''}
+>>>>>>> implement user and session api calls and dynamically render session data from db
         </tbody>
       </Table>
     );
   }
 }
 
-export default HistoryTable;
+function mapStateToProps(state) {
+  return {
+    sessionData: state.sessionData,
+    userProfileData:  state.userProfileData
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryTable);
+
+
+
+

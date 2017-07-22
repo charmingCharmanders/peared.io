@@ -5,7 +5,12 @@ import {updatePrompt} from './reducer-prompt';
 import {updateCode} from './reducer-code';
 import {updateRoomId} from './reducer-room-id';
 import {updateButtonStatus} from './reducer-button-status';
+<<<<<<< HEAD
 import {updateTestResults} from './reducer-test-results';
+=======
+import {updateSessionsData} from './reducer-session';
+import {updateUserProfileData} from './reducer-profile';
+>>>>>>> implement user and session api calls and dynamically render session data from db
 
 export default combineReducers({
   modal: toggleModal,
@@ -14,5 +19,12 @@ export default combineReducers({
   code: updateCode,
   roomId: updateRoomId,
   buttonStatus: updateButtonStatus,
+<<<<<<< HEAD
   testResults: updateTestResults
 });
+=======
+  sessionData: updateSessionsData,
+  userProfileData: updateUserProfileData
+  //userFriendData: updateUserFriendData
+});
+>>>>>>> implement user and session api calls and dynamically render session data from db
