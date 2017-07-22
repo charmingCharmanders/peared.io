@@ -11,16 +11,16 @@ class Navigation extends React.Component {
     let buttonSet = null;
     if (this.props.nav) {
       buttonSet = 
-        <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
-          <Button bsStyle="info" onClick={ () => {this.props.openModal(); this.props.openConnection();}}>Start Session</Button>
+        <ButtonToolbar style={{marginTop: '7px', float: 'right', marginRight: '-15px'}}>
+          <Button bsStyle="info" onClick={ () => { this.props.openModal(); this.props.openConnection(); }}>Start Session</Button>
           <Button href="/logout">Log out</Button>
         </ButtonToolbar>;
     } else {
       buttonSet = 
-        <ButtonToolbar style={{marginTop: '7px', marginLeft: '15px'}}>
+        <ButtonToolbar style={{marginTop: '7px', float: 'right', marginRight: '-15px'}}>
           <Button>Swap Roles</Button>
           <LinkContainer to='/'>
-            <Button bsStyle="info" onClick={() => {this.props.sessionToDashboard(); this.props.closeModal(); this.props.closeConnection();}}>End Session</Button>
+            <Button bsStyle="info" onClick={ () => { this.props.sessionToDashboard(); this.props.closeModal(); this.props.closeConnection(); }}>End Session</Button>
           </LinkContainer>
         </ButtonToolbar>;
     }
@@ -34,9 +34,7 @@ class Navigation extends React.Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav pullRight>
-            {buttonSet}
-          </Nav>
+          {buttonSet}
         </Navbar.Collapse>
       </Navbar>
     );

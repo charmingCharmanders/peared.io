@@ -49,8 +49,6 @@ class HistoryTable extends React.Component {
   }
 
   render() {
-    let index = 0;
-
     return (
       <Table responsive bordered condensed hover striped>
         <thead>
@@ -63,10 +61,16 @@ class HistoryTable extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {dummyData.map(row => {
-            index++;
-            return <TableRow id={index} partner={row.partner} name={row.name} time={row.time} category={row.category} />;
-          })}
+          {dummyData.map((row, index) =>
+            <TableRow 
+              key={index} 
+              id={index+1} 
+              partner={row.partner} 
+              name={row.name} 
+              time={row.time} 
+              category={row.category} 
+            />
+          )}
         </tbody>
       </Table>
     );

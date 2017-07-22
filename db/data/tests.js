@@ -13,7 +13,7 @@ module.exports = [
     promptId: 2,
     description: 'it should multiply one negative and one positive number',
     arguments: '-5, 5',
-    expectedOutput: -20
+    expectedOutput: -25
   }, {
     promptId: 2,
     description: 'it should multiply two positive numbers',
@@ -23,11 +23,11 @@ module.exports = [
     promptId: 3,
     description: 'it should return even for an even number',
     arguments: '10',
-    expectedOutput: true
+    expectedOutput: 'Even'
   }, {
     promptId: 3,
     description: 'it should return odd for an odd number',
     arguments: '3',
-    expectedOutput: false
+    expectedOutput: 'Odd'
   }
 ];

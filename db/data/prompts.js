@@ -4,6 +4,7 @@ module.exports = [
     description: 'Write a function that returns the sum of 2 numbers.',
     category: 'Math',
     hint: 'Use Addition.',
+    skeletonCode: 'const addTwoNumbers = function (a, b) { }',
     solutionCode: 'const addTwoNumbers = function (a, b) { return a + b; }',
     rating: null
   },
@@ -12,6 +13,7 @@ module.exports = [
     description: 'Return the product of two numbers',
     category: 'Multiplication',
     hint: 'Use math.',
+    skeletonCode: 'const multiplyTwoNumbers = function (a, b) { }',
     solutionCode: 'const multiplyTwoNumbers = function (a, b) { return a * b; }',
     rating: null
   },
@@ -20,6 +22,7 @@ module.exports = [
     description: 'Return `Even` if the argument is an even number, return `Odd` if an odd number.',
     category: 'If/else statements',
     hint: 'Use the remainder operator.',
+    skeletonCode: 'const evenOrOdd = function (a) { }',
     solutionCode: 'const evenOrOdd = function (a) { if (a%2 === 0) {return `Even`} else if (a%2 === 1) {return `Odd`} }',
     rating: null
   }

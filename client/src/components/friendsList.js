@@ -31,7 +31,7 @@ class FriendsList extends React.Component {
   render() {
     return (
       <Panel collapsible defaultExpanded header="Friends List">
-        {friends.map(friend => <ListGroupItem fill>{friend.name}<Badge>{friend.ranking}</Badge></ListGroupItem> )}
+        {friends.map((friend, index) => <ListGroupItem key={index} fill>{friend.name}<Badge>{friend.ranking}</Badge></ListGroupItem> )}
       </Panel>
     );
   }
