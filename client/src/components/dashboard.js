@@ -12,9 +12,6 @@ import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     let modal =
