@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
 import {toggleModal} from './reducer-modal.js';
 import {toggleNav} from './reducer-nav.js';
-import {updatePrompt} from './reducer-prompt'
+import {updatePrompt} from './reducer-prompt';
 import {updateCode} from './reducer-code';
 import {updateRoomId} from './reducer-room-id';
 import {updateButtonStatus} from './reducer-button-status';
+import {updateTestResults} from './reducer-test-results';
 
 export default combineReducers({
   modal: toggleModal,
@@ -12,5 +13,6 @@ export default combineReducers({
   prompt: updatePrompt,
   code: updateCode,
   roomId: updateRoomId,
-  buttonStatus: updateButtonStatus
+  buttonStatus: updateButtonStatus,
+  testResults: updateTestResults
 });

@@ -16,7 +16,7 @@ class TextEditorAndConsole extends React.Component {
   render() {
     return (
       <div className="session-main">
-        <SplitPane split="horizontal" defaultSize="75%" minSize={285}>
+        <SplitPane split="horizontal" defaultSize="75%" minSize={344}>
           <TextEditor code={this.props.code} socketConnection={this.props.socketConnection} />
           <ConsoleAndTest prompt={this.props.prompt} />
         </SplitPane>

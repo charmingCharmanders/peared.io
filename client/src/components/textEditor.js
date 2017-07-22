@@ -9,6 +9,7 @@ import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav
 import {updateCode} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import TextEditorButtons from './textEditorButtons';
 require('codemirror/mode/javascript/javascript');
 
 class TextEditor extends React.Component {
@@ -43,11 +44,14 @@ class TextEditor extends React.Component {
     };
 
     return ( 
-      <CodeMirror 
-        value={this.props.code}
-        onChange={this.codeChange}
-        options={options} 
-      />
+      <div className="editor-container">
+        <CodeMirror 
+          value={this.props.code}
+          onChange={this.codeChange}
+          options={options} 
+        />
+        <TextEditorButtons socketConnection={this.props.socketConnection} />
+      </div>
     );
      
   }

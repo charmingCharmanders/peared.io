@@ -6,7 +6,7 @@ import browserHistory from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode} from './actions';
+import {updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults} from './actions';
 import {bindActionCreators} from 'redux';
 
 class App extends React.Component {
@@ -24,6 +24,9 @@ class App extends React.Component {
       });
       this.socket.on('edit', (code)=>{
         this.props.updateCode(code);
+      });
+      this.socket.on('testResults', (testResults)=>{
+        this.props.updateTestResults(testResults);
       });
     });
   }
@@ -69,6 +72,7 @@ var mapDispatchToProps = function(dispatch) {
       updateRoomId: updateRoomId,
       updateCode: updateCode,
       updatePrompt: updatePrompt,
+      updateTestResults: updateTestResults,
       sessionToDashboard: sessionToDashboard,
     }, dispatch);
 };
