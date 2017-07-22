@@ -1,0 +1,66 @@
+.clearfix:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.app-container {
+  height: 100%;
+}
+
+.main-container {
+  height: 100%;
+  padding: 50px 0 0 0;
+}
+
+.navbar {
+  border: 0;
+  margin-bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.session {
+  height: 100%;
+}
+
+.session-container {
+  height: 100%;
+}
+
+.session-description {
+  float: left;
+  height: 100%;
+  width: 25%;
+}
+
+.session-main {
+  float: left;
+  height: 100%;
+  position: relative;
+  width: 75%;
+}
+
+.video-container {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.ReactCodeMirror {
+  height: 100%;
+  width: 100%;
+}
+
+.CodeMirror {
+  height: 100%;
+}

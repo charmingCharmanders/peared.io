@@ -7,19 +7,12 @@ import {Grid, Col, Row} from 'react-bootstrap';
 class Session extends React.Component {
   render() {
     return (
-      <Grid fluid>
-        <Row className='show-grid'>
-          <Col md={3}><Description /></Col>
-          <TextEditorAndConsole socketConnection={this.props.socketConnection}/>
-        </Row>
-      </Grid>
+      <div className="session-container clearfix">
+        <Description />
+        <TextEditorAndConsole socketConnection={this.props.socketConnection}/>
+      </div>
     );
   }
 }
 
 export default Session;
-
-
-
-
-

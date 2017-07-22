@@ -34,11 +34,12 @@ class TextEditor extends React.Component {
  
     var options = {
       lineNumbers: true,
-      theme: 'material',
       extraKeys: {
         Tab: convertToSoftTabs
       },
-      mode: 'javascript',
+      mode: 'text/javascript',
+      tabSize: 2,
+      theme: 'material'
     };
 
     return ( 
