@@ -2,16 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import {Tabs, Tab} from 'react-bootstrap';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
-var tests = {}
 class ConsoleAndTest extends React.Component {
   render() {
     return (
-      <Tabs defaultActiveKey={1} animation={true} id="noanim-tab-example">
-        <Tab eventKey={1} title="Output" style={{padding: '20px'}}>The Test Output Will Go Here.</Tab>
-      </Tabs>
+      <div className="console">
+        {this.props.testResults.map((test, index) => {
+          return <div key={index}>{test.description} <br />{test.result}</div>;
+        })
+      }
+      </div>
     );
   }
 }
 
-export default ConsoleAndTest;
+var mapStateToProps = function (state) {
+  return {
+    testResults: state.testResults
+  };
+};
+
+export default connect(mapStateToProps)(ConsoleAndTest);

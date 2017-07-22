@@ -26,7 +26,6 @@ class App extends React.Component {
         this.props.updateCode(code);
       });
       this.socket.on('testResults', (testResults)=>{
-        console.log(testResults);
         this.props.updateTestResults(testResults);
       });
     });
