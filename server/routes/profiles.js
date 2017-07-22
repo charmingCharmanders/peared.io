@@ -20,10 +20,5 @@ router.route('/:id/sessions')
   .get(ProfilesController.getSessions)
   ;
 
-// router.route('/loggedin')
-//   .get(middleware.auth.verify, (req, res) => {
-//     res.send(req.user);
-//   });
-
 
 module.exports = router;

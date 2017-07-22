@@ -64,18 +64,6 @@ class HistoryTable extends React.Component {
           </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
-          {dummyData.map((row, index) =>
-            <TableRow 
-              key={index} 
-              id={index+1} 
-              partner={row.partner} 
-              name={row.name} 
-              time={row.time} 
-              category={row.category} 
-            />
-          )}
-=======
           {this.props.sessionData.sessionArray ? this.props.sessionData.sessionArray.map((row, index) =>
             <TableRow
               key={index}
@@ -84,9 +72,7 @@ class HistoryTable extends React.Component {
               name={row[1]}
               time={row[2]}
               category={row[3]}
-            />
-          ) : ''}
->>>>>>> implement user and session api calls and dynamically render session data from db
+            />) : ''}
         </tbody>
       </Table>
     );

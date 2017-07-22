@@ -65,25 +65,15 @@ class Dashboard extends React.Component {
 const mapStateToProps = (state) => {
   return {
     modal: state.modal,
-<<<<<<< HEAD
-    buttonStatus: state.buttonStatus
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession}, dispatch);
-};
-=======
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
     userProfileData:  state.userProfileData
-  }
-}
+  };
+};
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserSessions: populateUserSessions, populateUserProfileData: populateUserProfileData}, dispatch);
 }
->>>>>>> implement user and session api calls and dynamically render session data from db
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
