@@ -84,3 +84,8 @@ body {
 .CodeMirror {
   height: 100%;
 }
+.console {
+  background-color: #f7f3ef;
+  height: 100%;
+  width: 100%;
+}

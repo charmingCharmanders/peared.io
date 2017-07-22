@@ -11,9 +11,14 @@ class ConsoleAndTest extends React.Component {
     return (
       <div className="console">
         {this.props.testResults.map((test, index) => {
-          return <div key={index}>{test.description} <br />{test.result}</div>;
-        })
-      }
+          return (
+            <div key={index}>
+              <span className="testDescription">{test.description}</span>
+              <br />
+              <span className="passedTests">{test.result}</span>
+            </div>
+          );
+        })}
       </div>
     );
   }
