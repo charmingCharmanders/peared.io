@@ -7,11 +7,21 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeModal, dashboardToSession} from '../actions';
+import {closeModal, dashboardToSession, populateUserSessions, populateUserProfileData} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
+import Axios from 'axios';
 
 class Dashboard extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    this.props.populateUserProfileData();
+  }
+
 
   render() {
     let modal =
@@ -19,7 +29,7 @@ class Dashboard extends React.Component {
         <Modal.Header closeButton>
           <Modal.Title>Our servers are searching for a partner!</Modal.Title>
         </Modal.Header>
-        <Modal.Body> 
+        <Modal.Body>
           <h5>Please be Patient...</h5>
         </Modal.Body>
         <Modal.Footer>
@@ -37,7 +47,7 @@ class Dashboard extends React.Component {
             <Col md={12} ><h6>Dashboard</h6></Col>
           </Row>
           <Row className='show-grid'>
-            <Col md={12}><h2>Welcome, Charmander!</h2></Col>
+            <Col md={12}><h2>Welcome, {this.props.userProfileData.firstName}! </h2></Col>
           </Row>
           {modal}
           <br />
@@ -55,13 +65,15 @@ class Dashboard extends React.Component {
 const mapStateToProps = (state) => {
   return {
     modal: state.modal,
-    buttonStatus: state.buttonStatus
+    buttonStatus: state.buttonStatus,
+    sessionData: state.sessionData,
+    userProfileData:  state.userProfileData
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession}, dispatch);
-};
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserSessions: populateUserSessions, populateUserProfileData: populateUserProfileData}, dispatch);
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 

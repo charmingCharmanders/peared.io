@@ -5,7 +5,9 @@ const router = express.Router();
 
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
-    res.render('index.ejs');
+    res.render('index.ejs', {
+      user: req.user
+    });
   });
 
 router.route('/login')
@@ -66,5 +68,11 @@ router.get('/auth/twitter/callback', middleware.passport.authenticate('twitter',
   successRedirect: '/',
   failureRedirect: '/login'
 }));
+
+router.route('/loggedin')
+  .get(middleware.auth.verify, (req, res) => {
+    res.send(req.user);
+  });
+
 
 module.exports = router;

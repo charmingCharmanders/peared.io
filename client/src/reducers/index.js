@@ -6,6 +6,9 @@ import {updateCode} from './reducer-code';
 import {updateRoomId} from './reducer-room-id';
 import {updateButtonStatus} from './reducer-button-status';
 import {updateTestResults} from './reducer-test-results';
+import {updateSessionsData} from './reducer-session';
+import {updateUserProfileData} from './reducer-profile';
+
 
 export default combineReducers({
   modal: toggleModal,
@@ -14,5 +17,9 @@ export default combineReducers({
   code: updateCode,
   roomId: updateRoomId,
   buttonStatus: updateButtonStatus,
-  testResults: updateTestResults
+  testResults: updateTestResults,
+  sessionData: updateSessionsData,
+  userProfileData: updateUserProfileData
+  //userFriendData: updateUserFriendData
 });
+
