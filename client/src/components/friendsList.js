@@ -5,11 +5,8 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import Axios from 'axios';
 import {Badge, ListGroup, ListGroupItem, Panel, Table, ButtonToolbar, Button, Navbar,
 CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
-<<<<<<< HEAD
-=======
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
->>>>>>> add dynamic friends list with pending stat and time data for sessions
 
 class FriendsList extends React.Component {
   constructor(props) {
