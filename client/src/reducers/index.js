@@ -8,7 +8,7 @@ import {updateButtonStatus} from './reducer-button-status';
 import {updateTestResults} from './reducer-test-results';
 import {updateSessionsData} from './reducer-session';
 import {updateUserProfileData} from './reducer-profile';
-
+import {updateUsersFriends} from './reducer-friends';
 
 export default combineReducers({
   modal: toggleModal,
@@ -19,7 +19,8 @@ export default combineReducers({
   buttonStatus: updateButtonStatus,
   testResults: updateTestResults,
   sessionData: updateSessionsData,
-  userProfileData: updateUserProfileData
-  //userFriendData: updateUserFriendData
+  userProfileData: updateUserProfileData,
+  testResults: updateTestResults,
+  userFriendData: updateUsersFriends
 });
 

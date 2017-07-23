@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeModal, dashboardToSession, populateUserSessions, populateUserProfileData} from '../actions';
+import {closeModal, dashboardToSession, populateUserProfileAndSessionData} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 import Axios from 'axios';
@@ -67,12 +67,13 @@ const mapStateToProps = (state) => {
     modal: state.modal,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
+    userProfileData:  state.userProfileData,
     userProfileData:  state.userProfileData
   };
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserSessions: populateUserSessions, populateUserProfileData: populateUserProfileData}, dispatch);
+  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserProfileData: populateUserProfileAndSessionData}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
