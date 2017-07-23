@@ -49,6 +49,10 @@ class App extends React.Component {
   }
 
   closeConnection() {
+    this.props.updateRoomId(null);
+    this.props.updatePrompt(null);
+    this.props.updateCode('');
+    this.props.updateButtonStatus();
     this.socket.disconnect();
   }
 
@@ -62,7 +66,10 @@ class App extends React.Component {
           />
           <div className="main-container">
             <Switch>
-              <Route exact path='/' component={Dashboard} />
+              <Route 
+                path='/'
+                render={()=>{ return (<Dashboard closeConnection={this.closeConnection.bind(this)}/>); }}
+              />
               <Route 
                 path='/session'
                 render={()=>{ return (<Session socketConnection={this.socket}/>); }}

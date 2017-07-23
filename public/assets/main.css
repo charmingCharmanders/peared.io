@@ -89,6 +89,7 @@ body {
   height: 100%;
   width: 100%;
 }
+
 .testDescription {
   font-weight: bold;
 }
@@ -101,4 +102,3 @@ body {
 .testFail {
   color: #f91111;
 }
-
