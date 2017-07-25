@@ -33,7 +33,7 @@ class Dashboard extends React.Component {
           <h5>Please be Patient...</h5>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.props.closeModal()}>Close</Button>
+          <Button onClick={() => {this.props.closeModal(); this.props.closeConnection();}}>Close</Button>
           <LinkContainer to='/session'>
             <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={() => this.props.dashboardToSession()}>Join Session!</Button>
           </LinkContainer>
@@ -72,9 +72,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = (dispatch) => {
   return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserProfileData: populateUserProfileAndSessionData}, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
