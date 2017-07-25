@@ -21,6 +21,11 @@ class Dashboard extends React.Component {
   componentWillMount() {
     this.props.populateUserProfileData();
   }
+
+  switchingToSession() {
+    this.props.dashboardToSession();
+    this.props.closeModal();
+  }
   
   closeButton() {
     console.log('hitting the close button');
@@ -44,7 +49,7 @@ class Dashboard extends React.Component {
         <Modal.Footer>
           <Button onClick={() => this.closeButton()}>Close</Button>
           <LinkContainer to='/session'>
-            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={() => {this.props.dashboardToSession(); this.props.closeModal();}}>Join Session!</Button>
+            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={this.switchingToSession}>Join Session!</Button>
           </LinkContainer>
         </Modal.Footer>
       </Modal>;
