@@ -8,6 +8,7 @@ import {updateButtonStatus} from './reducer-button-status';
 import {updateTestResults} from './reducer-test-results';
 import {updateSessionsData} from './reducer-session';
 import {updateUserProfileData} from './reducer-profile';
+import {toggleDashboard} from './reducer-dashboard';
 
 
 export default combineReducers({
@@ -19,7 +20,8 @@ export default combineReducers({
   buttonStatus: updateButtonStatus,
   testResults: updateTestResults,
   sessionData: updateSessionsData,
-  userProfileData: updateUserProfileData
-  //userFriendData: updateUserFriendData
+  userProfileData: updateUserProfileData,
+  isDashboard: toggleDashboard
+  // userFriendData: updateUserFriendData
 });
 

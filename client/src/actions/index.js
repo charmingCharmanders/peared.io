@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const openModal = () => {
-  console.log('inside openModal');
   return {
     type: 'OPEN_MODAL'
   };
@@ -62,52 +61,52 @@ const updateTestResults = (testResults) => {
 const populateUserSessions = (userSessionsArray) => {
   return dispatch => {
     axios.get('/api/profiles/3/sessions')
-    .then(result => {
-      dispatch({
-        type: 'POPULATE_USER_SESSIONS',
-        payload: result.data
+      .then(result => {
+        dispatch({
+          type: 'POPULATE_USER_SESSIONS',
+          payload: result.data
       });
     });
-  }
-}
+  };
+};
 
 const updateSessionEnd = () => {
   return {
     type: 'UPDATE_SESSION_END',
     payload: userSessionsArray
   };
-}
+};
 
 const populateUserProfileData = () => {
   return dispatch => {
     axios.get('/loggedin')
-    .then(result => {
-      dispatch({
-        type: 'POPULATE_USER_PROFILE_DATA',
-        payload: result.data
-      });
+      .then(result => {
+        dispatch({
+          type: 'POPULATE_USER_PROFILE_DATA',
+          payload: result.data
+        });
       return result;
     })
-    .then((result) => {
-      let id = result.data.id;
-      axios.get(`/api/profiles/${id}/sessions`)
-      .then(result => {
-        let sessionInfo = [];
-        result.data.forEach((session) => {
-          if (session.profile1.id === id) {
-            let name = session.profile2.firstName + " " + session.profile2.lastName
-            sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
-          } else {
-            let name = session.profile1.firstName + " " + session.profile1.lastName
-            sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
-          }
-        })
-        dispatch({
-          type: 'POPULATE_USER_SESSIONS',
-          payload: sessionInfo
+      .then((result) => {
+        let id = result.data.id;
+        axios.get(`/api/profiles/${id}/sessions`)
+          .then(result => {
+            let sessionInfo = [];
+            result.data.forEach((session) => {
+              if (session.profile1.id === id) {
+                let name = session.profile2.firstName + " " + session.profile2.lastName;
+                sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
+              } else {
+                let name = session.profile1.firstName + " " + session.profile1.lastName
+                sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
+              }
+            })
+            dispatch({
+              type: 'POPULATE_USER_SESSIONS',
+              payload: sessionInfo
+            });
         });
-      });
-    })
+      })
   }
 }
 
@@ -125,8 +124,3 @@ export {
   populateUserSessions,
   updateSessionEnd
 }
-
-
-// Action Creator Function
-  // Returns an Action which is an OBJECT
-    // The action has 2 props: a Type and a Payload

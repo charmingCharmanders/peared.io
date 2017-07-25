@@ -74,5 +74,4 @@ router.route('/loggedin')
     res.send(req.user);
   });
 
-
 module.exports = router;
