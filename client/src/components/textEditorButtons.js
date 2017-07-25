@@ -11,7 +11,7 @@ class TextEditorButtons extends React.Component {
   }
 
   codeTest() {
-    this.props.socketConnection.emit('test', this.props.promptId, this.minifyString(this.props.code), this.props.roomId);
+    this.props.socketConnection.emit('test', this.props.promptId, this.props.code, this.props.roomId);
   }
 
   render() {
