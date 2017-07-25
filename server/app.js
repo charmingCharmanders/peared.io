@@ -26,5 +26,6 @@ app.use('/api/friends', routes.friends);
 app.use('/api/profiles', routes.profiles);
 app.use('/api/prompts', routes.prompts);
 app.use('/api/sessions', routes.sessions);
+app.get('*', (req, res) => res.render('index.ejs'));
 
 module.exports = app;
