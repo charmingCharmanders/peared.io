@@ -22,7 +22,6 @@ class Dashboard extends React.Component {
     this.props.populateUserProfileData();
   }
 
-
   render() {
     let modal =
       <Modal show={this.props.modal} onHide={ () => this.props.closeModal() }>
