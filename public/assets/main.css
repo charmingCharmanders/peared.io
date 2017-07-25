@@ -84,3 +84,21 @@ body {
 .CodeMirror {
   height: 100%;
 }
+.console {
+  background-color: #f7f3ef;
+  height: 100%;
+  width: 100%;
+}
+.testDescription {
+  font-weight: bold;
+}
+.testContainer {
+  margin-left: 5px;
+}
+.testPass {
+  color: #35e21b;
+}
+.testFail {
+  color: #f91111;
+}
+

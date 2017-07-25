@@ -20,5 +20,4 @@ router.route('/:id/sessions')
   .get(ProfilesController.getSessions)
   ;
 
-
 module.exports = router;

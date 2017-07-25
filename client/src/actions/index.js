@@ -59,18 +59,6 @@ const updateTestResults = (testResults) => {
   };
 };
 
-const populateUserSessions = (userSessionsArray) => {
-  return dispatch => {
-    axios.get('/api/profiles/3/sessions')
-    .then(result => {
-      dispatch({
-        type: 'POPULATE_USER_SESSIONS',
-        payload: result.data
-      });
-    });
-  }
-}
-
 const updateSessionEnd = () => {
   return {
     type: 'UPDATE_SESSION_END',
@@ -78,7 +66,7 @@ const updateSessionEnd = () => {
   };
 }
 
-const populateUserProfileData = () => {
+const populateUserProfileAndSessionData = () => {
   return dispatch => {
     axios.get('/loggedin')
     .then(result => {
@@ -94,19 +82,37 @@ const populateUserProfileData = () => {
       .then(result => {
         let sessionInfo = [];
         result.data.forEach((session) => {
+          let minutes = Math.floor((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000)
+          let seconds = Math.floor((((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000) - minutes) * 60);
+          let lengthOfTime;
+          if (seconds < 10) {
+            lengthOfTime = minutes.toString() + ':0' + seconds.toString();
+          } else {
+            lengthOfTime = minutes.toString() + ':' + seconds.toString();
+          }
           if (session.profile1.id === id) {
             let name = session.profile2.firstName + " " + session.profile2.lastName
-            sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
+            sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
           } else {
             let name = session.profile1.firstName + " " + session.profile1.lastName
-            sessionInfo.push([name, session.prompt.name, '**insert time here**', session.prompt.category]);
+            sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
           }
         })
         dispatch({
           type: 'POPULATE_USER_SESSIONS',
           payload: sessionInfo
-        });
-      });
+        })
+      })
+      .then(() => {
+        axios.get(`/api/friends?profileId=${id}`)
+        .then(result => {
+          console.log('friends results**********', result);
+          dispatch({
+            type: 'POPULATE_USERS_FRIENDS',
+            payload: result.data
+          })
+        })
+      })
     })
   }
 }
@@ -121,8 +127,7 @@ export {
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
-  populateUserProfileData,
-  populateUserSessions,
+  populateUserProfileAndSessionData,
   updateSessionEnd
 }
 
