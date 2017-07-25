@@ -63,16 +63,15 @@ class App extends React.Component {
           <div className="main-container">
             <Switch>
               <Route 
-                path='/'
+                exact path='/'
                 render={()=>{ return (<Dashboard closeConnection={this.closeConnection.bind(this)}/>); }}
               />
               <Route 
                 path='/session'
-                render={ () => {
-                  console.log("It is redirecting back to dashboard");
-                  return (this.props.isDashboard ?
-                    (<Redirect to='/' />) :
-                    (<Session socketConnection={this.socket}/>)
+                render={ () => 
+                  {console.log('about to redirect');
+                    return (
+                    <Session socketConnection={this.socket}/>
                 )}}
               />
             </Switch>
