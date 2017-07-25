@@ -68,11 +68,13 @@ class App extends React.Component {
               />
               <Route 
                 path='/session'
-                render={ () => 
-                  {console.log('about to redirect');
-                    return (
-                    <Session socketConnection={this.socket}/>
-                )}}
+                render={ () => {
+                  return (
+                    this.props.isDashboard ? 
+                      (<Redirect to='/' />) :    
+                      (<Session socketConnection={this.socket}/>)
+                    );
+                } }
               />
             </Switch>
           </div>

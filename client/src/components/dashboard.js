@@ -20,9 +20,11 @@ class Dashboard extends React.Component {
 
   componentWillMount() {
     this.props.populateUserProfileData();
+
   }
 
   switchingToSession() {
+    console.log("this is firing");
     this.props.dashboardToSession();
     this.props.closeModal();
   }
@@ -49,7 +51,7 @@ class Dashboard extends React.Component {
         <Modal.Footer>
           <Button onClick={() => this.closeButton()}>Close</Button>
           <LinkContainer to='/session'>
-            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={this.switchingToSession}>Join Session!</Button>
+            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={this.switchingToSession.bind(this)}>Join Session!</Button>
           </LinkContainer>
         </Modal.Footer>
       </Modal>;
