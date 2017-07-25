@@ -25,9 +25,40 @@ module.exports = [
     arguments: '10',
     expectedOutput: 'Even'
   }, {
-    promptId: 3,
-    description: 'it should return odd for an odd number',
-    arguments: '3',
-    expectedOutput: 'Odd'
+    promptId: 4,
+    description: 'it should return a blank array for an array with no strings',
+    arguments: '[1,2,{}]',
+    expectedOutput: '[]'
+  },
+  {
+    promptId: 4,
+    description: 'it should return an array with two strings',
+    arguments: '[`coffee`, 10, {}, `shoe`]',
+    expectedOutput: '[`coffee`, `shoe`]'
+  },
+  {
+    promptId: 5,
+    description: 'it should return the index of target in the input array',
+    arguments: '[`a`,`b`,`c`,`d`,`e`,`f`,`g`], `f`',
+    expectedOutput: '5'
+  },
+  {
+    promptId: 5,
+    description: 'it should return the index of target in the input array',
+    arguments: '[`a`,`b`,`c`,`d`,`e`,`f`,`g`], `a`',
+    expectedOutput: '0'
   }
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+

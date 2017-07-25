@@ -6,7 +6,9 @@ module.exports = [
     hint: 'Use Addition.',
     skeletonCode: 'const addTwoNumbers = function (a, b) { }',
     solutionCode: 'const addTwoNumbers = function (a, b) { return a + b; }',
-    rating: null
+    rating: null,
+    userId: 1,
+    difficulty: 1
   },
   {
     name: 'Multiply Two Numbers',
@@ -15,7 +17,9 @@ module.exports = [
     hint: 'Use math.',
     skeletonCode: 'const multiplyTwoNumbers = function (a, b) { }',
     solutionCode: 'const multiplyTwoNumbers = function (a, b) { return a * b; }',
-    rating: null
+    rating: null,
+    userId: 2,
+    difficulty: 2
   },
   {
     name: 'Even or Odd',
@@ -24,9 +28,34 @@ module.exports = [
     hint: 'Use the remainder operator.',
     skeletonCode: 'const evenOrOdd = function (a) { }',
     solutionCode: 'const evenOrOdd = function (a) { if (a%2 === 0) {return `Even`} else if (a%2 === 1) {return `Odd`} }',
-    rating: null
+    rating: null,
+    userId: 3,
+    difficulty: 3
+  },
+  {
+    name: 'Only Strings',
+    description: 'Given an array of strings, numbers and objects, return the input array with only its strings.',
+    category: 'For loop',
+    hint: 'Loop through the array and use typeof to test the data type of each element.',
+    skeletonCode: 'const arrayOfStrings = function (array) { }',
+    solutionCode: 'const arrayofStrings = function(array) { let result = []; for (var i = 0; i < array.length; i++) { if (typeof array[i] === `string`) { result.push(array[i]) } } return result }',
+    rating: null,
+    userId: 4,
+    difficulty: 4
+  },
+  {
+    name: 'Find index of x in an array',
+    description: 'Given a target value and an array, return the index of the target in the array.',
+    category: 'Indexes of Arrays',
+    hint: 'Use the indexOf() method in the Object prototype.',
+    skeletonCode: 'const findIndexOfTarget = function (target, array) { }',
+    solutionCode: 'const findIndexOfTarget = function (target, array) { return array.indexOf(target); }',
+    rating: null,
+    userId: 4,
+    difficulty: 2
   }
 ];
+
 
 // {
 //     name: 'Balanced Parens',

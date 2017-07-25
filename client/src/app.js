@@ -71,6 +71,7 @@ class App extends React.Component {
                     (<Session socketConnection={this.socket}/>)
                 )}
               />
+              <Route path='/' component={Dashboard} />
             </Switch>
           </div>
         </div>
