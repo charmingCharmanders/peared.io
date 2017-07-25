@@ -37,7 +37,7 @@ class App extends React.Component {
       this.socket.on('prompt', (prompt) =>{
         this.props.updatePrompt(prompt);
         this.props.updateCode(prompt.skeletonCode);
-        this.props.updateButtonStatus();
+        this.props.updateButtonStatus(false);
       });
       this.socket.on('edit', (code)=>{
         this.props.updateCode(code);
@@ -49,10 +49,6 @@ class App extends React.Component {
   }
 
   closeConnection() {
-    this.props.updateRoomId(null);
-    this.props.updatePrompt(null);
-    this.props.updateCode('');
-    this.props.updateButtonStatus();
     this.socket.disconnect();
   }
 

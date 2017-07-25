@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeModal, dashboardToSession, populateUserProfileAndSessionData} from '../actions';
+import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateUserProfileAndSessionData} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 import Axios from 'axios';
@@ -22,6 +22,16 @@ class Dashboard extends React.Component {
     this.props.populateUserProfileData();
   }
 
+  closeButton() {
+    console.log('hitting the close button');
+    this.props.updateRoomId(null);
+    this.props.updatePrompt(null);
+    this.props.updateCode('');
+    this.props.updateButtonStatus(true);
+    this.props.closeConnection();
+    this.props.closeModal();
+  }
+
 
   render() {
     let modal =
@@ -33,9 +43,9 @@ class Dashboard extends React.Component {
           <h5>Please be Patient...</h5>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => {this.props.closeModal(); this.props.closeConnection();}}>Close</Button>
+          <Button onClick={() => this.closeButton()}>Close</Button>
           <LinkContainer to='/session'>
-            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={() => this.props.dashboardToSession()}>Join Session!</Button>
+            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={() => {this.props.dashboardToSession(); this.props.closeModal();}}>Join Session!</Button>
           </LinkContainer>
         </Modal.Footer>
       </Modal>;
@@ -73,7 +83,17 @@ const mapStateToProps = (state) => {
 };
 
 var mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserProfileData: populateUserProfileAndSessionData}, dispatch);
+  return bindActionCreators(
+    {
+      closeModal: closeModal,
+      dashboardToSession: dashboardToSession,
+      populateUserProfileData: populateUserProfileAndSessionData,
+      updateRoomId: updateRoomId,
+      updatePrompt: updatePrompt,
+      updateCode: updateCode,
+      updateButtonStatus: updateButtonStatus,
+    },
+    dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
