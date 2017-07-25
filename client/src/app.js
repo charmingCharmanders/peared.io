@@ -2,7 +2,7 @@ import React from 'react';
 import Session from './components/session';
 import Dashboard from './components/dashboard';
 import Navigation from './components/navigation';
-import browserHistory from 'react-router';
+import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
@@ -68,7 +68,11 @@ class App extends React.Component {
               />
               <Route 
                 path='/session'
-                render={()=>{ return (<Session socketConnection={this.socket}/>); }}
+                render={ () => (
+                  this.props.isDashboard ?
+                    (<Redirect to='/' />) :
+                    (<Session socketConnection={this.socket}/>)
+                )}
               />
             </Switch>
           </div>
@@ -80,7 +84,8 @@ class App extends React.Component {
 
 var mapStateToProps = function(state) {
   return {
-    nav: state.nav
+    nav: state.nav,
+    isDashboard: state.isDashboard
   };
 };
 

@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
   componentWillMount() {
     this.props.populateUserProfileData();
   }
-
+  
   closeButton() {
     console.log('hitting the close button');
     this.props.updateRoomId(null);
@@ -31,7 +31,6 @@ class Dashboard extends React.Component {
     this.props.closeConnection();
     this.props.closeModal();
   }
-
 
   render() {
     let modal =
