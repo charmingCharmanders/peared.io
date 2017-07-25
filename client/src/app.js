@@ -73,7 +73,7 @@ class App extends React.Component {
                     this.props.isDashboard ? 
                       (<Redirect to='/' />) :    
                       (<Session socketConnection={this.socket}/>)
-                    );
+                  );
                 } }
               />
             </Switch>
