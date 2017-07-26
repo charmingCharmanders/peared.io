@@ -46,9 +46,10 @@ const updateRoomId = (roomId) => {
   };
 };
 
-const updateButtonStatus = () => {
+const updateButtonStatus = (update) => {
   return {
-    type: 'ENABLE_START_SESSION_BUTTON',
+    type: 'UPDATE_START_SESSION_BUTTON',
+    payload: update
   };
 };
 
@@ -64,7 +65,7 @@ const updateSessionEnd = () => {
     type: 'UPDATE_SESSION_END',
     payload: userSessionsArray
   };
-}
+};
 
 const populateUserProfileAndSessionData = () => {
   return dispatch => {
@@ -114,8 +115,8 @@ const populateUserProfileAndSessionData = () => {
         })
       })
     })
-  }
-}
+  };
+};
 
 export {
   openModal,
@@ -129,7 +130,7 @@ export {
   updateTestResults,
   populateUserProfileAndSessionData,
   updateSessionEnd
-}
+};
 
 
 // Action Creator Function

@@ -37,7 +37,7 @@ class App extends React.Component {
       this.socket.on('prompt', (prompt) =>{
         this.props.updatePrompt(prompt);
         this.props.updateCode(prompt.skeletonCode);
-        this.props.updateButtonStatus();
+        this.props.updateButtonStatus(false);
       });
       this.socket.on('edit', (code)=>{
         this.props.updateCode(code);
@@ -62,14 +62,19 @@ class App extends React.Component {
           />
           <div className="main-container">
             <Switch>
-              <Route exact path='/' component={Dashboard} />
+              <Route 
+                exact path='/'
+                render={()=>{ return (<Dashboard closeConnection={this.closeConnection.bind(this)}/>); }}
+              />
               <Route 
                 path='/session'
-                render={ () => (
-                  this.props.isDashboard ?
-                    (<Redirect to='/' />) :
-                    (<Session socketConnection={this.socket}/>)
-                )}
+                render={ () => {
+                  return (
+                    this.props.isDashboard ? 
+                      (<Redirect to='/' />) :    
+                      (<Session socketConnection={this.socket}/>)
+                  );
+                } }
               />
             </Switch>
           </div>

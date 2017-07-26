@@ -1,6 +1,9 @@
 function updatePrompt(state = {}, action) {
   switch (action.type) {
     case 'UPDATE_PROMPT':
+    if(action.payload === null) {
+      return Object.assign({}, state, {});
+    } else {
       return Object.assign({}, state, 
       {
         name: action.payload.name,
@@ -11,6 +14,8 @@ function updatePrompt(state = {}, action) {
         skeletonCode: action.payload.skeletonCode,
         solutionCode: action.payload.solutionCode,
       });
+    }
+
     default:
       return state;
   }
