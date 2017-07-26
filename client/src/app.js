@@ -34,7 +34,7 @@ class App extends React.Component {
     });
     this.socket.on('connect', ()=>{
       this.socket.on('startSession', (sessionData) =>{
-        this.props.updateButtonStatus();
+        this.props.updateButtonStatus(false);
         this.props.updateCode(sessionData.prompt.skeletonCode);
         this.props.updatePrompt(sessionData.prompt);
         this.props.updateRoomId(sessionData.roomId);
@@ -62,14 +62,19 @@ class App extends React.Component {
           />
           <div className="main-container">
             <Switch>
-              <Route exact path='/' component={Dashboard} />
+              <Route 
+                exact path='/'
+                render={()=>{ return (<Dashboard closeConnection={this.closeConnection.bind(this)}/>); }}
+              />
               <Route 
                 path='/session'
-                render={ () => (
-                  this.props.isDashboard ?
-                    (<Redirect to='/' />) :
-                    (<Session socketConnection={this.socket}/>)
-                )}
+                render={ () => {
+                  return (
+                    this.props.isDashboard ? 
+                      (<Redirect to='/' />) :    
+                      (<Session socketConnection={this.socket}/>)
+                  );
+                } }
               />
             </Switch>
           </div>
