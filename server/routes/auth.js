@@ -52,36 +52,9 @@ router.get('/auth/github/callback', middleware.passport.authenticate('github', {
   failureRedirect: '/login'
 }));
 
-router.get('/auth/google', middleware.passport.authenticate('google', {
-  scope: ['email', 'profile']
-}));
-
-router.get('/auth/google/callback', middleware.passport.authenticate('google', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
-
-router.get('/auth/facebook', middleware.passport.authenticate('facebook', {
-  scope: ['public_profile', 'email']
-}));
-
-router.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
-
-router.get('/auth/twitter', middleware.passport.authenticate('twitter'));
-
-router.get('/auth/twitter/callback', middleware.passport.authenticate('twitter', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
-
 router.route('/loggedin')
   .get(middleware.auth.verify, (req, res) => {
     res.send(req.user);
   });
-
 
 module.exports = router;

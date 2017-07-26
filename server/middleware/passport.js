@@ -2,9 +2,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
-const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
@@ -114,33 +111,6 @@ passport.use('github', new GitHubStrategy({
   callbackURL: process.env.GITHUB_CALLBACK_URL || config.GitHub.callbackURL
 },
 (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('github', profile, done))
-);
-
-passport.use('google', new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID || config.Google.clientID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.Google.clientSecret,
-  callbackURL: process.env.GOOGLE_CALLBACK_URL || config.Google.callbackURL
-},
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
-);
-
-passport.use('facebook', new FacebookStrategy({
-  clientID: process.env.FACEBOOK_CLIENT_ID || config.Facebook.clientID,
-  clientSecret: process.env.FACEBOOK_CLIENT_SECRET || config.Facebook.clientSecret,
-  callbackURL: process.env.FACEBOOK_CALLBACK_URL || config.Facebook.callbackURL,
-  profileFields: ['id', 'emails', 'name']
-},
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
-);
-
-// REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
-passport.use('twitter', new TwitterStrategy({
-  consumerKey: process.env.TWITTER_CONSUMER_KEY || config.Twitter.consumerKey,
-  consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.Twitter.consumerSecret,
-  callbackURL: process.env.TWITTER_CALLBACK_URL || config.Twitter.callbackURL,
-  userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
-},
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('twitter', profile, done))
 );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
