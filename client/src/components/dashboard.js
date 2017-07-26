@@ -24,13 +24,11 @@ class Dashboard extends React.Component {
   }
 
   switchingToSession() {
-    console.log("this is firing");
     this.props.dashboardToSession();
     this.props.closeModal();
   }
   
   closeButton() {
-    console.log('hitting the close button');
     this.props.updateRoomId(null);
     this.props.updatePrompt(null);
     this.props.updateCode('');
