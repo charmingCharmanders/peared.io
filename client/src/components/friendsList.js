@@ -14,7 +14,6 @@ class FriendsList extends React.Component {
   }
 
   render() {
-    console.log('props inside friends list', this.props);
     return (
       <Panel collapsible defaultExpanded header="Friends List">
         {this.props.userFriendData.friendArray ? this.props.userFriendData.friendArray.map((friend, index) => <ListGroupItem key={index} fill>{friend.friend.firstName}<Badge>{friend.status === 'pending' ? friend.status : ''}</Badge></ListGroupItem> ) : ''}

@@ -4,9 +4,14 @@ function updateSessionsData(state = {}, action) {
       return Object.assign({}, state, {
         sessionArray: action.payload
       });
-    case 'UPDATE_SESSION_END':
+    case 'START_SESSION':
       return Object.assign({}, state, {
-        endedAt: action.payload.endedAt
+        currentSession: action.payload
+      });
+    case 'END_SESSION':
+      return Object.assign({}, state, {
+        sessionArray: action.payload,
+        currentSession: ''
       });
     default:
       return state;

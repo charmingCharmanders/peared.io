@@ -29,10 +29,10 @@ class HistoryTable extends React.Component {
             <TableRow
               key={index}
               id={index+1}
-              partner={row[0]}
-              name={row[1]}
-              time={row[2]}
-              category={row[3]}
+              partner={row.name}
+              name={row.promptName}
+              time={row.lengthOfSession}
+              category={row.category}
             />) : ''}
         </tbody>
       </Table>
