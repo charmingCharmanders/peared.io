@@ -67,18 +67,7 @@ const updateTestResults = (testResults) => {
   };
 };
 
-<<<<<<< HEAD
-const updateSessionEnd = () => {
-  return {
-    type: 'UPDATE_SESSION_END',
-    payload: userSessionsArray
-  };
-};
-
-const populateUserProfileAndSessionData = () => {
-=======
 const populateUserProfileFriendsAndSessionData = () => {
->>>>>>> implement start and end session axios calls
   return dispatch => {
     axios.get('/loggedin')
     .then(result => {
@@ -152,8 +141,8 @@ const endSession = (userSessionsArray, currentSessionObject) => {
     })
     axios.get(`/api/profiles/${userProfileId}`)
     .then((result) => {
-      let sessionEndTime = Date();
-      let sessionScore = helpers.calculateSessionScore(3600, (Date.parse(sessionEndTime) - Date.parse(sessionStartTime))/1000, currentSessionObject.difficulty)
+      let sessionEndTime = new Date();
+      let sessionScore = helpers.calculateSessionScore(3600, (Date.parse(sessionEndTime) - Date.parse(sessionStartTime))/1000, currentSessionObject.difficulty, currentSessionObject.numberOfTests, currentSessionObject.numberOfTestsPassed);
       let newRating;
       if (result.data.rating === null || result.data.rating === NaN) {
         newRating = sessionScore.toString();
@@ -164,7 +153,7 @@ const endSession = (userSessionsArray, currentSessionObject) => {
         rating: Math.floor(newRating)
       })
       .then(() => {
-        axios.get(`/api/profiles/${partnerId.toString()}/sessions`)
+        axios.get(`/api/profiles/${partnerId.toString()}`)
         .then(results => {
           if (!results.data.rating) {
             newRating = sessionScore.toString();
@@ -176,8 +165,11 @@ const endSession = (userSessionsArray, currentSessionObject) => {
           })
           .then(() => {
             axios.put(`/api/sessions/${sessionId}`, {
-              solutionCode: '',
-              endedAt: sessionEndTime.toString()
+              endedAt: sessionEndTime,
+              solutionCode: 'solution code here', //currentSessionObject.solutionCode,
+              rating: Math.round(sessionScore),
+              numberOfTests: 'tests here', //currentSessionObject.numberOfTests,
+              numberOfTestsPassed: 'tests passed here' //currentSessionObject.numberOfTestsPassed
             })
           })
         })
@@ -196,16 +188,11 @@ export {
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
-<<<<<<< HEAD
-  populateUserProfileAndSessionData,
-  updateSessionEnd
-};
-=======
   populateUserProfileFriendsAndSessionData,
   startSession,
   endSession
 }
->>>>>>> implement start and end session axios calls
+
 
 // Action Creator Function
   // Returns an Action which is an OBJECT

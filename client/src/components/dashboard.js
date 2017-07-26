@@ -7,8 +7,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateUserProfileAndSessionData} from '../actions';
-import {closeModal, dashboardToSession, populateUserProfileFriendsAndSessionData, startSession, endSession} from '../actions';
+import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateUserProfileFriendsAndSessionData, startSession, endSession} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 import Axios from 'axios';
@@ -21,17 +20,6 @@ class Dashboard extends React.Component {
 
   componentWillMount() {
     this.props.populateUserProfileFriendsAndSessionData();
-    this.props.startSession({
-      profileId1: '2',
-      profileId2: '3',
-      prompt: {
-        id: '1',
-        difficulty: 1
-      }
-    })
-    setTimeout(() => {
-      this.props.endSession(this.props.sessionData.sessionArray, this.props.sessionData.currentSession)
-    }, 1000)
   }
 
   switchingToSession() {
