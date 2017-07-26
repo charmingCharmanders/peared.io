@@ -2,6 +2,7 @@ let userProfileId;
 let partnerId;
 let sessionId;
 let sessionStartTime;
+
 const helpers = require('./helpers');
 import axios from 'axios';
 
@@ -65,6 +66,13 @@ const updateTestResults = (testResults) => {
   };
 };
 
+const updateSessionEnd = () => {
+  return {
+    type: 'UPDATE_SESSION_END',
+    payload: userSessionsArray
+  };
+};
+
 const populateUserProfileFriendsAndSessionData = () => {
   return dispatch => {
     return axios.get('/loggedin')
@@ -103,6 +111,33 @@ const populateUserProfileFriendsAndSessionData = () => {
   };
 };
 
+// const startSession = ({profileId1, profileId2, prompt}) => {
+//   return dispatch => {
+//     dispatch({
+//       type: 'START_SESSION',
+//       payload: {
+//         profileId1: profileId1,
+//         profileId2: profileId2,
+//         promptId: prompt.id,
+//         difficulty: prompt.difficulty
+//       }
+//     });
+//     sessionStartTime = Date();
+//     axios.post('/api/sessions', {
+//       profileId1: profileId1,
+//       profileId2: profileId2,
+//       promptId: prompt.id
+//     })
+//     .then(result => {
+//       sessionId = result.data.id;
+//       Number(result.data.profileId1) === userProfileId ? partnerId = result.data.profileId2 : partnerId = result.data.profileId1;
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+//   };
+// };
+
 const startSession = ({profileId1, profileId2, prompt}) => {
   return dispatch => {
     dispatch({
@@ -113,7 +148,7 @@ const startSession = ({profileId1, profileId2, prompt}) => {
         promptId: prompt.id,
         difficulty: prompt.difficulty
       }
-    });
+    })
     sessionStartTime = Date();
     axios.post('/api/sessions', {
       profileId1: profileId1,
@@ -126,9 +161,9 @@ const startSession = ({profileId1, profileId2, prompt}) => {
     })
     .catch(err => {
       console.log(err);
-    });
-  };
-};
+    })
+  }
+}
 
 const endSession = (userSessionsArray, currentSessionObject) => {
   userSessionsArray.push(currentSessionObject);
@@ -190,3 +225,8 @@ export {
   startSession,
   endSession
 };
+
+// Action Creator Function
+  // Returns an Action which is an OBJECT
+    // The action has 2 props: a Type and a Payload
+
