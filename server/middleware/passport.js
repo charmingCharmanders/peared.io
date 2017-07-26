@@ -1,4 +1,5 @@
 'use strict';
+const axios = require('axios');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
@@ -110,26 +111,46 @@ passport.use('github', new GitHubStrategy({
   clientSecret: process.env.GITHUB_CLIENT_SECRET || config.GitHub.clientSecret,
   callbackURL: process.env.GITHUB_CALLBACK_URL || config.GitHub.callbackURL
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('github', profile, done))
+(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('github', accessToken, profile, done))
 );
 
-const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  return models.Auth.where({ type, oauthId: oauthProfile.id }).fetch({
-    withRelated: ['profile']
-  })
+const getOrCreateOAuthProfile = (type, accessToken, oauthProfile, done) => {
+  return models.Auth
+    .where({ type, oauthId: oauthProfile.id })
+    .fetch({ withRelated: ['profile'] })
     .then(oauthAccount => {
       if (oauthAccount) {
         throw oauthAccount;
       }
       if (!oauthProfile.emails || !oauthProfile.emails.length) {
-        // GitHub users can set email address as private
-        throw null;
+        // GitHub users can set email address as private. The below request uses
+        // their access token to retrieve the primary email address
+        axios({
+          method: 'get',
+          url: 'https://api.github.com/user/emails',
+          headers: {
+            authorization: `token ${accessToken}`
+          }
+        })
+        .then(response => {
+          return models.Profile
+            .where({
+              emailAddress: response.find(item => item.primary).email
+            })
+            .fetch();
+        });
       }
-      return models.Profile.where({ emailAddress: oauthProfile.emails[0].value }).fetch();
+      return models.Profile
+        .where({
+          emailAddress: oauthProfile.emails[0].value
+        })
+        .fetch();
     })
     .then(profile => {
       let profileInfo = {
-        emailAddress: oauthProfile.emails[0].value
+        emailAddress: oauthProfile.emails[0].value,
+        firstName: oauthProfile._json.name.split(' ')[0],
+        lastName: oauthProfile._json.name.split(' ')[1]
       };
       if (profile) {
         // update profile with info from oauth
@@ -160,8 +181,8 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       }
     })
     .catch((err) => {
-      // TODO: This is not working because redirect to login uses req.flash('loginMessage')
-      // and there is no access to req here
+      // TODO: This is not working because redirect to login uses
+      // req.flash('loginMessage') and there is no access to req here
       done(null, null, {
         'message': 'Signing up requires an email address. \
           Please be sure the email address associated with your \
