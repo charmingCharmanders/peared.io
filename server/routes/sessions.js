@@ -10,6 +10,7 @@ router.route('/')
 
 router.route('/:id')
   .get(SessionsController.getOne)
+  .put(SessionsController.update)
 ;
 
 module.exports = router;

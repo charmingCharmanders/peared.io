@@ -44,3 +44,24 @@ module.exports.getOne = (req, res) => {
       res.sendStatus(404);
     });
 };
+
+module.exports.update = (req, res) => {
+  models.Session
+    .where({ id: req.params.id })
+    .fetch()
+    .then(session => {
+      if (!session) {
+        throw session;
+      }
+      return session.save(req.body, { method: 'update' });
+    })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(() => {
+      res.sendStatus(404);
+    });
+};

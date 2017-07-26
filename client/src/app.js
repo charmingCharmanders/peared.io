@@ -29,15 +29,15 @@ class App extends React.Component {
   }
 
   openConnection() {
-    this.socket = io.connect(this.connectionUrl());
+    this.socket = io.connect(this.connectionUrl(), {
+      query: { profileId: this.props.profile.id }
+    });
     this.socket.on('connect', ()=>{
-      this.socket.on('room id', (roomId) =>{
-        this.props.updateRoomId(roomId);
-      });
-      this.socket.on('prompt', (prompt) =>{
-        this.props.updatePrompt(prompt);
-        this.props.updateCode(prompt.skeletonCode);
+      this.socket.on('startSession', (sessionData) =>{
         this.props.updateButtonStatus(false);
+        this.props.updateCode(sessionData.prompt.skeletonCode);
+        this.props.updatePrompt(sessionData.prompt);
+        this.props.updateRoomId(sessionData.roomId);
       });
       this.socket.on('edit', (code)=>{
         this.props.updateCode(code);
@@ -86,8 +86,9 @@ class App extends React.Component {
 
 var mapStateToProps = function(state) {
   return {
+    isDashboard: state.isDashboard,
     nav: state.nav,
-    isDashboard: state.isDashboard
+    profile: state.userProfileData
   };
 };
 

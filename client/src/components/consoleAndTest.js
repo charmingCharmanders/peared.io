@@ -8,15 +8,20 @@ import {connect} from 'react-redux';
 class ConsoleAndTest extends React.Component {
   
   renderTestResults() {
+    const testResults = this.props.testResults;
+    if (testResults.error) {
+      return (
+        <div className="testContainer">
+          <div>{testResults.error}</div>
+        </div>
+      );
+    }
     return (
       <div className="testContainer">
-        {this.props.testResults.map((test, index) => {
-          if (Object.keys(test).length === 1) {
-            return <div key={index}>{test.message}</div>;
-          }
+        {testResults.tests.map((test, index) => {
           return (
             <div key={index}>
-              <span className="testDescription">{index}: {test.description}</span>
+              <span className="testDescription">{test.description}</span>
               <br />
               <span className={test.result === 'test passed' ? 'testPass' : 'testFail'}>{test.result}</span>
             </div>
