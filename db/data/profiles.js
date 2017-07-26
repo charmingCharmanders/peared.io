@@ -10,7 +10,7 @@ module.exports = [
   }, {
     firstName: 'Jeff',
     lastName: 'Shindelus',
-    emailAddress: 'jeff.shindelus@gmail.com'
+    emailAddress: 'jeffshindelus@gmail.com'
   }, {
     firstName: 'Wes',
     lastName: 'Choi',

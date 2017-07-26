@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateUserProfileAndSessionData} from '../actions';
+import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateUserProfileFriendsAndSessionData, startSession, endSession} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 import Axios from 'axios';
@@ -19,15 +19,14 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount() {
-    this.props.populateUserProfileData();
-
+    this.props.populateUserProfileFriendsAndSessionData();
   }
 
   switchingToSession() {
     this.props.dashboardToSession();
     this.props.closeModal();
   }
-  
+
   closeButton() {
     this.props.updateRoomId(null);
     this.props.updatePrompt(null);
@@ -81,23 +80,22 @@ const mapStateToProps = (state) => {
     modal: state.modal,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
-    userProfileData:  state.userProfileData,
     userProfileData:  state.userProfileData
   };
 };
 
 var mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      closeModal: closeModal,
-      dashboardToSession: dashboardToSession,
-      populateUserProfileData: populateUserProfileAndSessionData,
-      updateRoomId: updateRoomId,
-      updatePrompt: updatePrompt,
-      updateCode: updateCode,
-      updateButtonStatus: updateButtonStatus,
-    },
-    dispatch);
+  return bindActionCreators({
+    closeModal: closeModal,
+    dashboardToSession: dashboardToSession,
+    populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
+    updateRoomId: updateRoomId,
+    updatePrompt: updatePrompt,
+    updateCode: updateCode,
+    updateButtonStatus: updateButtonStatus,
+    endSession: endSession,
+    startSession: startSession
+  }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

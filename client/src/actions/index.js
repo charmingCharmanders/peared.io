@@ -1,3 +1,10 @@
+let userProfileId;
+let partnerId;
+let sessionId;
+let sessionStartTime;
+
+
+const helpers = require('./helpers');
 import axios from 'axios';
 
 const openModal = () => {
@@ -60,14 +67,7 @@ const updateTestResults = (testResults) => {
   };
 };
 
-const updateSessionEnd = () => {
-  return {
-    type: 'UPDATE_SESSION_END',
-    payload: userSessionsArray
-  };
-};
-
-const populateUserProfileAndSessionData = () => {
+const populateUserProfileFriendsAndSessionData = () => {
   return dispatch => {
     axios.get('/loggedin')
     .then(result => {
@@ -78,36 +78,23 @@ const populateUserProfileAndSessionData = () => {
       return result;
     })
     .then((result) => {
-      let id = result.data.id;
-      axios.get(`/api/profiles/${id}/sessions`)
+      userProfileId = result.data.id;
+      axios.get(`/api/profiles/${userProfileId}/sessions`)
       .then(result => {
-        let sessionInfo = [];
-        result.data.forEach((session) => {
-          let minutes = Math.floor((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000)
-          let seconds = Math.floor((((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000) - minutes) * 60);
-          let lengthOfTime;
-          if (seconds < 10) {
-            lengthOfTime = minutes.toString() + ':0' + seconds.toString();
-          } else {
-            lengthOfTime = minutes.toString() + ':' + seconds.toString();
-          }
-          if (session.profile1.id === id) {
-            let name = session.profile2.firstName + " " + session.profile2.lastName
-            sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
-          } else {
-            let name = session.profile1.firstName + " " + session.profile1.lastName
-            sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
-          }
-        })
+        let sessionInfo;
+        if (result.data) {
+          sessionInfo = helpers.formatSessionsData(result.data, userProfileId);
+        } else {
+          sessionInfo = [];
+        }
         dispatch({
           type: 'POPULATE_USER_SESSIONS',
           payload: sessionInfo
         })
       })
       .then(() => {
-        axios.get(`/api/friends?profileId=${id}`)
+        axios.get(`/api/friends?profileId=${userProfileId}`)
         .then(result => {
-          console.log('friends results**********', result);
           dispatch({
             type: 'POPULATE_USERS_FRIENDS',
             payload: result.data
@@ -117,6 +104,79 @@ const populateUserProfileAndSessionData = () => {
     })
   };
 };
+
+const startSession = ({profileId1, profileId2, prompt}) => {
+  return dispatch => {
+    dispatch({
+      type: 'START_SESSION',
+      payload: {
+        profileId1: profileId1,
+        profileId2: profileId2,
+        promptId: prompt.id,
+        difficulty: prompt.difficulty
+      }
+    })
+    sessionStartTime = Date();
+    axios.post('/api/sessions', {
+      profileId1: profileId1,
+      profileId2: profileId2,
+      promptId: prompt.id
+    })
+    .then(result => {
+      sessionId = result.data.id;
+      Number(result.data.profileId1) === userProfileId ? partnerId = result.data.profileId2 : partnerId = result.data.profileId1;
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+}
+
+const endSession = (userSessionsArray, currentSessionObject) => {
+  userSessionsArray.push(currentSessionObject);
+  return dispatch => {
+    dispatch({
+      type: 'END_SESSION',
+      payload: userSessionsArray
+    })
+    axios.get(`/api/profiles/${userProfileId}`)
+    .then((result) => {
+      let sessionEndTime = new Date();
+      let sessionScore = helpers.calculateSessionScore(3600, (Date.parse(sessionEndTime) - Date.parse(sessionStartTime))/1000, currentSessionObject.difficulty, currentSessionObject.numberOfTests, currentSessionObject.numberOfTestsPassed);
+      let newRating;
+      if (result.data.rating === null || result.data.rating === NaN) {
+        newRating = sessionScore.toString();
+      } else {
+        newRating = (sessionScore + Number(result.data.rating)).toString();
+      }
+      axios.put(`/api/profiles/${userProfileId}`, {
+        rating: Math.floor(newRating)
+      })
+      .then(() => {
+        axios.get(`/api/profiles/${partnerId.toString()}`)
+        .then(results => {
+          if (!results.data.rating) {
+            newRating = sessionScore.toString();
+          } else {
+            newRating = (sessionScore + Number(results.data.rating)).toString();
+          }
+          axios.put(`/api/profiles/${partnerId}`, {
+            rating: Math.floor(newRating)
+          })
+          .then(() => {
+            axios.put(`/api/sessions/${sessionId}`, {
+              endedAt: sessionEndTime,
+              solutionCode: 'solution code here', //currentSessionObject.solutionCode,
+              rating: Math.round(sessionScore),
+              numberOfTests: 'tests here', //currentSessionObject.numberOfTests,
+              numberOfTestsPassed: 'tests passed here' //currentSessionObject.numberOfTestsPassed
+            })
+          })
+        })
+      })
+    })
+  }
+}
 
 export {
   openModal,
@@ -128,9 +188,10 @@ export {
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
-  populateUserProfileAndSessionData,
-  updateSessionEnd
-};
+  populateUserProfileFriendsAndSessionData,
+  startSession,
+  endSession
+}
 
 
 // Action Creator Function
