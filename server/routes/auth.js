@@ -43,6 +43,15 @@ router.route('/logout')
     res.redirect('/');
   });
 
+router.get('/auth/github', middleware.passport.authenticate('github', {
+  scope: ['user', 'email']
+}));
+
+router.get('/auth/github/callback', middleware.passport.authenticate('github', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));
+
 router.get('/auth/google', middleware.passport.authenticate('google', {
   scope: ['email', 'profile']
 }));

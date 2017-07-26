@@ -1,6 +1,7 @@
 'use strict';
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
@@ -107,6 +108,14 @@ passport.use('local-login', new LocalStrategy({
     });
 }));
 
+passport.use('github', new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID || config.GitHub.clientID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET || config.GitHub.clientSecret,
+  callbackURL: process.env.GITHUB_CALLBACK_URL || config.GitHub.callbackURL
+},
+(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('github', profile, done))
+);
+
 passport.use('google', new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID || config.Google.clientID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.Google.clientSecret,
@@ -139,27 +148,21 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     withRelated: ['profile']
   })
     .then(oauthAccount => {
-
       if (oauthAccount) {
         throw oauthAccount;
       }
-
       if (!oauthProfile.emails || !oauthProfile.emails.length) {
-        // FB users can register with a phone number, which is not exposed by Passport
+        // GitHub users can set email address as private
         throw null;
       }
       return models.Profile.where({ emailAddress: oauthProfile.emails[0].value }).fetch();
     })
     .then(profile => {
-
       let profileInfo = {
-        emailAddress: oauthProfile.emails[0].value,
-        firstName: oauthProfile.name.givenName,
-        lastName: oauthProfile.name.familyName
+        emailAddress: oauthProfile.emails[0].value
       };
-
       if (profile) {
-        //update profile with info from oauth
+        // update profile with info from oauth
         return profile.save(profileInfo, { method: 'update' });
       }
       // otherwise create new profile
@@ -190,9 +193,9 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       // TODO: This is not working because redirect to login uses req.flash('loginMessage')
       // and there is no access to req here
       done(null, null, {
-        'message': 'Signing up requires an email address, \
-          please be sure there is an email address associated with your Facebook account \
-          and grant access when you register.' });
+        'message': 'Signing up requires an email address. \
+          Please be sure the email address associated with your \
+          GitHub account is public.' });
     });
 };
 
