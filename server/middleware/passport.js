@@ -1,9 +1,7 @@
 'use strict';
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
-const TwitterStrategy = require('passport-twitter').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
@@ -107,31 +105,12 @@ passport.use('local-login', new LocalStrategy({
     });
 }));
 
-passport.use('google', new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID || config.Google.clientID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.Google.clientSecret,
-  callbackURL: process.env.GOOGLE_CALLBACK_URL || config.Google.callbackURL
+passport.use('github', new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID || config.GitHub.clientID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET || config.GitHub.clientSecret,
+  callbackURL: process.env.GITHUB_CALLBACK_URL || config.GitHub.callbackURL
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
-);
-
-passport.use('facebook', new FacebookStrategy({
-  clientID: process.env.FACEBOOK_CLIENT_ID || config.Facebook.clientID,
-  clientSecret: process.env.FACEBOOK_CLIENT_SECRET || config.Facebook.clientSecret,
-  callbackURL: process.env.FACEBOOK_CALLBACK_URL || config.Facebook.callbackURL,
-  profileFields: ['id', 'emails', 'name']
-},
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
-);
-
-// REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
-passport.use('twitter', new TwitterStrategy({
-  consumerKey: process.env.TWITTER_CONSUMER_KEY || config.Twitter.consumerKey,
-  consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.Twitter.consumerSecret,
-  callbackURL: process.env.TWITTER_CALLBACK_URL || config.Twitter.callbackURL,
-  userProfileURL: 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
-},
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('twitter', profile, done))
+(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('github', profile, done))
 );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
@@ -139,27 +118,21 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     withRelated: ['profile']
   })
     .then(oauthAccount => {
-
       if (oauthAccount) {
         throw oauthAccount;
       }
-
       if (!oauthProfile.emails || !oauthProfile.emails.length) {
-        // FB users can register with a phone number, which is not exposed by Passport
+        // GitHub users can set email address as private
         throw null;
       }
       return models.Profile.where({ emailAddress: oauthProfile.emails[0].value }).fetch();
     })
     .then(profile => {
-
       let profileInfo = {
-        emailAddress: oauthProfile.emails[0].value,
-        firstName: oauthProfile.name.givenName,
-        lastName: oauthProfile.name.familyName
+        emailAddress: oauthProfile.emails[0].value
       };
-
       if (profile) {
-        //update profile with info from oauth
+        // update profile with info from oauth
         return profile.save(profileInfo, { method: 'update' });
       }
       // otherwise create new profile
@@ -190,9 +163,9 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       // TODO: This is not working because redirect to login uses req.flash('loginMessage')
       // and there is no access to req here
       done(null, null, {
-        'message': 'Signing up requires an email address, \
-          please be sure there is an email address associated with your Facebook account \
-          and grant access when you register.' });
+        'message': 'Signing up requires an email address. \
+          Please be sure the email address associated with your \
+          GitHub account is public.' });
     });
 };
 
