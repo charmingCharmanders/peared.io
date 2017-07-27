@@ -69,7 +69,7 @@ const updateSessionEnd = () => {
 
 const populateUserProfileAndSessionData = () => {
   return dispatch => {
-    axios.get('/loggedin')
+    return axios.get('/loggedin')
     .then(result => {
       dispatch({
         type: 'POPULATE_USER_PROFILE_DATA',
@@ -83,7 +83,7 @@ const populateUserProfileAndSessionData = () => {
       .then(result => {
         let sessionInfo = [];
         result.data.forEach((session) => {
-          let minutes = Math.floor((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000)
+          let minutes = Math.floor((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000);
           let seconds = Math.floor((((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000) - minutes) * 60);
           let lengthOfTime;
           if (seconds < 10) {
@@ -92,17 +92,17 @@ const populateUserProfileAndSessionData = () => {
             lengthOfTime = minutes.toString() + ':' + seconds.toString();
           }
           if (session.profile1.id === id) {
-            let name = session.profile2.firstName + " " + session.profile2.lastName
+            let name = session.profile2.firstName + " " + session.profile2.lastName;
             sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
           } else {
-            let name = session.profile1.firstName + " " + session.profile1.lastName
+            let name = session.profile1.firstName + " " + session.profile1.lastName;
             sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
           }
-        })
+        });
         dispatch({
           type: 'POPULATE_USER_SESSIONS',
           payload: sessionInfo
-        })
+        });
       })
       .then(() => {
         axios.get(`/api/friends?profileId=${id}`)
@@ -111,10 +111,10 @@ const populateUserProfileAndSessionData = () => {
           dispatch({
             type: 'POPULATE_USERS_FRIENDS',
             payload: result.data
-          })
-        })
-      })
-    })
+          });
+        });
+      });
+    });
   };
 };
 

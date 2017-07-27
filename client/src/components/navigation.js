@@ -2,17 +2,36 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import {dashboardToSession, openModal, closeModal, sessionToDashboard} from '../actions';
+import {openModal, closeModal, sessionToDashboard} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 class Navigation extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.joinRoom = this.joinRoom.bind(this);
+    this.leaveRoom = this.leaveRoom.bind(this);
+  }
+
+  joinRoom() {
+    console.log("this.props.socket:", this);
+    this.props.openModal();
+    this.props.socket.emit('join room'); 
+  }
+
+  leaveRoom() {
+    this.props.sessionToDashboard();
+    this.props.closeModal();
+    this.props.socket.emit('leave room');
+  }
+
   render() {
     let buttonSet = null;
     if (this.props.nav) {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', float: 'right', marginRight: '-15px'}}>
-          <Button bsStyle="info" onClick={ () => { this.props.openModal(); this.props.openConnection(); }}>Start Session</Button>
+          <Button bsStyle="info" onClick={this.joinRoom.bind(this)}>Start Session</Button>
           <Button href="/logout">Log out</Button>
         </ButtonToolbar>;
     } else {
@@ -20,7 +39,7 @@ class Navigation extends React.Component {
         <ButtonToolbar style={{marginTop: '7px', float: 'right', marginRight: '-15px'}}>
           <Button>Swap Roles</Button>
           <LinkContainer to='/'>
-            <Button bsStyle="info" onClick={ () => { this.props.sessionToDashboard(); this.props.closeModal(); this.props.closeConnection(); }}>End Session</Button>
+            <Button bsStyle="info" onClick={this.leaveRoom.bind(this)}>End Session</Button>
           </LinkContainer>
         </ButtonToolbar>;
     }
@@ -51,7 +70,6 @@ var mapStateToProps = function(state) {
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators(
     {
-      dashboardToSession: dashboardToSession,
       openModal: openModal,
       sessionToDashboard: sessionToDashboard,
       closeModal: closeModal
