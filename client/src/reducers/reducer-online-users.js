@@ -7,7 +7,7 @@ var updateOnlineUsers = function(state = 0, action) {
     default:
       return state;
   }
-}
+};
 
 export {
   updateOnlineUsers

@@ -48,7 +48,7 @@ class App extends React.Component {
       });
       this.state.socket.on('users online', (userCount)=>{
         this.props.updateOnlineUsers(userCount);
-      })
+      });
       this.state.socket.on('edit', (code)=>{
         this.props.updateCode(code);
       });
