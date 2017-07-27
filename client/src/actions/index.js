@@ -2,8 +2,6 @@ let userProfileId;
 let partnerId;
 let sessionId;
 let sessionStartTime;
-
-
 const helpers = require('./helpers');
 import axios from 'axios';
 
@@ -81,28 +79,16 @@ const populateUserProfileFriendsAndSessionData = () => {
       userProfileId = result.data.id;
       axios.get(`/api/profiles/${userProfileId}/sessions`)
       .then(result => {
-        let sessionInfo = [];
-        result.data.forEach((session) => {
-          let minutes = Math.floor((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000);
-          let seconds = Math.floor((((Date.parse(session.endedAt) - Date.parse(session.startedAt))/60000) - minutes) * 60);
-          let lengthOfTime;
-          if (seconds < 10) {
-            lengthOfTime = minutes.toString() + ':0' + seconds.toString();
-          } else {
-            lengthOfTime = minutes.toString() + ':' + seconds.toString();
-          }
-          if (session.profile1.id === id) {
-            let name = session.profile2.firstName + " " + session.profile2.lastName;
-            sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
-          } else {
-            let name = session.profile1.firstName + " " + session.profile1.lastName;
-            sessionInfo.push([name, session.prompt.name, lengthOfTime, session.prompt.category]);
-          }
-        });
+        let sessionInfo;
+        if (result.data) {
+          sessionInfo = helpers.formatSessionsData(result.data, userProfileId);
+        } else {
+          sessionInfo = [];
+        }
         dispatch({
           type: 'POPULATE_USER_SESSIONS',
           payload: sessionInfo
-        });
+        })
       })
       .then(() => {
         axios.get(`/api/friends?profileId=${userProfileId}`)
@@ -127,7 +113,7 @@ const startSession = ({profileId1, profileId2, prompt}) => {
         promptId: prompt.id,
         difficulty: prompt.difficulty
       }
-    })
+    });
     sessionStartTime = Date();
     axios.post('/api/sessions', {
       profileId1: profileId1,
@@ -140,9 +126,9 @@ const startSession = ({profileId1, profileId2, prompt}) => {
     })
     .catch(err => {
       console.log(err);
-    })
-  }
-}
+    });
+  };
+};
 
 const endSession = (userSessionsArray, currentSessionObject) => {
   userSessionsArray.push(currentSessionObject);
@@ -182,13 +168,13 @@ const endSession = (userSessionsArray, currentSessionObject) => {
               rating: Math.round(sessionScore),
               numberOfTests: 'tests here', //currentSessionObject.numberOfTests,
               numberOfTestsPassed: 'tests passed here' //currentSessionObject.numberOfTestsPassed
-            })
-          })
-        })
-      })
-    })
+            });
+          });
+        });
+      });
+    });
   }
-}
+};
 
 export {
   openModal,
@@ -203,9 +189,4 @@ export {
   populateUserProfileFriendsAndSessionData,
   startSession,
   endSession
-}
-
-
-// Action Creator Function
-  // Returns an Action which is an OBJECT
-    // The action has 2 props: a Type and a Payload
+};
