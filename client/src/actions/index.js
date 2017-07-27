@@ -154,33 +154,6 @@ const populateUserProfileFriendsAndSessionData = () => {
   };
 };
 
-const startSession = ({profileId1, profileId2, prompt}) => {
-  return dispatch => {
-    dispatch({
-      type: 'START_SESSION',
-      payload: {
-        profileId1: profileId1,
-        profileId2: profileId2,
-        promptId: prompt.id,
-        difficulty: prompt.difficulty
-      }
-    })
-    sessionStartTime = Date();
-    axios.post('/api/sessions', {
-      profileId1: profileId1,
-      profileId2: profileId2,
-      promptId: prompt.id
-    })
-    .then(result => {
-      sessionId = result.data.id;
-      Number(result.data.profileId1) === userProfileId ? partnerId = result.data.profileId2 : partnerId = result.data.profileId1;
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-}
-
 const endSession = (sessions, session, code, testResults) => {
   const sessionEndedAt = new Date();
   const sessionScore = helpers.calculateSessionScore(

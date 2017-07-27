@@ -41,11 +41,6 @@ class App extends React.Component {
     });
     this.state.socket.on('connect', ()=>{
       this.state.socket.on('startSession', (sessionData) =>{
-        this.props.startSession({
-          profileId1: sessionData.profileId1,
-          profileId2: sessionData.profileId2,
-          prompt: sessionData.prompt
-        });
         this.props.updateButtonStatus(false);
         this.props.updateCode(sessionData.prompt.skeletonCode);
         this.props.updateCurrentSession(sessionData);
