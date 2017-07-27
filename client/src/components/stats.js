@@ -6,35 +6,42 @@ import {selectUser} from '../actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-// console.log(this.props);
-
 class Stats extends React.Component {
   render() {
+    let ranking;
+
+    if (this.props.userProfileData.rating < 100) {ranking = 'Novice'}
+    else if (this.props.userProfileData.rating < 5000) {ranking = 'Amateur'}
+    else if (this.props.userProfileData.rating < 20000) {ranking = 'Professional'}
+    else {ranking = 'Expert'}
+
     return (
       <Row className='show-grid'>
         <Col md={3} xs={4}>
           <Panel header="Total Solved" bsStyle="primary">
-            <p onClick={() => this.props.selectUser()} >Click me!</p>
+            <p>{this.props.sessionData.sessionArray ? this.props.sessionData.sessionArray.length : ''}</p>
           </Panel>
         </Col>
         <Col md={3} xs={4}>
           <Panel header="Completion Rate" bsStyle="info">
-            50%
+            {this.props.sessionData.sessionArray ? (this.props.sessionData.sessionArray.filter(session => session.lengthOfSession).length/this.props.sessionData.sessionArray.length * 100).toString() + '%' : ''}
           </Panel>
         </Col>
         <Col md={3} xs={4}>
           <Panel header="Ranking" bsStyle="info">
-            Jedi Master
+            {ranking}
           </Panel>
         </Col>
       </Row>
-    )   
+    )
   }
 }
 
 function mapStateToProps(store) {
   return {
-    users: store.users
+    users: store.users,
+    sessionData: store.sessionData,
+    userProfileData:  store.userProfileData
   }
 }
 

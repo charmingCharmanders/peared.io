@@ -66,6 +66,24 @@ const updateTestResults = (testResults) => {
   };
 };
 
+const populateLeaderboard = () => {
+  return dispatch => {
+    axios.get('/api/profiles?sortBy=rating&limit=10')
+    .then(result => {
+      let ratingArray = result.data.map(profile => {
+        return {
+          name: profile.firstName,
+          rating: profile.rating
+          }
+      });
+      dispatch({
+        type: 'POPULATE_LEADERBOARD',
+        payload: ratingArray
+      })
+    })
+  }
+}
+
 const populateUserProfileFriendsAndSessionData = () => {
   return dispatch => {
     return axios.get('/loggedin')
@@ -144,9 +162,9 @@ const endSession = (userSessionsArray, currentSessionObject) => {
       let sessionScore = helpers.calculateSessionScore(3600, (Date.parse(sessionEndTime) - Date.parse(sessionStartTime))/1000, currentSessionObject.difficulty, currentSessionObject.numberOfTests, currentSessionObject.numberOfTestsPassed);
       let newRating;
       if (result.data.rating === null || result.data.rating === NaN) {
-        newRating = sessionScore.toString();
+        newRating = sessionScore;
       } else {
-        newRating = (sessionScore + Number(result.data.rating)).toString();
+        newRating = sessionScore + result.data.rating;
       }
       axios.put(`/api/profiles/${userProfileId}`, {
         rating: Math.floor(newRating)
@@ -155,9 +173,9 @@ const endSession = (userSessionsArray, currentSessionObject) => {
         axios.get(`/api/profiles/${partnerId.toString()}`)
         .then(results => {
           if (!results.data.rating) {
-            newRating = sessionScore.toString();
+            newRating = sessionScore;
           } else {
-            newRating = (sessionScore + Number(results.data.rating)).toString();
+            newRating = sessionScore + results.data.rating;
           }
           axios.put(`/api/profiles/${partnerId}`, {
             rating: Math.floor(newRating)
@@ -187,6 +205,7 @@ export {
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
+  populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
   startSession,
   endSession
