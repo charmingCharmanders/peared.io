@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HistoryTable from './historyTable';
 import FriendsList from './friendsList';
+import Leaderboard from './leaderboard';
 import Stats from './stats';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateUserProfileFriendsAndSessionData, startSession, endSession} from '../actions';
+import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
-import Axios from 'axios';
 
 class Dashboard extends React.Component {
 
@@ -18,6 +18,10 @@ class Dashboard extends React.Component {
     super(props);
     this.closeButton = this.closeButton.bind(this);
     this.switchingToSession = this.switchingToSession.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.populateLeaderboard();
   }
 
   switchingToSession() {
@@ -66,6 +70,7 @@ class Dashboard extends React.Component {
           <Row className='show-grid'>
             <Col md={9}><HistoryTable /></Col>
             <Col md={3}><FriendsList /></Col>
+            <Col md={3}><Leaderboard /></Col>
           </Row>
           <Stats />
         </Grid>
@@ -91,7 +96,8 @@ var mapDispatchToProps = (dispatch) => {
       updateRoomId: updateRoomId,
       updatePrompt: updatePrompt,
       updateCode: updateCode,
-      updateButtonStatus: updateButtonStatus,
+      populateLeaderboard: populateLeaderboard,
+      updateButtonStatus: updateButtonStatus
     },
     dispatch);
 };

@@ -31,7 +31,8 @@ module.exports.formatSessionsData = (sessionArray, id) => {
         lengthOfSession: lengthOfTime,
         lengthOfSessionInSeconds: Date.parse(session.endedAt) - Date.parse(session.startedAt),
         category: session.prompt.category,
-        difficulty: session.prompt.difficulty
+        difficulty: session.prompt.difficulty,
+        rating: session.rating
       });
     } else {
       let name = session.profile1.firstName + " " + session.profile1.lastName
@@ -40,7 +41,8 @@ module.exports.formatSessionsData = (sessionArray, id) => {
         promptName: session.prompt.name,
         lengthOfSession: lengthOfTime,
         category: session.prompt.category,
-        difficulty: session.prompt.difficulty
+        difficulty: session.prompt.difficulty,
+        rating: session.rating
       });
     }
   })

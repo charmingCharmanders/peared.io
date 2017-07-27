@@ -1,13 +1,26 @@
 const models = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
-  models.Profile.fetchAll()
-    .then(profiles => {
-      res.status(200).send(profiles);
-    })
-    .catch(err => {
-      res.status(503).send(err);
-    });
+  console.log(req.query);
+  if (JSON.stringify(req.query) === JSON.stringify({})) {
+    models.Profile.fetchAll()
+      .then(profiles => {
+        res.status(200).send(profiles);
+      })
+      .catch(err => {
+        res.status(503).send(err);
+      });
+  } else if (req.query.hasOwnProperty('sortBy')) {
+    models.Profile.forge().orderBy(req.query.sortBy, 'DESC').query((qb) => {
+      qb.limit(Number(req.query.limit) || null)
+    }).fetchAll()
+      .then(profiles => {
+        res.status(200).send(profiles);
+      })
+      .catch(err => {
+        res.status(503).send(err);
+      });
+  }
 };
 
 module.exports.getOne = (req, res) => {

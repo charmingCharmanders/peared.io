@@ -22,6 +22,7 @@ class HistoryTable extends React.Component {
             <th>Toy Problem</th>
             <th>Time</th>
             <th>Category</th>
+            <th>Rating</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@ class HistoryTable extends React.Component {
               name={row.promptName}
               time={row.lengthOfSession}
               category={row.category}
+              rating={row.rating}
             />) : ''}
         </tbody>
       </Table>

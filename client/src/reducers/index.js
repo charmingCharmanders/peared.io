@@ -10,6 +10,7 @@ import {updateSessionsData} from './reducer-session';
 import {updateUserProfileData} from './reducer-profile';
 import {updateUsersFriends} from './reducer-friends';
 import {toggleDashboard} from './reducer-dashboard';
+import {populateLeaderboard} from './reducer-leaderboard';
 
 export default combineReducers({
   modal: toggleModal,
@@ -23,6 +24,7 @@ export default combineReducers({
   userProfileData: updateUserProfileData,
   testResults: updateTestResults,
   userFriendData: updateUsersFriends,
-  isDashboard: toggleDashboard
+  isDashboard: toggleDashboard,
+  leaderboard: populateLeaderboard
 });
 
