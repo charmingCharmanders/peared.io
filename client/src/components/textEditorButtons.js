@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {endSession} from '../actions';
 
 class TextEditorButtons extends React.Component {
   
   minifyString(string) {
     return string.replace(/\s+/g, ' ');
+  }
+
+  codeSubmit() {
+    this.props.endSession(this.props.sessionData, this.props.currentSession);
   }
 
   codeTest() {
@@ -18,7 +23,7 @@ class TextEditorButtons extends React.Component {
     return (
       <div className="editor-buttons">
         <Button bsStyle="info" onClick={() => this.codeTest()}>Run</Button>
-        <Button bsStyle="success">Submit</Button>
+        <Button bsStyle="success" onClick={() => this.codeSubmit()}>Submit</Button>
       </div>
     );
   }
@@ -28,8 +33,16 @@ var mapStateToProps = function (state) {
   return {
     code: state.code,
     promptId: state.prompt.id,
-    roomId: state.roomId
+    roomId: state.roomId,
+    sessionData: state.sessionData.sessionArray,
+    currentSession: state.currentSession
   };
 };
 
-export default connect(mapStateToProps)(TextEditorButtons);
+var mapDispatchToProps = function (dispatch) {
+  return bindActionCreators({
+    endSession: endSession
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextEditorButtons);
