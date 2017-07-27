@@ -6,7 +6,7 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {populateUserProfileAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults} from './actions';
+import {populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults} from './actions';
 import {bindActionCreators} from 'redux';
 
 class App extends React.Component {
@@ -56,7 +56,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.props.populateUserProfileData()
+    this.props.populateUserProfileFriendsAndSessionData()
     .then(()=>{
       console.log("this is:", this);
       this.openConnection();
@@ -103,7 +103,7 @@ var mapStateToProps = function(state) {
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators(
     {
-      populateUserProfileData: populateUserProfileAndSessionData,
+      populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
       updateButtonStatus: updateButtonStatus,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,
