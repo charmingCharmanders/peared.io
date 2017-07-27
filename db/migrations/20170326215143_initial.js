@@ -2,10 +2,10 @@ exports.up = function (knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('profiles', function (table) {
       table.increments('id').unsigned().primary();
-      table.string('emailAddress', 100).nullable().unique();
+      table.string('emailAddress', 100).notNullable().unique();
       table.string('firstName', 100).nullable();
       table.string('lastName', 100).nullable();
-      table.integer('rating', 100).nullable();
+      table.decimal('rating').defaultTo('0.00');
       table.timestamp('createdAt').defaultTo(knex.fn.now());
       table.timestamp('updatedAt').defaultTo(knex.fn.now());
     }),
