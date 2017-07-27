@@ -45,6 +45,13 @@ const updateCode = (code) => {
   };
 };
 
+const updateCurrentSession = (session) => {
+  return {
+    type: 'UPDATE_CURRENT_SESSION',
+    payload: session
+  };
+};
+
 const updateRoomId = (roomId) => {
   return {
     type: 'UPDATE_ROOM_ID',
@@ -175,6 +182,7 @@ const startSession = ({profileId1, profileId2, prompt}) => {
 }
 
 const endSession = (userSessionsArray, currentSessionObject) => {
+  console.log(userSessionsArray, currentSessionObject);
   userSessionsArray.push(currentSessionObject);
   return dispatch => {
     dispatch({
@@ -230,6 +238,7 @@ export {
   setCurrentTimeToZero,
   updateOnlineUsers,
   updateCode,
+  updateCurrentSession,
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
