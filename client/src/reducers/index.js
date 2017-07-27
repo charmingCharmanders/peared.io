@@ -3,6 +3,7 @@ import {toggleModal} from './reducer-modal.js';
 import {toggleNav} from './reducer-nav.js';
 import {updatePrompt} from './reducer-prompt';
 import {updateCode} from './reducer-code';
+import {updateOnlineUsers} from './reducer-online-users';
 import {updateRoomId} from './reducer-room-id';
 import {updateButtonStatus} from './reducer-button-status';
 import {updateTestResults} from './reducer-test-results';
@@ -17,6 +18,7 @@ export default combineReducers({
   nav: toggleNav,
   prompt: updatePrompt,
   code: updateCode,
+  onlineUsers: updateOnlineUsers,
   roomId: updateRoomId,
   buttonStatus: updateButtonStatus,
   testResults: updateTestResults,

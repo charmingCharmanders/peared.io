@@ -50,6 +50,7 @@ class Navigation extends React.Component {
           <Navbar.Brand>
             <a href="/">Peared.io</a>
           </Navbar.Brand>
+          <p className="navbar-text">{this.props.onlineUsers} users currently online</p> 
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
@@ -63,7 +64,8 @@ class Navigation extends React.Component {
 
 var mapStateToProps = function(state) {
   return {
-    nav: state.nav
+    nav: state.nav,
+    onlineUsers: state.onlineUsers
   };
 };
 

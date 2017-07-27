@@ -52,6 +52,13 @@ const updateRoomId = (roomId) => {
   };
 };
 
+const updateOnlineUsers = (userCount) => {
+  return {
+    type: 'UPDATE_ONLINE_USERS',
+    payload: userCount
+  };
+};
+
 const updateButtonStatus = (update) => {
   return {
     type: 'UPDATE_START_SESSION_BUTTON',
@@ -201,6 +208,7 @@ export {
   dashboardToSession,
   sessionToDashboard,
   updatePrompt,
+  updateOnlineUsers,
   updateCode,
   updateRoomId,
   updateButtonStatus,
