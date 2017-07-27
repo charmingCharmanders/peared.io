@@ -1,7 +1,9 @@
 var updateOnlineUsers = function(state = 0, action) {
+  var newState = 0;
   switch (action.type) {
     case 'UPDATE_ONLINE_USERS':
-      return Object.assign({}, state, action.payload);
+      newState = action.payload;
+      return newState;
     default:
       return state;
   }

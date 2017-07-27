@@ -53,6 +53,7 @@ const updateRoomId = (roomId) => {
 };
 
 const updateOnlineUsers = (userCount) => {
+  console.log("users count is:", userCount);
   return {
     type: 'UPDATE_ONLINE_USERS',
     payload: userCount
