@@ -6,7 +6,7 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults} from './actions';
+import {populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults, updateOnlineUsers} from './actions';
 import {bindActionCreators} from 'redux';
 
 class App extends React.Component {
@@ -45,6 +45,9 @@ class App extends React.Component {
         this.props.updateCode(sessionData.prompt.skeletonCode);
         this.props.updatePrompt(sessionData.prompt);
         this.props.updateRoomId(sessionData.roomId);
+      });
+      this.state.socket.on('users online', (userCount)=>{
+        this.props.updateOnlineUsers(userCount);
       });
       this.state.socket.on('edit', (code)=>{
         this.props.updateCode(code);
@@ -111,6 +114,7 @@ var mapDispatchToProps = function(dispatch) {
       updatePrompt: updatePrompt,
       updateTestResults: updateTestResults,
       sessionToDashboard: sessionToDashboard,
+      updateOnlineUsers: updateOnlineUsers,
     }, dispatch);
 };
 
