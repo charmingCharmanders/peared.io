@@ -12,7 +12,7 @@ class TextEditorButtons extends React.Component {
   }
 
   codeSubmit() {
-    this.props.endSession(this.props.sessionData, this.props.currentSession);
+    this.props.endSession(this.props.sessionData, this.props.currentSession, this.props.code, this.props.testResults);
   }
 
   codeTest() {
@@ -32,10 +32,11 @@ class TextEditorButtons extends React.Component {
 var mapStateToProps = function (state) {
   return {
     code: state.code,
+    currentSession: state.currentSession,
     promptId: state.prompt.id,
     roomId: state.roomId,
     sessionData: state.sessionData.sessionArray,
-    currentSession: state.currentSession
+    testResults: state.testResults
   };
 };
 

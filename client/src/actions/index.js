@@ -181,51 +181,48 @@ const startSession = ({profileId1, profileId2, prompt}) => {
   }
 }
 
-const endSession = (userSessionsArray, currentSessionObject) => {
-  console.log(userSessionsArray, currentSessionObject);
-  userSessionsArray.push(currentSessionObject);
+const endSession = (sessions, session, code, testResults) => {
+  const sessionEndedAt = new Date();
+  const sessionScore = helpers.calculateSessionScore(
+    3600,
+    (Date.parse(sessionEndedAt) - Date.parse(session.startedAt)) / 1000,
+    session.prompt.difficulty,
+    testResults.testsCount,
+    testResults.testsPassed
+  );
   return dispatch => {
     dispatch({
       type: 'END_SESSION',
-      payload: userSessionsArray
-    })
-    axios.get(`/api/profiles/${userProfileId}`)
+      payload: sessions.push(session)
+    });
+    axios.get(`/api/profiles/${session.profileId1}`)
     .then((result) => {
-      let sessionEndTime = new Date();
-      let sessionScore = helpers.calculateSessionScore(3600, (Date.parse(sessionEndTime) - Date.parse(sessionStartTime))/1000, currentSessionObject.difficulty, currentSessionObject.numberOfTests, currentSessionObject.numberOfTestsPassed);
-      let newRating;
-      if (result.data.rating === null || result.data.rating === NaN) {
-        newRating = sessionScore;
-      } else {
-        newRating = sessionScore + result.data.rating;
-      }
-      axios.put(`/api/profiles/${userProfileId}`, {
-        rating: Math.floor(newRating)
+      axios.put(`/api/profiles/${session.profileId1}`, {
+        rating: Number(result.data.rating) + sessionScore
       })
       .then(() => {
-        axios.get(`/api/profiles/${partnerId.toString()}`)
+        axios.get(`/api/profiles/${session.profileId2}`)
         .then(results => {
-          if (!results.data.rating) {
-            newRating = sessionScore;
-          } else {
-            newRating = sessionScore + results.data.rating;
-          }
-          axios.put(`/api/profiles/${partnerId}`, {
-            rating: Math.floor(newRating)
+          axios.put(`/api/profiles/${session.profileId2}`, {
+            rating: Number(result.data.rating) + sessionScore
           })
           .then(() => {
-            axios.put(`/api/sessions/${sessionId}`, {
-              endedAt: sessionEndTime,
-              solutionCode: 'solution code here', //currentSessionObject.solutionCode,
-              rating: Math.round(sessionScore),
-              numberOfTests: 'tests here', //currentSessionObject.numberOfTests,
-              numberOfTestsPassed: 'tests passed here' //currentSessionObject.numberOfTestsPassed
+            axios.post('/api/sessions', {
+              profileId1: session.profileId1,
+              profileId2: session.profileId2,
+              promptId: session.prompt.id,
+              rating: sessionScore,
+              solutionCode: code,
+              numberOfTests: testResults.testsCount,
+              numberOfTestsPassed: testResults.testsPassed,
+              startedAt: session.startedAt,
+              endedAt: sessionEndedAt
             });
           });
         });
       });
     });
-  }
+  };
 };
 
 export {
