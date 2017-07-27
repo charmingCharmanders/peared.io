@@ -308,7 +308,6 @@ const endSession = (sessions, session, code, testResults) => {
       .then(profile => {
         axios.put(`/api/profiles/${session.profileId1}`, {
           rating: Number(profile.data.rating) + sessionScore
-
         });
       });
 
