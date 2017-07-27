@@ -16,10 +16,8 @@ class Dashboard extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount() {
-    this.props.populateUserProfileFriendsAndSessionData();
+    this.closeButton = this.closeButton.bind(this);
+    this.switchingToSession = this.switchingToSession.bind(this);
   }
 
   switchingToSession() {
@@ -28,17 +26,18 @@ class Dashboard extends React.Component {
   }
 
   closeButton() {
+    console.log('running the close button method');
     this.props.updateRoomId(null);
     this.props.updatePrompt(null);
     this.props.updateCode('');
     this.props.updateButtonStatus(true);
-    this.props.closeConnection();
+    this.props.socket.emit('leave room');
     this.props.closeModal();
   }
 
   render() {
     let modal =
-      <Modal show={this.props.modal} onHide={ () => this.props.closeModal() }>
+      <Modal show={this.props.modal} onHide={this.closeButton}>
         <Modal.Header closeButton>
           <Modal.Title>Our servers are searching for a partner!</Modal.Title>
         </Modal.Header>
@@ -46,9 +45,9 @@ class Dashboard extends React.Component {
           <h5>Please be Patient...</h5>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.closeButton()}>Close</Button>
+          <Button onClick={this.closeButton}>Close</Button>
           <LinkContainer to='/session'>
-            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={this.switchingToSession.bind(this)}>Join Session!</Button>
+            <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={this.switchingToSession}>Join Session!</Button>
           </LinkContainer>
         </Modal.Footer>
       </Modal>;
@@ -85,17 +84,16 @@ const mapStateToProps = (state) => {
 };
 
 var mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    closeModal: closeModal,
-    dashboardToSession: dashboardToSession,
-    populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
-    updateRoomId: updateRoomId,
-    updatePrompt: updatePrompt,
-    updateCode: updateCode,
-    updateButtonStatus: updateButtonStatus,
-    endSession: endSession,
-    startSession: startSession
-  }, dispatch);
+  return bindActionCreators(
+    {
+      closeModal: closeModal,
+      dashboardToSession: dashboardToSession,
+      updateRoomId: updateRoomId,
+      updatePrompt: updatePrompt,
+      updateCode: updateCode,
+      updateButtonStatus: updateButtonStatus,
+    },
+    dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

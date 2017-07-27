@@ -6,10 +6,16 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults} from './actions';
+import {populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults} from './actions';
 import {bindActionCreators} from 'redux';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      socket: null
+    };
+  }
 
   connectionUrl() { 
     const protocol = window.location.protocol;
@@ -29,42 +35,44 @@ class App extends React.Component {
   }
 
   openConnection() {
-    this.socket = io.connect(this.connectionUrl(), {
-      query: { profileId: this.props.profile.id }
+    console.log("profile id:", this);
+    this.setState({
+      socket: io.connect(this.connectionUrl(), { query: { profileId: this.props.profile.id } })
     });
-    this.socket.on('connect', ()=>{
-      this.socket.on('startSession', (sessionData) =>{
+    this.state.socket.on('connect', ()=>{
+      this.state.socket.on('startSession', (sessionData) =>{
         this.props.updateButtonStatus(false);
         this.props.updateCode(sessionData.prompt.skeletonCode);
         this.props.updatePrompt(sessionData.prompt);
         this.props.updateRoomId(sessionData.roomId);
       });
-      this.socket.on('edit', (code)=>{
+      this.state.socket.on('edit', (code)=>{
         this.props.updateCode(code);
       });
-      this.socket.on('testResults', (testResults)=>{
+      this.state.socket.on('testResults', (testResults)=>{
         this.props.updateTestResults(testResults);
       });
     });
   }
 
-  closeConnection() {
-    this.socket.disconnect();
+  componentWillMount() {
+    this.props.populateUserProfileFriendsAndSessionData()
+    .then(()=>{
+      console.log("this is:", this);
+      this.openConnection();
+    });
   }
 
   render() {
     return (
       <Router history={browserHistory}>
         <div className="app-container">
-          <Navigation
-            openConnection={this.openConnection.bind(this)}
-            closeConnection={this.closeConnection.bind(this)}
-          />
+          <Navigation socket={this.state.socket}/>
           <div className="main-container">
             <Switch>
               <Route 
                 exact path='/'
-                render={()=>{ return (<Dashboard closeConnection={this.closeConnection.bind(this)}/>); }}
+                render={()=>{ return (<Dashboard socket={this.state.socket}/>); }}
               />
               <Route 
                 path='/session'
@@ -72,7 +80,7 @@ class App extends React.Component {
                   return (
                     this.props.isDashboard ? 
                       (<Redirect to='/' />) :    
-                      (<Session socketConnection={this.socket}/>)
+                      (<Session socketConnection={this.state.socket}/>)
                   );
                 } }
               />
@@ -95,6 +103,7 @@ var mapStateToProps = function(state) {
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators(
     {
+      populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
       updateButtonStatus: updateButtonStatus,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,

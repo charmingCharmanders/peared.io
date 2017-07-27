@@ -2,8 +2,6 @@ let userProfileId;
 let partnerId;
 let sessionId;
 let sessionStartTime;
-
-
 const helpers = require('./helpers');
 import axios from 'axios';
 
@@ -69,7 +67,7 @@ const updateTestResults = (testResults) => {
 
 const populateUserProfileFriendsAndSessionData = () => {
   return dispatch => {
-    axios.get('/loggedin')
+    return axios.get('/loggedin')
     .then(result => {
       dispatch({
         type: 'POPULATE_USER_PROFILE_DATA',
@@ -98,10 +96,10 @@ const populateUserProfileFriendsAndSessionData = () => {
           dispatch({
             type: 'POPULATE_USERS_FRIENDS',
             payload: result.data
-          })
-        })
-      })
-    })
+          });
+        });
+      });
+    });
   };
 };
 
@@ -115,7 +113,7 @@ const startSession = ({profileId1, profileId2, prompt}) => {
         promptId: prompt.id,
         difficulty: prompt.difficulty
       }
-    })
+    });
     sessionStartTime = Date();
     axios.post('/api/sessions', {
       profileId1: profileId1,
@@ -128,9 +126,9 @@ const startSession = ({profileId1, profileId2, prompt}) => {
     })
     .catch(err => {
       console.log(err);
-    })
-  }
-}
+    });
+  };
+};
 
 const endSession = (userSessionsArray, currentSessionObject) => {
   userSessionsArray.push(currentSessionObject);
@@ -170,13 +168,13 @@ const endSession = (userSessionsArray, currentSessionObject) => {
               rating: Math.round(sessionScore),
               numberOfTests: 'tests here', //currentSessionObject.numberOfTests,
               numberOfTestsPassed: 'tests passed here' //currentSessionObject.numberOfTestsPassed
-            })
-          })
-        })
-      })
-    })
+            });
+          });
+        });
+      });
+    });
   }
-}
+};
 
 export {
   openModal,
@@ -191,9 +189,4 @@ export {
   populateUserProfileFriendsAndSessionData,
   startSession,
   endSession
-}
-
-
-// Action Creator Function
-  // Returns an Action which is an OBJECT
-    // The action has 2 props: a Type and a Payload
+};
