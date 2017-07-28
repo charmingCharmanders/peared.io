@@ -37,13 +37,14 @@ module.exports.getOne = (req, res) => {
     });
 };
 
+
 module.exports.update = (req, res) => {
   models.Prompt.where({ id: req.params.id }).fetch()
     .then(prompt => {
       if (!prompt) {
         throw prompt;
       }
-      return prompt.save(req.body, { method: 'update' });
+      return prompt.save(req.body, { method: 'update' })
     })
     .then(() => {
       res.sendStatus(200);

@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HistoryTable from './historyTable';
 import FriendsList from './friendsList';
+import YourToyProblems from './yourToyProblems';
 import Stats from './stats';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeModal, dashboardToSession, populateUserProfileAndSessionData} from '../actions';
+import {populateUserToyProblems, closeModal, dashboardToSession, populateUserProfileAndSessionData} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
-import Axios from 'axios';
+import axios from 'axios';
 
 class Dashboard extends React.Component {
 
@@ -19,6 +20,7 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount() {
+    this.props.populateUserToyProblems();
     this.props.populateUserProfileData();
   }
 
@@ -54,6 +56,7 @@ class Dashboard extends React.Component {
             <Col md={9}><HistoryTable /></Col>
             <Col md={3}><FriendsList /></Col>
           </Row>
+          <YourToyProblems />
           <Stats />
         </Grid>
       </div>
@@ -66,13 +69,12 @@ const mapStateToProps = (state) => {
     modal: state.modal,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
-    userProfileData:  state.userProfileData,
     userProfileData:  state.userProfileData
   };
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserProfileData: populateUserProfileAndSessionData}, dispatch);
+  return bindActionCreators({closeModal: closeModal, dashboardToSession: dashboardToSession, populateUserProfileData: populateUserProfileAndSessionData, populateUserToyProblems: populateUserToyProblems}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

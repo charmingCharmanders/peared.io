@@ -59,6 +59,20 @@ module.exports.getFriends = (req, res) => {
     });
 };
 
+module.exports.getPrompts = (req, res) => {
+  models.Prompt
+    .where({ userId: req.params.id })
+    .fetchAll({
+      withRelated: ['tests']
+    })
+    .then(promptWithTest => {
+      res.status(200).send(promptWithTest)
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+};
+
 module.exports.getSessions = (req, res) => {
   models.Session
     .query({

@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
       table.integer('difficulty').unsigned();
       table.integer('userId').unsigned();
       table.foreign('userId').references('id').inTable('profiles');
-      table.integer('rating').nullable();
+      table.integer('rating').nullable();      
       table.timestamp('createdAt').defaultTo(knex.fn.now());
       table.timestamp('updatedAt').defaultTo(knex.fn.now());
     })

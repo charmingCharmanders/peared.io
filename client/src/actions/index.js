@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const openModal = () => {
-  console.log('inside openModal');
   return {
     type: 'OPEN_MODAL'
   };
@@ -10,6 +9,52 @@ const openModal = () => {
 const closeModal = () => {
   return {
     type: 'CLOSE_MODAL'
+  };
+};
+
+const postUserToyProblem = (obj) => {
+  return dispatch => {
+    axios.post('/api/prompts', obj)
+      .then(prompt => {
+        dispatch({
+          type: 'POST_USER_TOY_PROBLEM',
+          payload: prompt
+        })
+      })
+  }
+}
+
+const toggleUpdateUserToyProblemModal = (show, toyProblem) => {
+  return {
+    type: 'TOGGLE_UPDATE_USER_TOY_PROBLEM_MODAL',
+    payload: show,
+  }
+};
+
+const getUserToyProblemTests = (userId) => {
+  return dispatch => {
+    axios.get(`/api/tests/${userId}`)
+      .then(test => {
+        dispatch({
+          type: 'GET_USER_TOY_PROBLEM_TESTS',
+          payload: test.data
+        })
+      })    
+  }
+}
+
+const setCurrentUserToyProblem = (toyProblem) => {
+
+  return {
+    type: 'SET_CURRENT_USER_TOY_PROBLEM',
+    payload: toyProblem
+  };
+};
+
+const toggleNewUserToyProblemModal = (status) => {
+  return {
+    type: 'TOGGLE_NEW_USER_TOY_PROBLEM_MODAL',
+    payload: status
   };
 };
 
@@ -66,6 +111,48 @@ const updateSessionEnd = () => {
   };
 }
 
+const populateUserToyProblems = () => {
+  let id = null;
+  return dispatch => {
+    axios.get('/loggedin')
+      .then(result => {
+        id = result.data.id;
+        axios.get(`/api/profiles/${result.data.id}/prompts`)
+          .then(result => {
+            dispatch({
+              type: 'POPULATE_USER_TOY_PROBLEMS',
+              payload: result.data
+            })
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      });
+  }
+}
+
+const updateUserToyProblem = ({name, description, category, difficulty, updatedAt, id}) => {
+  axios.put(`/api/prompts/${id}`, {
+    name: name, 
+    description: description, 
+    category: category, 
+    difficulty: difficulty, 
+    updatedAt: updatedAt
+  });
+
+  return {
+    type: 'UPDATE_USER_TOY_PROBLEMS',
+    payload: {
+      name: name, 
+      description: description, 
+      category: category, 
+      difficulty: difficulty, 
+      updatedAt: updatedAt,
+      id: id
+    }
+  };
+}
+
 const populateUserProfileAndSessionData = () => {
   return dispatch => {
     axios.get('/loggedin')
@@ -106,7 +193,6 @@ const populateUserProfileAndSessionData = () => {
       .then(() => {
         axios.get(`/api/friends?profileId=${id}`)
         .then(result => {
-          console.log('friends results**********', result);
           dispatch({
             type: 'POPULATE_USERS_FRIENDS',
             payload: result.data
@@ -128,7 +214,14 @@ export {
   updateButtonStatus,
   updateTestResults,
   populateUserProfileAndSessionData,
-  updateSessionEnd
+  updateSessionEnd,
+  populateUserToyProblems,
+  toggleUpdateUserToyProblemModal,
+  toggleNewUserToyProblemModal,
+  setCurrentUserToyProblem,
+  updateUserToyProblem,
+  getUserToyProblemTests,
+  postUserToyProblem
 }
 
 
