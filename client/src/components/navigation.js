@@ -15,7 +15,7 @@ class Navigation extends React.Component {
   }
 
   joinRoom() {
-    console.log("this.props.socket:", this);
+    console.log('this.props.socket:', this);
     this.props.openModal();
     this.props.socket.emit('join room'); 
   }
@@ -28,12 +28,14 @@ class Navigation extends React.Component {
 
   render() {
     let buttonSet = null;
+    let extraInfo = null;
     if (this.props.nav) {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', float: 'right', marginRight: '-15px'}}>
           <Button bsStyle="info" onClick={this.joinRoom.bind(this)}>Start Session</Button>
           <Button href="/logout">Log out</Button>
         </ButtonToolbar>;
+      extraInfo = <p className="navbar-text">{this.props.onlineUsers} users currently online</p>;
     } else {
       buttonSet = 
         <ButtonToolbar style={{marginTop: '7px', float: 'right', marginRight: '-15px'}}>
@@ -42,7 +44,8 @@ class Navigation extends React.Component {
             <Button bsStyle="info" onClick={this.leaveRoom.bind(this)}>End Session</Button>
           </LinkContainer>
         </ButtonToolbar>;
-    }
+      extraInfo = <p className="navbar-text">{this.props.currentTime}</p>;
+    }    
 
     return (
       <Navbar>
@@ -50,7 +53,7 @@ class Navigation extends React.Component {
           <Navbar.Brand>
             <a href="/">Peared.io</a>
           </Navbar.Brand>
-          <p className="navbar-text">{this.props.onlineUsers} users currently online</p> 
+          {extraInfo}
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
@@ -65,7 +68,8 @@ class Navigation extends React.Component {
 var mapStateToProps = function(state) {
   return {
     nav: state.nav,
-    onlineUsers: state.onlineUsers
+    onlineUsers: state.onlineUsers,
+    currentTime: state.currentTime
   };
 };
 

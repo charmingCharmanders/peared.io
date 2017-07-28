@@ -12,11 +12,13 @@ import {updateUserProfileData} from './reducer-profile';
 import {updateUsersFriends} from './reducer-friends';
 import {toggleDashboard} from './reducer-dashboard';
 import {populateLeaderboard} from './reducer-leaderboard';
+import {updateCurrentTime} from './reducer-current-time';
 
 export default combineReducers({
   modal: toggleModal,
   nav: toggleNav,
   prompt: updatePrompt,
+  currentTime: updateCurrentTime,
   code: updateCode,
   onlineUsers: updateOnlineUsers,
   roomId: updateRoomId,

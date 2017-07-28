@@ -9,6 +9,30 @@ module.exports.calculateSessionScore = (timeLimitInSeconds, promptTime, promptDi
   }
 }
 
+module.exports.generateNewTime = (hours, minutes, seconds) =>{
+  console.log('the minutes:', minutes);
+  if(parseInt(seconds) < 59) {
+    return `${hours}:${minutes}:${incrementTimeUnits(seconds)}`;
+  } else if(parseInt(minutes) < 59) {
+    return `${hours}:${incrementTimeUnits(minutes)}:00`;
+  } else if(parseInt(hours) < 59) {
+    return `${incrementTimeUnits(hours)}:00:00`;
+  } else {
+    return '00:00:00';
+  }
+};
+
+const incrementTimeUnits = (units)=>{
+  units = parseInt(units); 
+  units++;
+  if(units < 10) {
+    units = `0${units.toString()}`;
+  } else {
+    units = units.toString();
+  }
+  return units
+}
+
 const convertStartEndToLengthOfTime = (start, end) => {
   let minutes = Math.floor((Date.parse(end) - Date.parse(start))/60000)
   let seconds = Math.floor((((Date.parse(end) - Date.parse(start))/60000) - minutes) * 60);
