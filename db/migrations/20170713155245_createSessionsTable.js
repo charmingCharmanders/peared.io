@@ -10,8 +10,8 @@ exports.up = function(knex, Promise) {
       table.foreign('promptId').references('id').inTable('prompts');
       table.string('solutionCode').nullable();
       table.integer('rating').nullable();
-      table.string('numberOfTests').nullable();
-      table.string('numberOfTestsPassed').nullable();
+      table.integer('numberOfTests').nullable();
+      table.integer('numberOfTestsPassed').nullable();
       table.dateTime('startedAt').defaultTo(knex.fn.now());
       table.dateTime('endedAt').nullable();
     })

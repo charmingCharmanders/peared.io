@@ -56,6 +56,19 @@ class Dashboard extends React.Component {
         </Modal.Footer>
       </Modal>;
 
+    let questionModal =
+      <Modal show={this.props.questionModal} onHide={this.closeButton}>
+        <Modal.Header closeButton>
+          <Modal.Title>The Question was helper..</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5>The problem will go here</h5>
+        </Modal.Body>
+        <Modal.Footer>
+          <h5>Something else could go here...</h5>
+        </Modal.Footer>
+      </Modal>;
+
     return (
       <div>
         <Grid>
@@ -66,6 +79,7 @@ class Dashboard extends React.Component {
             <Col md={12}><h2>Welcome, {this.props.userProfileData.firstName}! </h2></Col>
           </Row>
           {modal}
+          {questionModal}
           <br />
           <Row className='show-grid'>
             <Col md={9}><HistoryTable /></Col>

@@ -45,30 +45,24 @@ const convertStartEndToLengthOfTime = (start, end) => {
 
 module.exports.formatSessionsData = (sessionArray, id) => {
   let sessionInfo = [];
+  console.log('session Array:', sessionArray);
   sessionArray.forEach((session) => {
     let lengthOfTime = convertStartEndToLengthOfTime(session.startedAt, session.endedAt);
+    let name;
     if (session.profile1.id === id) {
-      let name = session.profile2.firstName + " " + session.profile2.lastName
-      sessionInfo.push({
-        name: name,
-        promptName: session.prompt.name,
-        lengthOfSession: lengthOfTime,
-        lengthOfSessionInSeconds: Date.parse(session.endedAt) - Date.parse(session.startedAt),
-        category: session.prompt.category,
-        difficulty: session.prompt.difficulty,
-        rating: session.rating
-      });
+      name = session.profile2.firstName + " " + session.profile2.lastName
     } else {
-      let name = session.profile1.firstName + " " + session.profile1.lastName
-      sessionInfo.push({
-        name: name,
-        promptName: session.prompt.name,
-        lengthOfSession: lengthOfTime,
-        category: session.prompt.category,
-        difficulty: session.prompt.difficulty,
-        rating: session.rating
-      });
+      name = session.profile1.firstName + " " + session.profile1.lastName
     }
+    sessionInfo.push({
+      name: name,
+      promptName: session.prompt.name,
+      lengthOfSession: lengthOfTime,
+      category: session.prompt.category,
+      difficulty: session.prompt.difficulty,
+      rating: session.rating,
+      solution: session.solutionCode
+    });
   })
   return sessionInfo;
 }
