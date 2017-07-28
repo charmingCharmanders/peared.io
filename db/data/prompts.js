@@ -6,7 +6,6 @@ module.exports = [
     hint: 'Use Addition.',
     skeletonCode: 'const addTwoNumbers = function (a, b) { }',
     solutionCode: 'const addTwoNumbers = function (a, b) { return a + b; }',
-    rating: null,
     userId: 1,
     difficulty: 1
   },
@@ -17,7 +16,6 @@ module.exports = [
     hint: 'Use math.',
     skeletonCode: 'const multiplyTwoNumbers = function (a, b) { }',
     solutionCode: 'const multiplyTwoNumbers = function (a, b) { return a * b; }',
-    rating: null,
     userId: 2,
     difficulty: 2
   },
@@ -28,7 +26,6 @@ module.exports = [
     hint: 'Use the remainder operator.',
     skeletonCode: 'const evenOrOdd = function (a) { }',
     solutionCode: 'const evenOrOdd = function (a) { if (a%2 === 0) {return `Even`} else if (a%2 === 1) {return `Odd`} }',
-    rating: null,
     userId: 3,
     difficulty: 3
   },

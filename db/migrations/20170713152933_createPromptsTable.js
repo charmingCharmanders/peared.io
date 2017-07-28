@@ -8,10 +8,10 @@ exports.up = function(knex, Promise) {
       table.string('hint');
       table.string('skeletonCode');
       table.string('solutionCode');
-      table.integer('difficulty').unsigned();
       table.integer('userId').unsigned();
       table.foreign('userId').references('id').inTable('profiles');
-      table.integer('rating').nullable();      
+      table.integer('difficulty');
+      table.string('createdBy');
       table.timestamp('createdAt').defaultTo(knex.fn.now());
       table.timestamp('updatedAt').defaultTo(knex.fn.now());
     })
