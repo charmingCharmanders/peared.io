@@ -74,6 +74,23 @@ const updateTestResults = (testResults) => {
   };
 };
 
+const incrementCurrentTime = (currentTime) => {
+  console.log('incrementing the current time:', currentTime);
+  var result = "00:00:00";
+  result = helpers.generateNewTime(...currentTime.split(':'));
+  return {
+    type: 'UPDATE_CURRENT_TIME',
+    payload: result
+  };
+};
+
+const setCurrentTimeToZero = () => {
+  return {
+    type: 'UPDATE_CURRENT_TIME',
+    payload: "00:00:00"
+  };
+};
+
 const populateLeaderboard = () => {
   return dispatch => {
     axios.get('/api/profiles?sortBy=rating&limit=10')
@@ -209,6 +226,8 @@ export {
   dashboardToSession,
   sessionToDashboard,
   updatePrompt,
+  incrementCurrentTime,
+  setCurrentTimeToZero,
   updateOnlineUsers,
   updateCode,
   updateRoomId,
