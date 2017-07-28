@@ -375,7 +375,6 @@ export {
   postUserToyProblem,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
-  // startSession,
   endSession,
   updateToyProblemTests,
   updateSkeletonCode,
