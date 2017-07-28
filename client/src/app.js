@@ -48,6 +48,15 @@ class App extends React.Component {
         this.props.updatePrompt(sessionData.prompt);
         this.props.updateRoomId(sessionData.roomId);
       });
+      this.state.socket.on('end session', () => {
+        this.props.sessionToDashboard();
+        this.props.updateButtonStatus(true);
+        this.props.updateCode(null);
+        this.props.updateCurrentSession(null);
+        this.props.updateRoomId(null);
+        this.props.updateTestResults(null);
+        this.state.socket.emit('leave room');
+      });
       this.state.socket.on('users online', (userCount)=>{
         this.props.updateOnlineUsers(userCount);
       });
@@ -56,15 +65,6 @@ class App extends React.Component {
       });
       this.state.socket.on('testResults', (testResults)=>{
         this.props.updateTestResults(testResults);
-      });
-      this.state.socket.on('submit code', ()=>{
-        this.props.sessionToDashboard();
-        this.props.updateButtonStatus(true);
-        this.props.updateCode(null);
-        this.props.updateCurrentSession(null);
-        this.props.updateRoomId(null);
-        this.props.updateTestResults(null);
-        this.state.socket.emit('leave room');
       });
     });
   }
