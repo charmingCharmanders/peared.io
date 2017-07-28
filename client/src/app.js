@@ -63,7 +63,6 @@ class App extends React.Component {
         this.props.updateCurrentSession(null);
         this.props.updateRoomId(null);
         this.props.updateTestResults(null);
-        this.props.closeModal();
         this.state.socket.emit('leave room');
       });
     });
