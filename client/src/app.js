@@ -6,8 +6,9 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
+import {closeModal, populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
 import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
   constructor(props) {
@@ -55,6 +56,11 @@ class App extends React.Component {
       });
       this.state.socket.on('testResults', (testResults)=>{
         this.props.updateTestResults(testResults);
+      });
+      this.state.socket.on('submit code', ()=>{
+        this.props.sessionToDashboard();
+        this.props.closeModal();
+        this.state.socket.emit('leave room');
       });
     });
   }
@@ -107,6 +113,7 @@ var mapStateToProps = function(state) {
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators(
     {
+      closeModal: closeModal,
       populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
       updateButtonStatus: updateButtonStatus,
       dashboardToSession: dashboardToSession,

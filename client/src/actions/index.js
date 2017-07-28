@@ -162,10 +162,10 @@ const endSession = (sessions, session, code, testResults) => {
   );
 
   return dispatch => {
-    dispatch({
-      type: 'END_SESSION',
-      payload: sessions.push(session)
-    });
+    // dispatch({
+    //   type: 'END_SESSION',
+    //   payload: sessions.push(session)
+    // });
 
     axios.post('/api/sessions', {
       profileId1: session.profileId1,

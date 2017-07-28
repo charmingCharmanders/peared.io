@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {endSession} from '../actions';
+import {closeModal, endSession, sessionToDashboard} from '../actions';
+import {LinkContainer} from 'react-router-bootstrap';
 
 class TextEditorButtons extends React.Component {
-  
+
   minifyString(string) {
     return string.replace(/\s+/g, ' ');
   }
 
   codeSubmit() {
+    console.log(2222, 'testing');
     this.props.endSession(this.props.sessionData, this.props.currentSession, this.props.code, this.props.testResults);
+    this.props.socketConnection.emit('submit code');
   }
 
   codeTest() {
@@ -42,7 +45,9 @@ var mapStateToProps = function (state) {
 
 var mapDispatchToProps = function (dispatch) {
   return bindActionCreators({
-    endSession: endSession
+    closeModal: closeModal,
+    endSession: endSession,
+    sessionToDashboard: sessionToDashboard
   }, dispatch);
 };
 
