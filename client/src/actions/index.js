@@ -1,7 +1,4 @@
 let userProfileId;
-let partnerId;
-let sessionId;
-let sessionStartTime;
 
 const helpers = require('./helpers');
 import axios from 'axios';
@@ -163,38 +160,38 @@ const endSession = (sessions, session, code, testResults) => {
     testResults.testsCount,
     testResults.testsPassed
   );
+
   return dispatch => {
     dispatch({
       type: 'END_SESSION',
       payload: sessions.push(session)
     });
+
+    axios.post('/api/sessions', {
+      profileId1: session.profileId1,
+      profileId2: session.profileId2,
+      promptId: session.prompt.id,
+      rating: sessionScore,
+      solutionCode: code,
+      numberOfTests: testResults.testsCount,
+      numberOfTestsPassed: testResults.testsPassed,
+      startedAt: session.startedAt,
+      endedAt: sessionEndedAt
+    });
+
     axios.get(`/api/profiles/${session.profileId1}`)
-    .then((result) => {
-      axios.put(`/api/profiles/${session.profileId1}`, {
-        rating: Number(result.data.rating) + sessionScore
-      })
-      .then(() => {
-        axios.get(`/api/profiles/${session.profileId2}`)
-        .then(results => {
-          axios.put(`/api/profiles/${session.profileId2}`, {
-            rating: Number(result.data.rating) + sessionScore
-          })
-          .then(() => {
-            axios.post('/api/sessions', {
-              profileId1: session.profileId1,
-              profileId2: session.profileId2,
-              promptId: session.prompt.id,
-              rating: sessionScore,
-              solutionCode: code,
-              numberOfTests: testResults.testsCount,
-              numberOfTestsPassed: testResults.testsPassed,
-              startedAt: session.startedAt,
-              endedAt: sessionEndedAt
-            });
-          });
+      .then(profile => {
+        axios.put(`/api/profiles/${session.profileId1}`, {
+          rating: Number(profile.data.rating) + sessionScore
         });
       });
-    });
+
+    axios.get(`/api/profiles/${session.profileId2}`)
+      .then(profile => {
+        axios.put(`/api/profiles/${session.profileId2}`, {
+          rating: Number(profile.data.rating) + sessionScore
+        });
+      });
   };
 };
 
@@ -214,7 +211,6 @@ export {
   updateTestResults,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
-  startSession,
   endSession
 };
 
