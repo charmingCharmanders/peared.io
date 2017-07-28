@@ -2,7 +2,7 @@ const updateCurrentSession = function (state = {}, action) {
   switch (action.type) {
   case 'UPDATE_CURRENT_SESSION':
     if (action.payload === null) {
-      return Object.assign({}, state, {});
+      return {};
     } else {
       return Object.assign({}, state, 
         {
