@@ -22,6 +22,7 @@ class Navigation extends React.Component {
 
   leaveRoom() {
     this.props.sessionToDashboard();
+    this.props.updateButtonStatus(true);
     this.props.updateCode(null);
     this.props.updateCurrentSession(null);
     this.props.updateRoomId(null);
