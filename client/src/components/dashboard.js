@@ -9,7 +9,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {populateUserToyProblems, updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
+import {closeQuestionModal, updateButtonStatus, populateUserToyProblems, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 
@@ -58,6 +58,23 @@ class Dashboard extends React.Component {
         </Modal.Footer>
       </Modal>;
 
+    let questionModal =
+      this.props.sessionData.sessionArray ? 
+        <Modal show={this.props.questionModal} onHide={this.props.closeQuestionModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.sessionData.sessionArray[this.props.currentQuestion].promptName}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>{this.props.sessionData.sessionArray[this.props.currentQuestion].lengthOfSession}</h4>
+            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].solution}</h5>
+          </Modal.Body>
+          <Modal.Footer>
+            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTestsPassed} /
+              {this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTests}
+            </h5>
+          </Modal.Footer>
+        </Modal> : '';
+
     return (
       <div>
         <Grid>
@@ -68,6 +85,7 @@ class Dashboard extends React.Component {
             <Col md={12}><h2>Welcome, {this.props.userProfileData.firstName}! </h2></Col>
           </Row>
           {modal}
+          {questionModal}
           <br />
           <Row className='show-grid'>
             <Col md={9}><HistoryTable /></Col>
@@ -85,9 +103,11 @@ class Dashboard extends React.Component {
 const mapStateToProps = (state) => {
   return {
     modal: state.modal,
+    currentQuestion: state.currentQuestion,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
-    userProfileData:  state.userProfileData
+    userProfileData: state.userProfileData,
+    questionModal: state.questionModal
   };
 };
 
@@ -95,6 +115,7 @@ var mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       populateUserToyProblems: populateUserToyProblems,
+      closeQuestionModal: closeQuestionModal,
       closeModal: closeModal,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,

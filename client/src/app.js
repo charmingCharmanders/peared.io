@@ -6,8 +6,9 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, updatePrompt, updateCode, updateTestResults, updateOnlineUsers} from './actions';
+import {closeModal, populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
 import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class App extends React.Component {
   }
 
   openConnection() {
-    console.log("profile id:", this);
+    console.log('profile id:', this);
     this.setState({
       socket: io.connect(this.connectionUrl(), { query: { profileId: this.props.profile.id } })
     });
@@ -43,6 +44,7 @@ class App extends React.Component {
       this.state.socket.on('startSession', (sessionData) =>{
         this.props.updateButtonStatus(false);
         this.props.updateCode(sessionData.prompt.skeletonCode);
+        this.props.updateCurrentSession(sessionData);
         this.props.updatePrompt(sessionData.prompt);
         this.props.updateRoomId(sessionData.roomId);
       });
@@ -55,15 +57,22 @@ class App extends React.Component {
       this.state.socket.on('testResults', (testResults)=>{
         this.props.updateTestResults(testResults);
       });
+      this.state.socket.on('submit code', ()=>{
+        this.props.sessionToDashboard();
+        this.props.updateCode(null);
+        this.props.updateCurrentSession(null);
+        this.props.updateRoomId(null);
+        this.props.updateTestResults(null);
+        this.state.socket.emit('leave room');
+      });
     });
   }
 
   componentWillMount() {
     this.props.populateUserProfileFriendsAndSessionData()
-    .then(()=>{
-      console.log("this is:", this);
-      this.openConnection();
-    });
+      .then(()=>{
+        this.openConnection();
+      });
   }
 
   render() {
@@ -107,15 +116,18 @@ var mapStateToProps = function(state) {
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators(
     {
+      closeModal: closeModal,
       populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
       updateButtonStatus: updateButtonStatus,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,
       updateCode: updateCode,
+      updateCurrentSession: updateCurrentSession,
       updatePrompt: updatePrompt,
       updateTestResults: updateTestResults,
       sessionToDashboard: sessionToDashboard,
       updateOnlineUsers: updateOnlineUsers,
+      startSession: startSession
     }, dispatch);
 };
 

@@ -1,7 +1,4 @@
 let userProfileId;
-let partnerId;
-let sessionId;
-let sessionStartTime;
 
 const helpers = require('./helpers');
 import axios from 'axios';
@@ -30,7 +27,7 @@ const postUserToyProblem = (newToyProblem, newToyProblemTest) => {
               newToyProblem: prompt.data,
               newToyProblemTest: test.data
             });
-          })
+          });
 
       });
   };
@@ -56,7 +53,6 @@ const getUserToyProblemTests = (userId) => {
 };
 
 const setCurrentUserToyProblem = (toyProblem) => {
-
   return {
     type: 'SET_CURRENT_USER_TOY_PROBLEM',
     payload: toyProblem
@@ -69,6 +65,19 @@ const toggleNewUserToyProblemModal = (status) => {
     payload: status
   };
 };
+
+const openQuestionModal = () => {
+  return {
+    type: 'OPEN_QUESTION_MODAL'
+  };
+};
+
+const closeQuestionModal = () => {
+  return {
+    type: 'CLOSE_QUESTION_MODAL'
+  };
+};
+
 
 const dashboardToSession = () => {
   return {
@@ -96,6 +105,20 @@ const updateCode = (code) => {
   };
 };
 
+const updateCurrentQuestion = (questionNumber) => {
+  return {
+    type: 'UPDATE_CURRENT_QUESTION',
+    payload: questionNumber
+  };
+};
+
+const updateCurrentSession = (session) => {
+  return {
+    type: 'UPDATE_CURRENT_SESSION',
+    payload: session
+  };
+};
+
 const updateRoomId = (roomId) => {
   return {
     type: 'UPDATE_ROOM_ID',
@@ -104,7 +127,7 @@ const updateRoomId = (roomId) => {
 };
 
 const updateOnlineUsers = (userCount) => {
-  console.log("users count is:", userCount);
+  console.log('users count is:', userCount);
   return {
     type: 'UPDATE_ONLINE_USERS',
     payload: userCount
@@ -127,7 +150,7 @@ const updateTestResults = (testResults) => {
 
 const incrementCurrentTime = (currentTime) => {
   console.log('incrementing the current time:', currentTime);
-  var result = "00:00:00";
+  var result = '00:00:00';
   result = helpers.generateNewTime(...currentTime.split(':'));
   return {
     type: 'UPDATE_CURRENT_TIME',
@@ -138,7 +161,7 @@ const incrementCurrentTime = (currentTime) => {
 const setCurrentTimeToZero = () => {
   return {
     type: 'UPDATE_CURRENT_TIME',
-    payload: "00:00:00"
+    payload: '00:00:00'
   };
 };
 
@@ -150,13 +173,13 @@ const populateLeaderboard = () => {
           return {
             name: profile.firstName,
             rating: profile.rating
-            }
+          };
         });
         dispatch({
           type: 'POPULATE_LEADERBOARD',
           payload: ratingArray
         });
-    });
+      });
   };
 };
 
@@ -171,7 +194,7 @@ const populateUserToyProblems = () => {
             dispatch({
               type: 'POPULATE_USER_TOY_PROBLEMS',
               payload: result.data
-            })
+            });
           })
           .catch(err => {
             console.log(err);
@@ -218,112 +241,83 @@ const populateUserProfileFriendsAndSessionData = () => {
 
   return dispatch => {
     return axios.get('/loggedin')
-    .then(result => {
-      dispatch({
-        type: 'POPULATE_USER_PROFILE_DATA',
-        payload: result.data
-      });
-      return result;
-    })
-    .then((result) => {
-      userProfileId = result.data.id;
-      axios.get(`/api/profiles/${userProfileId}/sessions`)
       .then(result => {
-        let sessionInfo;
-        if (result.data) {
-          sessionInfo = helpers.formatSessionsData(result.data, userProfileId);
-        } else {
-          sessionInfo = [];
-        }
         dispatch({
-          type: 'POPULATE_USER_SESSIONS',
-          payload: sessionInfo
-        })
-      })
-      .then(() => {
-        axios.get(`/api/friends?profileId=${userProfileId}`)
-        .then(result => {
-          dispatch({
-            type: 'POPULATE_USERS_FRIENDS',
-            payload: result.data
-          });
+          type: 'POPULATE_USER_PROFILE_DATA',
+          payload: result.data
         });
-      });
-    });
-  };
-};
-
-const startSession = ({profileId1, profileId2, prompt}) => {
-  return dispatch => {
-    dispatch({
-      type: 'START_SESSION',
-      payload: {
-        profileId1: profileId1,
-        profileId2: profileId2,
-        promptId: prompt.id,
-        difficulty: prompt.difficulty
-      }
-    })
-    sessionStartTime = Date();
-    axios.post('/api/sessions', {
-      profileId1: profileId1,
-      profileId2: profileId2,
-      promptId: prompt.id
-    })
-    .then(result => {
-      sessionId = result.data.id;
-      Number(result.data.profileId1) === userProfileId ? partnerId = result.data.profileId2 : partnerId = result.data.profileId1;
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  };
-};
-
-const endSession = (userSessionsArray, currentSessionObject) => {
-  userSessionsArray.push(currentSessionObject);
-  return dispatch => {
-    dispatch({
-      type: 'END_SESSION',
-      payload: userSessionsArray
-    })
-    axios.get(`/api/profiles/${userProfileId}`)
-    .then((result) => {
-      let sessionEndTime = new Date();
-      let sessionScore = helpers.calculateSessionScore(3600, (Date.parse(sessionEndTime) - Date.parse(sessionStartTime))/1000, currentSessionObject.difficulty, currentSessionObject.numberOfTests, currentSessionObject.numberOfTestsPassed);
-      let newRating;
-      if (result.data.rating === null || result.data.rating === NaN) {
-        newRating = sessionScore;
-      } else {
-        newRating = sessionScore + result.data.rating;
-      }
-      axios.put(`/api/profiles/${userProfileId}`, {
-        rating: Math.floor(newRating)
+        return result;
       })
-      .then(() => {
-        axios.get(`/api/profiles/${partnerId.toString()}`)
-        .then(results => {
-          if (!results.data.rating) {
-            newRating = sessionScore;
-          } else {
-            newRating = sessionScore + results.data.rating;
-          }
-          axios.put(`/api/profiles/${partnerId}`, {
-            rating: Math.floor(newRating)
+      .then((result) => {
+        userProfileId = result.data.id;
+        axios.get(`/api/profiles/${userProfileId}/sessions`)
+          .then(result => {
+            let sessionInfo;
+            if (result.data) {
+              sessionInfo = helpers.formatSessionsData(result.data, userProfileId);
+            } else {
+              sessionInfo = [];
+            }
+            dispatch({
+              type: 'POPULATE_USER_SESSIONS',
+              payload: sessionInfo
+            });
           })
           .then(() => {
-            axios.put(`/api/sessions/${sessionId}`, {
-              endedAt: sessionEndTime,
-              solutionCode: 'solution code here', //currentSessionObject.solutionCode,
-              rating: Math.round(sessionScore),
-              numberOfTests: 'tests here', //currentSessionObject.numberOfTests,
-              numberOfTestsPassed: 'tests passed here' //currentSessionObject.numberOfTestsPassed
-            });
+            axios.get(`/api/friends?profileId=${userProfileId}`)
+              .then(result => {
+                dispatch({
+                  type: 'POPULATE_USERS_FRIENDS',
+                  payload: result.data
+                });
+              });
           });
+      });
+  };
+};
+
+const endSession = (sessions, session, code, testResults) => {
+  const sessionEndedAt = new Date();
+  const sessionScore = helpers.calculateSessionScore(
+    3600,
+    (Date.parse(sessionEndedAt) - Date.parse(session.startedAt)) / 1000,
+    session.prompt.difficulty,
+    testResults.testsCount,
+    testResults.testsPassed
+  );
+
+  return dispatch => {
+    // dispatch({
+    //   type: 'END_SESSION',
+    //   payload: sessions.push(session)
+    // });
+
+    axios.post('/api/sessions', {
+      profileId1: session.profileId1,
+      profileId2: session.profileId2,
+      promptId: session.prompt.id,
+      rating: sessionScore,
+      solutionCode: code,
+      numberOfTests: testResults.testsCount,
+      numberOfTestsPassed: testResults.testsPassed,
+      startedAt: session.startedAt,
+      endedAt: sessionEndedAt
+    });
+
+    axios.get(`/api/profiles/${session.profileId1}`)
+      .then(profile => {
+        axios.put(`/api/profiles/${session.profileId1}`, {
+          rating: Number(profile.data.rating) + sessionScore
         });
       });
-    });
-  }
+
+    axios.get(`/api/profiles/${session.profileId2}`)
+      .then(profile => {
+        axios.put(`/api/profiles/${session.profileId2}`, {
+          rating: Number(profile.data.rating) + sessionScore
+        });
+      });
+  };
 };
 
 const updateSkeletonCode = (code) => {
@@ -358,6 +352,8 @@ const setNewSolutionCode = (code) => {
 export {
   openModal,
   closeModal,
+  openQuestionModal,
+  closeQuestionModal,
   dashboardToSession,
   sessionToDashboard,
   updatePrompt,
@@ -365,6 +361,7 @@ export {
   setCurrentTimeToZero,
   updateOnlineUsers,
   updateCode,
+  updateCurrentSession,
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
@@ -378,11 +375,12 @@ export {
   postUserToyProblem,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
-  startSession,
+  // startSession,
   endSession,
   updateToyProblemTests,
   updateSkeletonCode,
   updateSolutionCode,
   setNewSkeletonCode,
   setNewSolutionCode,
+  updateCurrentQuestion
 };

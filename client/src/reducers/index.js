@@ -6,6 +6,7 @@ import {toggleNav} from './reducer-nav.js';
 import {updatePrompt} from './reducer-prompt';
 import {updateCode} from './reducer-code';
 import {updateOnlineUsers} from './reducer-online-users';
+import {updateCurrentSession} from './reducer-current-session';
 import {updateRoomId} from './reducer-room-id';
 import {updateButtonStatus} from './reducer-button-status';
 import {updateTestResults} from './reducer-test-results';
@@ -21,14 +22,19 @@ import {updateSkeletonCode} from './reducer-skeleton';
 import {updateSolutionCode} from './reducer-solution';
 import {setNewSkeletonCode} from './reducer-new-skeleton';
 import {setNewSolutionCode} from './reducer-new-solution';
+import {updateCurrentQuestion} from './reducer-current-question';
+import {toggleQuestionModal} from './reducer-question-modal.js';
 
 export default combineReducers({
+  questionModal: toggleQuestionModal,
+  currentQuestion: updateCurrentQuestion,
   modal: toggleModal,
   nav: toggleNav,
   prompt: updatePrompt,
   currentTime: updateCurrentTime,
   code: updateCode,
   onlineUsers: updateOnlineUsers,
+  currentSession: updateCurrentSession,
   roomId: updateRoomId,
   buttonStatus: updateButtonStatus,
   testResults: updateTestResults,
@@ -47,4 +53,3 @@ export default combineReducers({
   newSkeletonCode: setNewSkeletonCode,
   newSolutionCode: setNewSolutionCode
 });
-
