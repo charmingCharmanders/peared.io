@@ -4,12 +4,13 @@ import HistoryTable from './historyTable';
 import FriendsList from './friendsList';
 import YourToyProblems from './yourToyProblems';
 import Leaderboard from './leaderboard';
+import SearchProfiles from './searchProfiles';
 import Stats from './stats';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeQuestionModal, updateButtonStatus, populateUserToyProblems, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
+import {closeQuestionModal, updateButtonStatus, populateUserToyProblems, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard, populateUsers} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 import Modal from './modal';
@@ -22,6 +23,7 @@ class Dashboard extends React.Component {
   componentWillMount() {
     this.props.populateUserToyProblems();
     this.props.populateLeaderboard();
+    this.props.populateUsers();
   }
 
   render() {
@@ -36,6 +38,7 @@ class Dashboard extends React.Component {
           </Row>
           <br />
           <Row className='show-grid'>
+            <Col md={9}><SearchProfiles /></Col>
             <Col md={9}><HistoryTable /></Col>
             <Col md={3}><FriendsList /></Col>
             <Col md={3}><Leaderboard /></Col>
@@ -69,7 +72,8 @@ var mapDispatchToProps = (dispatch) => {
       updateCode: updateCode,
       populateLeaderboard: populateLeaderboard,
       populateUserToyProblems: populateUserToyProblems,
-      updateButtonStatus: updateButtonStatus
+      updateButtonStatus: updateButtonStatus,
+      populateUsers: populateUsers
     },
     dispatch);
 };

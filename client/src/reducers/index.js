@@ -23,6 +23,8 @@ import {updateSolutionCode} from './reducer-solution';
 import {setNewSkeletonCode} from './reducer-new-skeleton';
 import {setNewSolutionCode} from './reducer-new-solution';
 import {updateCurrentQuestion} from './reducer-current-question';
+import {updateSearch} from './reducer-updateSearch';
+import {populateUsers} from './reducer-populateUsers';
 
 export default combineReducers({
   currentQuestion: updateCurrentQuestion,
@@ -49,5 +51,8 @@ export default combineReducers({
   skeletonCode: updateSkeletonCode,
   solutionCode: updateSolutionCode,
   newSkeletonCode: setNewSkeletonCode,
-  newSolutionCode: setNewSolutionCode
+  newSolutionCode: setNewSolutionCode,
+  leaderboard: populateLeaderboard,
+  searchResults: updateSearch,
+  users: populateUsers
 });

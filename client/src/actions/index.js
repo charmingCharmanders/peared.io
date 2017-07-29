@@ -217,20 +217,20 @@ const updateToyProblemTests = (testArray) => {
 
 const updateUserToyProblem = ({name, description, category, difficulty, updatedAt, id}) => {
   axios.put(`/api/prompts/${id}`, {
-    name: name, 
-    description: description, 
-    category: category, 
-    difficulty: difficulty, 
+    name: name,
+    description: description,
+    category: category,
+    difficulty: difficulty,
     updatedAt: updatedAt
   });
 
   return {
     type: 'UPDATE_USER_TOY_PROBLEMS',
     payload: {
-      name: name, 
-      description: description, 
-      category: category, 
-      difficulty: difficulty, 
+      name: name,
+      description: description,
+      category: category,
+      difficulty: difficulty,
       updatedAt: updatedAt,
       id: id
     }
@@ -349,6 +349,82 @@ const setNewSolutionCode = (code) => {
   };
 };
 
+const populateUsers = () => {
+  return dispatch => {
+    axios.get('/api/profiles?properties=id,firstName,lastName')
+    .then(results => {
+      dispatch({
+        type: 'POPULATE_USERS',
+        payload: results
+      })
+    })
+  }
+}
+
+const updateSearch = (searchObj) => {
+  return dispatch => {
+    let searchResults = [];
+    searchObj.users.forEach(prof => {
+      name = prof.firstName + ' ' + prof.lastName;
+      if (name.toLowerCase().includes(searchObj.value.toLowerCase())) {
+        searchResults.push({
+          name: name,
+          id: prof.id
+        });
+      }
+    })
+    dispatch({
+      type: 'UPDATE_SEARCH_RESULTS',
+      payload: {
+        searchResults: searchResults
+      }
+    })
+  };
+};
+
+const addFriend = (userId, friendId, friendArray) => {
+  return dispatch => {
+    let friendObj = {
+      profileId: userId,
+      friendId: friendId,
+      status: 'pending',
+      updatedBy: userId
+    }
+    friendArray.friendArray.push(friendObj)
+    axios.post('api/friends', friendObj)
+    .then(() => {
+      dispatch({
+        type: 'ADD_FRIEND',
+        payload: friendArray
+      });
+    })
+  }
+}
+
+const acceptOrUnfriend = (userId, friendId, friendArray) => {
+  return dispatch => {
+    let friendIndex;
+    let id;
+    friendArray.friendArray.forEach((friend, index) => {
+      if (friend.friendId === friendId) {
+        friendIndex = index;
+        id = friend.id;
+      }
+    })
+    friendArray.friendArray.splice(friendIndex, 1);
+    axios.delete(`/api/friends/${id}`)
+    .then(() => {
+      axios.delete(`/api/friends/${id + 1}`)
+    })
+    .then(() => {
+      dispatch({
+        type: 'UPDATE_FRIENDS',
+        payload: friendArray
+      });
+    })
+  }
+}
+
 export {
   openModal,
   closeModal,
@@ -363,7 +439,6 @@ export {
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
-  // updateSessionEnd,
   populateUserToyProblems,
   toggleUpdateUserToyProblemModal,
   toggleNewUserToyProblemModal,
@@ -379,5 +454,10 @@ export {
   updateSolutionCode,
   setNewSkeletonCode,
   setNewSolutionCode,
-  updateCurrentQuestion
+  updateCurrentQuestion,
+  startSession,
+  updateSearch,
+  populateUsers,
+  addFriend,
+  acceptOrUnfriend
 };
