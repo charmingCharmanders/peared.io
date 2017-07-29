@@ -221,16 +221,11 @@ const updateUserToyProblem = ({name, description, hint, category, difficulty, up
     name: name,
     description: description,
     category: category,
-<<<<<<< HEAD
     hint: hint,
     difficulty: difficulty,
     updatedAt: updatedAt,
     skeletonCode: skeletonCode,
     solutionCode: solutionCode
-=======
-    difficulty: difficulty,
-    updatedAt: updatedAt
->>>>>>> implement search friend, add friend, and unfriend
   });
 
   return {
@@ -238,10 +233,7 @@ const updateUserToyProblem = ({name, description, hint, category, difficulty, up
     payload: {
       name: name,
       description: description,
-<<<<<<< HEAD
       hint: hint,
-=======
->>>>>>> implement search friend, add friend, and unfriend
       category: category,
       difficulty: difficulty,
       updatedAt: updatedAt,
@@ -385,7 +377,6 @@ const populateUsers = () => {
   };
 };
 
-
 const updateSearch = (searchObj) => {
   return dispatch => {
     let searchResults = [];
@@ -403,7 +394,6 @@ const updateSearch = (searchObj) => {
       payload: {
         searchResults: searchResults
       }
-<<<<<<< HEAD
     });
   };
 };
@@ -417,16 +407,16 @@ const addFriend = (userId, friendId, friendArray) => {
       updatedBy: userId
     };
     axios.post('api/friends', friendObj)
-    .then(() => {
-      dispatch({
-        type: 'ADD_FRIEND',
-        payload: friendArray
+      .then(() => {
+        dispatch({
+          type: 'ADD_FRIEND',
+          payload: friendArray
+        });
       });
-    });
   };
 };
 
-const acceptOrUnfriend = (userId, friendId, friendArray) => {
+const unfriend = (userId, friendId, friendArray) => {
   return dispatch => {
     let friendIndex;
     let id;
@@ -438,15 +428,15 @@ const acceptOrUnfriend = (userId, friendId, friendArray) => {
     });
     friendArray.friendArray.splice(friendIndex, 1);
     axios.delete(`/api/friends/${id}`)
-    .then(() => {
-      axios.delete(`/api/friends/${id + 1}`)
-    })
-    .then(() => {
-      dispatch({
-        type: 'UPDATE_FRIENDS',
-        payload: friendArray
+      .then(() => {
+        axios.delete(`/api/friends/${id + 1}`);
+      })
+      .then(() => {
+        dispatch({
+          type: 'UPDATE_FRIENDS',
+          payload: friendArray
+        });
       });
-    });
   };
 };
 
@@ -481,7 +471,6 @@ export {
   setNewSolutionCode,
   updateCurrentQuestion,
   deleteToyProblem,
-  startSession,
   updateSearch,
   populateUsers,
   addFriend,
