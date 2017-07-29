@@ -42,16 +42,16 @@ class HistoryTable extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+var mapStateToProps = function(state) {
   return {
     sessionData: state.sessionData,
     userProfileData:  state.userProfileData
-  }
-}
+  };
+};
 
-function mapDispatchToProps(dispatch) {
+var mapDispatchToProps = function(dispatch) {
   return bindActionCreators({}, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HistoryTable);
 

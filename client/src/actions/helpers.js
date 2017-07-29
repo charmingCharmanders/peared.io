@@ -61,7 +61,9 @@ module.exports.formatSessionsData = (sessionArray, id) => {
       category: session.prompt.category,
       difficulty: session.prompt.difficulty,
       rating: session.rating,
-      solution: session.solutionCode
+      solution: session.solutionCode,
+      numberOfTests: session.numberOfTests,
+      numberOfTestsPassed: session.numberOfTestsPassed
     });
   })
   return sessionInfo;
