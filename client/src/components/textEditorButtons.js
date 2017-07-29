@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeModal, endSession, sessionToDashboard} from '../actions';
+import {closeModal, endSession, openModal, sessionToDashboard} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 
 class TextEditorButtons extends React.Component {
@@ -14,7 +14,7 @@ class TextEditorButtons extends React.Component {
 
   codeSubmit() {
     this.props.endSession(this.props.sessionData, this.props.currentSession, this.props.code, this.props.testResults);
-    this.props.socketConnection.emit('end session');
+    this.props.socketConnection.emit('end session', 'submitSession');
   }
 
   codeTest() {
@@ -46,6 +46,7 @@ var mapDispatchToProps = function (dispatch) {
   return bindActionCreators({
     closeModal: closeModal,
     endSession: endSession,
+    openModal: openModal,
     sessionToDashboard: sessionToDashboard
   }, dispatch);
 };

@@ -3,9 +3,11 @@ let userProfileId;
 const helpers = require('./helpers');
 import axios from 'axios';
 
-const openModal = () => {
+const openModal = (type) => {
+  console.log('inside openModal');
   return {
-    type: 'OPEN_MODAL'
+    type: 'OPEN_MODAL',
+    payload: type
   };
 };
 
