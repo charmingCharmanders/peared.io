@@ -22,25 +22,25 @@ const postUserToyProblem = (newToyProblem, newToyProblemTest) => {
   return dispatch => {
     axios.post('/api/prompts', newToyProblem)
       .then(prompt => {
-          newToyProblemTest.promptId = prompt.data.id;
-          axios.post('/api/tests', newToyProblemTest)
-            .then(test => {
-              dispatch({
-                type: 'POST_USER_TOY_PROBLEM',
-                newToyProblem: prompt.data,
-                newToyProblemTest: test.data
-              })
-            })
+        newToyProblemTest.promptId = prompt.data.id;
+        axios.post('/api/tests', newToyProblemTest)
+          .then(test => {
+            dispatch({
+              type: 'POST_USER_TOY_PROBLEM',
+              newToyProblem: prompt.data,
+              newToyProblemTest: test.data
+            });
+          })
 
-      })
-  }
-}
+      });
+  };
+};
 
 const toggleUpdateUserToyProblemModal = (show, toyProblem) => {
   return {
     type: 'TOGGLE_UPDATE_USER_TOY_PROBLEM_MODAL',
     payload: show,
-  }
+  };
 };
 
 const getUserToyProblemTests = (userId) => {
@@ -50,10 +50,10 @@ const getUserToyProblemTests = (userId) => {
         dispatch({
           type: 'GET_USER_TOY_PROBLEM_TESTS',
           payload: test.data
-        })
-      })    
-  }
-}
+        });
+      });
+  };
+};
 
 const setCurrentUserToyProblem = (toyProblem) => {
 
@@ -145,20 +145,20 @@ const setCurrentTimeToZero = () => {
 const populateLeaderboard = () => {
   return dispatch => {
     axios.get('/api/profiles?sortBy=rating&limit=10')
-    .then(result => {
-      let ratingArray = result.data.map(profile => {
-        return {
-          name: profile.firstName,
-          rating: profile.rating
-          }
-      });
-      dispatch({
-        type: 'POPULATE_LEADERBOARD',
-        payload: ratingArray
-      })
-    })
-  }
-}
+      .then(result => {
+        let ratingArray = result.data.map(profile => {
+          return {
+            name: profile.firstName,
+            rating: profile.rating
+            }
+        });
+        dispatch({
+          type: 'POPULATE_LEADERBOARD',
+          payload: ratingArray
+        });
+    });
+  };
+};
 
 const populateUserToyProblems = () => {
   let id = null;
@@ -175,10 +175,10 @@ const populateUserToyProblems = () => {
           })
           .catch(err => {
             console.log(err);
-          })
+          });
       });
-  }
-}
+  };
+};
 
 const updateToyProblemTests = (testArray) => {
   for (let i = 0; i < testArray.length; i++) {
@@ -190,7 +190,7 @@ const updateToyProblemTests = (testArray) => {
     type: 'UPDATE_TOY_PROBLEM_TESTS',
     payload: testArray
   };
-}
+};
 
 const updateUserToyProblem = ({name, description, category, difficulty, updatedAt, id}) => {
   axios.put(`/api/prompts/${id}`, {
@@ -212,7 +212,7 @@ const updateUserToyProblem = ({name, description, category, difficulty, updatedA
       id: id
     }
   };
-}
+};
 
 const populateUserProfileFriendsAndSessionData = () => {
 
@@ -276,9 +276,9 @@ const startSession = ({profileId1, profileId2, prompt}) => {
     })
     .catch(err => {
       console.log(err);
-    })
-  }
-}
+    });
+  };
+};
 
 const endSession = (userSessionsArray, currentSessionObject) => {
   userSessionsArray.push(currentSessionObject);
@@ -330,30 +330,30 @@ const updateSkeletonCode = (code) => {
   return {
     type: 'UPDATE_SKELETON_CODE',
     payload: code
-  }
-}
+  };
+};
 
 const updateSolutionCode = (code) => {
   return {
     type: 'UPDATE_SOLUTION_CODE',
     payload: code
-  }
-}
+  };
+};
 
 
 const setNewSkeletonCode = (code) => {
   return {
     type: 'SET_NEW_SKELETON_CODE',
     payload: code
-  }
-}
+  };
+};
 
 const setNewSolutionCode = (code) => {
   return {
     type: 'SET_NEW_SOLUTION_CODE',
     payload: code
-  }
-}
+  };
+};
 
 export {
   openModal,
