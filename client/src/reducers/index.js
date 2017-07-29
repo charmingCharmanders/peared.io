@@ -17,6 +17,10 @@ import {userToyProblems} from './reducer-user-toy-problems';
 import {currentUserToyProblem} from './reducer-current-user-toy-problem';
 import {populateLeaderboard} from './reducer-leaderboard';
 import {updateCurrentTime} from './reducer-current-time';
+import {updateSkeletonCode} from './reducer-skeleton';
+import {updateSolutionCode} from './reducer-solution';
+import {setNewSkeletonCode} from './reducer-new-skeleton';
+import {setNewSolutionCode} from './reducer-new-solution';
 
 export default combineReducers({
   modal: toggleModal,
@@ -37,6 +41,10 @@ export default combineReducers({
   updateUserToyProblemModal: updateUserToyProblemModal,
   newUserToyProblemModal: newUserToyProblemModal,
   currentUserToyProblem: currentUserToyProblem,
-  leaderboard: populateLeaderboard
+  leaderboard: populateLeaderboard,
+  skeletonCode: updateSkeletonCode,
+  solutionCode: updateSolutionCode,
+  newSkeletonCode: setNewSkeletonCode,
+  newSolutionCode: setNewSolutionCode
 });
 

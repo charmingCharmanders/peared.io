@@ -3,11 +3,37 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { 
-  postUserToyProblem, setCurrentUserToyProblem, updateUserToyProblem, toggleUpdateUserToyProblemModal, toggleNewUserToyProblemModal} from '../actions'
+import { setNewSkeletonCode, setNewSolutionCode, updateSkeletonCode, updateSolutionCode, updateToyProblemTests, postUserToyProblem, setCurrentUserToyProblem, updateUserToyProblem, toggleUpdateUserToyProblemModal, toggleNewUserToyProblemModal} from '../actions'
 import {form, FieldGroup, Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
+import CodeMirror from '@skidding/react-codemirror';
+// var js_beautify = require('js-beautify');
+require('codemirror/mode/javascript/javascript');
 
 class YourToyProblems extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.onSkeletonCodeChange = this.onSkeletonCodeChange.bind(this);
+    this.onSolutionCodeChange = this.onSolutionCodeChange.bind(this);
+    this.onNewSkeletonCodeChange = this.onNewSkeletonCodeChange.bind(this);
+    this.onNewSolutionCodeChange = this.onNewSolutionCodeChange.bind(this);
+  }
+
+  onSkeletonCodeChange(newCode) {
+    this.props.updateSkeletonCode(newCode);
+  }
+
+  onSolutionCodeChange(newCode) {
+    this.props.updateSolutionCode(newCode);
+  }
+
+  onNewSkeletonCodeChange(newCode) {
+    this.props.setNewSkeletonCode(newCode);
+  }
+
+  onNewSolutionCodeChange(newCode) {
+    this.props.setNewSolutionCode(newCode);
+  }
 
   renderNewTest() {
     return (
@@ -50,6 +76,26 @@ class YourToyProblems extends React.Component {
   )}
 
   render() {
+
+    var convertToSoftTabs = function(cm) {
+      if (cm.somethingSelected()) {
+        cm.indentSelection();
+      } else {
+        var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
+        cm.replaceSelection(spaces);
+      }
+    };
+ 
+    var options = {
+      lineNumbers: true,
+      extraKeys: {
+        Tab: convertToSoftTabs
+      },
+      mode: 'text/javascript',
+      tabSize: 2,
+      theme: 'material'
+    };
+
     let newModal = 
       <Modal show={this.props.newUserToyProblemModal} onHide={ () => this.props.toggleNewUserToyProblemModal(false) }>
         <Modal.Header closeButton>
@@ -84,25 +130,63 @@ class YourToyProblems extends React.Component {
           </Row>
 
           <Row className="show-grid">
+            <Col md={12}>
+              <h5>Hint</h5>
+              <input 
+                id="newToyProblemHint" 
+                type="text" 
+                name="Hint" 
+                placeholder="Add a Hint"
+                style={{width: '100%'}} 
+              />
+            </Col>
+          </Row>
+
+          <Row className="show-grid">
             <Col md={6}>
               <h5>Category</h5>
               <input 
                 id="newToyProblemCategory" 
                 type="text" 
                 name="Category" 
-                placeholder="Add A Category" 
+                placeholder="Add a Category" 
                 style={{width: '100%'}}
               />
             </Col>
             <Col md={6}>
               <h5>Difficulty</h5>
-              <input 
-                id="newToyProblemDifficulty" 
-                type="text" 
-                name="Difficulty"
-                placeholder="Add a Difficulty"
-                style={{width: '100%'}}
-              />
+                <select id="newToyProblemDifficulty">
+                  <option value="one">1</option>
+                  <option value="two">2</option>
+                  <option value="three">3</option>
+                  <option value="four">4</option>
+                </select>
+            </Col>
+          </Row>
+
+          <Row className="show-grid">
+            <Col md={12}>
+              <h5>Skeleton Code</h5>
+              <div className="editor-container" id='newToyProblemSkeletonCode'>
+                <CodeMirror
+                  value={this.props.newSkeletonCode}
+                  onChange={this.onNewSkeletonCodeChange}
+                  options={options} 
+                />
+              </div>
+            </Col>
+          </Row>
+
+          <Row className="show-grid">
+            <Col md={12}>
+              <h5>Solution Code</h5>
+              <div className="editor-container" id='newToyProblemSolutionCode'>
+                <CodeMirror 
+                  value={this.props.newSolutionCode}
+                  onChange={this.onNewSolutionCodeChange}
+                  options={options} 
+                />
+              </div>
             </Col>
           </Row>
 
@@ -117,7 +201,6 @@ class YourToyProblems extends React.Component {
                 bsStyle="info" 
                 bsSize="xsmall"
                 onClick = { () => this.renderNewTest() }
-                // onClick={ () => console.log('clicked')}
               >+ Test
               </Button>
             </Col>
@@ -131,7 +214,11 @@ class YourToyProblems extends React.Component {
             let newName = document.getElementById('newToyProblemName').value;
             let newDescription = document.getElementById('newToyProblemDescription').value;
             let newCategory = document.getElementById('newToyProblemCategory').value;
-            let newDifficulty = document.getElementById('newToyProblemDifficulty').value;
+            let newHint = document.getElementById('newToyProblemHint').value;
+            let newDifficulty = document.getElementById('newToyProblemDifficulty');
+            let newDifficulty2 = newDifficulty.options[newDifficulty.selectedIndex].text;
+            let newSkeletonCode = this.props.newSkeletonCode;
+            let newSolutionCode = this.props.newSolutionCode;
 
             let newTestDescription = document.getElementById('newTestDescription').value;
             let newTestArguments = document.getElementById('newTestArguments').value;
@@ -139,21 +226,29 @@ class YourToyProblems extends React.Component {
 
             this.props.toggleNewUserToyProblemModal(false);
 
-            let obj = {
-              // userId: this.props.userProfileData.id
+            let newToyProblem = {
+              userId: this.props.userProfileData.id,
               name: newName, 
               description: newDescription, 
-              category: newCategory, 
-              difficulty: newDifficulty
+              category: newCategory,
+              hint: newHint,
+              difficulty: newDifficulty2,
+              skeletonCode: newSkeletonCode,
+              solutionCode: newSolutionCode
             };
 
-            this.props.postUserToyProblem(obj);
-          
+            let newToyProblemTest = {
+              arguments: newTestArguments,
+              description: newTestDescription,
+              expectedOutput: newTestOutput,
+              promptId: '',
+            }
+
+            this.props.postUserToyProblem(newToyProblem, newToyProblemTest);
+
           }}>Submit</Button>
         </Modal.Footer>
       </Modal>;
-
-
 
 
 
@@ -191,6 +286,19 @@ class YourToyProblems extends React.Component {
           </Row>
 
           <Row className="show-grid">
+            <Col md={12}>
+              <h5>Hint</h5>
+              <input 
+                id="toyProblemHint" 
+                type="text" 
+                name="Hint" 
+                defaultValue={this.props.currentUserToyProblem.hint} 
+                style={{width: '100%'}} 
+              />
+            </Col>
+          </Row>
+
+          <Row className="show-grid">
             <Col md={6}>
               <h5>Category</h5>
               <input 
@@ -213,6 +321,33 @@ class YourToyProblems extends React.Component {
             </Col>
           </Row>
 
+
+          <Row className="show-grid">
+            <Col md={12}>
+              <h5>Skeleton Code</h5>
+              <div className="editor-container" id='toyProblemSkeletonCode'>
+                <CodeMirror
+                  value={this.props.currentUserToyProblem.skeletonCode}
+                  onChange={this.onSkeletonCodeChange}
+                  options={options} 
+                />
+              </div>
+            </Col>
+          </Row>
+
+          <Row className="show-grid">
+            <Col md={12}>
+              <h5>Solution Code</h5>
+              <div className="editor-container" id='toyProblemSolutionCode'>
+                <CodeMirror 
+                  value={this.props.currentUserToyProblem.solutionCode}
+                  onChange={this.onSolutionCodeChange}
+                  options={options} 
+                />
+              </div>
+            </Col>
+          </Row>
+
           <hr />
           <h4>Tests</h4>
 
@@ -223,7 +358,7 @@ class YourToyProblems extends React.Component {
                   <Col md={12}>
                     <h5>Description</h5>
                     <input 
-                      id="testDescription" 
+                      id={`testDescription${index}`} 
                       type="text" 
                       name="testDescription" 
                       defaultValue={test.description} 
@@ -235,9 +370,9 @@ class YourToyProblems extends React.Component {
                   <Col md={6}>
                     <h5>Arguments</h5>
                     <input 
-                      id="testCategory" 
+                      id={`testArguments${index}`} 
                       type="text" 
-                      name="testCategory" 
+                      name="testArguments" 
                       defaultValue={test.arguments} 
                       style={{width: '100%'}}
                     />
@@ -245,9 +380,9 @@ class YourToyProblems extends React.Component {
                   <Col md={6}>
                     <h5>Output</h5>
                     <input 
-                      id="testDifficulty" 
+                      id={`testOutput${index}`} 
                       type="text" 
-                      name="testDifficulty"
+                      name="testOutput"
                       defaultValue={test.expectedOutput} 
                       style={{width: '100%'}}
                     />
@@ -269,12 +404,44 @@ class YourToyProblems extends React.Component {
             let newDescription = document.getElementById('toyProblemDescription').value;
             let newCategory = document.getElementById('toyProblemCategory').value;
             let newDifficulty = document.getElementById('toyProblemDifficulty').value;
+            let newHint = document.getElementById('toyProblemHint').value;
+            let skeletonCode = this.props.skeletonCode;
+            let solutionCode = this.props.solutionCode;
 
+            let toy = this.props.currentUserToyProblem;
+            let testArray = [];
+
+            this.props.updateUserToyProblem({
+              id: toy.id,
+              name: newName, 
+              description: newDescription, 
+              category: newCategory, 
+              difficulty: newDifficulty, 
+              updatedAt: today,
+              hint: newHint,
+              skeletonCode: skeletonCode,
+              solutionCode: solutionCode
+            });
+
+            for (let i = 0; i < toy.tests.length; i++) {
+              let obj = {};
+              obj.promptId = toy.id;
+              obj.id = toy.tests[i].id;
+              obj.description = document.getElementById(`testDescription${i}`).value;
+              obj.arguments = document.getElementById(`testArguments${i}`).value;
+              obj.expectedOutput = document.getElementById(`testOutput${i}`).value;
+              testArray.push(obj);
+            };
+
+            this.props.updateToyProblemTests(testArray);
             this.props.toggleUpdateUserToyProblemModal(false);
-            this.props.updateUserToyProblem({id: this.props.currentUserToyProblem.id, name: newName, description: newDescription, category: newCategory, difficulty: newDifficulty, updatedAt: today});
+
           }}>Update</Button>
         </Modal.Footer>
       </Modal>;
+
+
+
 
 
 
@@ -300,7 +467,8 @@ class YourToyProblems extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.userToyProblems.map((row,index) => (
+            { this.props.userToyProblems ?
+              this.props.userToyProblems.map((row,index) => (
               <tr key={index}>
                 <td>{index+1}</td>
                 <td>{row.name}</td>
@@ -316,7 +484,8 @@ class YourToyProblems extends React.Component {
                   }}>Update</Button>
                 </td>
               </tr> )
-            )}
+            ):
+              ('Loading')}
           </tbody>
         </Table>
       </div>
@@ -329,7 +498,12 @@ const mapStateToProps = (state) => {
     userToyProblems: state.userToyProblems,
     updateUserToyProblemModal: state.updateUserToyProblemModal,
     newUserToyProblemModal: state.newUserToyProblemModal,
-    currentUserToyProblem: state.currentUserToyProblem
+    currentUserToyProblem: state.currentUserToyProblem,
+    userProfileData: state.userProfileData,
+    skeletonCode: state.skeletonCode,
+    solutionCode: state.solutionCode,
+    newSkeletonCode: state.newSkeletonCode,
+    newSolutionCode: state.newSolutionCode
   };
 };
 
@@ -340,8 +514,15 @@ function mapDispatchToProps(dispatch) {
     toggleUpdateUserToyProblemModal: toggleUpdateUserToyProblemModal,
     setCurrentUserToyProblem: setCurrentUserToyProblem,
     postUserToyProblem: postUserToyProblem,
+    updateToyProblemTests: updateToyProblemTests,
+    updateSkeletonCode: updateSkeletonCode,
+    updateSolutionCode: updateSolutionCode,
+    setNewSkeletonCode: setNewSkeletonCode,
+    setNewSolutionCode: setNewSolutionCode,
     // getUserToyProblemTests: getUserToyProblemTests, 
   }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(YourToyProblems);
+
+

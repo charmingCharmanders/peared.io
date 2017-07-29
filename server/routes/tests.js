@@ -1,11 +1,15 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const PromptsController = require('../controllers').Tests;
+const TestsController = require('../controllers').Tests;
 
 router.route('/:promptId')
-  .get(PromptsController.getOne)
-  .put(PromptsController.update)
+  .get(TestsController.getOne)
+  .put(TestsController.update)
+;
+
+router.route('/')
+  .post(TestsController.create)
 ;
 
 module.exports = router;

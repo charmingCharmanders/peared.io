@@ -23,7 +23,6 @@ class Dashboard extends React.Component {
 
   componentWillMount() {
     this.props.populateUserToyProblems();
-    this.props.populateUserProfileData();
     this.props.populateLeaderboard();
   }
 

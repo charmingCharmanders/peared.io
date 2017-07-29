@@ -30,7 +30,34 @@ function userToyProblems(state = [], action) {
       return result
       break;
     case 'POST_USER_TOY_PROBLEM':
-      return state.concat(action.payload);
+      let toy = action.newToyProblem;
+      toy.tests = [];
+      toy.tests.push(action.newToyProblemTest);
+      return state.concat(toy);
+      break;
+    case 'UPDATE_TOY_PROBLEM_TESTS':
+      // let result = [];
+
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].id === action.payload[0].promptId) {
+          state[i].tests = action.payload
+        }
+      }
+
+      // for (let i = 0; i < state.length; i++) {
+      //   if (state[i].id !== action.payload.promptId) {
+      //     result.push(state[i])
+      //   } else {
+      //     for (let j = 0; j < state.tests.length; j++) {
+      //       if (state.tests[j].id === action.payload.id) {
+      //         state.tests[j] = action.payload;
+      //       }
+      //     }
+      //     result.push(state[i]);
+      //   }
+      // }
+
+      return state;
       break;
     default:
       return state;

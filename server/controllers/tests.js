@@ -34,3 +34,14 @@ module.exports.update = (req, res) => {
       res.sendStatus(404)
     });
 };
+
+module.exports.create = (req, res) => {
+  models.Test.forge(req.body)
+    .save()
+    .then(test => {
+      res.status(201).send(test);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+};

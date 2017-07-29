@@ -18,14 +18,20 @@ const closeModal = () => {
   };
 };
 
-const postUserToyProblem = (obj) => {
+const postUserToyProblem = (newToyProblem, newToyProblemTest) => {
   return dispatch => {
-    axios.post('/api/prompts', obj)
+    axios.post('/api/prompts', newToyProblem)
       .then(prompt => {
-        dispatch({
-          type: 'POST_USER_TOY_PROBLEM',
-          payload: prompt
-        })
+          newToyProblemTest.promptId = prompt.data.id;
+          axios.post('/api/tests', newToyProblemTest)
+            .then(test => {
+              dispatch({
+                type: 'POST_USER_TOY_PROBLEM',
+                newToyProblem: prompt.data,
+                newToyProblemTest: test.data
+              })
+            })
+
       })
   }
 }
@@ -174,6 +180,18 @@ const populateUserToyProblems = () => {
   }
 }
 
+const updateToyProblemTests = (testArray) => {
+  for (let i = 0; i < testArray.length; i++) {
+    axios.put(`/api/tests/${testArray[i].promptId}`, testArray[i]);
+  }
+  // axios.put(`/api/tests/${testObj.promptId}`, testObj);
+
+  return {
+    type: 'UPDATE_TOY_PROBLEM_TESTS',
+    payload: testArray
+  };
+}
+
 const updateUserToyProblem = ({name, description, category, difficulty, updatedAt, id}) => {
   axios.put(`/api/prompts/${id}`, {
     name: name, 
@@ -308,6 +326,35 @@ const endSession = (userSessionsArray, currentSessionObject) => {
   }
 };
 
+const updateSkeletonCode = (code) => {
+  return {
+    type: 'UPDATE_SKELETON_CODE',
+    payload: code
+  }
+}
+
+const updateSolutionCode = (code) => {
+  return {
+    type: 'UPDATE_SOLUTION_CODE',
+    payload: code
+  }
+}
+
+
+const setNewSkeletonCode = (code) => {
+  return {
+    type: 'SET_NEW_SKELETON_CODE',
+    payload: code
+  }
+}
+
+const setNewSolutionCode = (code) => {
+  return {
+    type: 'SET_NEW_SOLUTION_CODE',
+    payload: code
+  }
+}
+
 export {
   openModal,
   closeModal,
@@ -321,22 +368,21 @@ export {
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
-  updateSessionEnd,
+  // updateSessionEnd,
   populateUserToyProblems,
   toggleUpdateUserToyProblemModal,
   toggleNewUserToyProblemModal,
   setCurrentUserToyProblem,
   updateUserToyProblem,
   getUserToyProblemTests,
-  postUserToyProblem
+  postUserToyProblem,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
   startSession,
-  endSession
+  endSession,
+  updateToyProblemTests,
+  updateSkeletonCode,
+  updateSolutionCode,
+  setNewSkeletonCode,
+  setNewSolutionCode,
 };
-
-
-// Action Creator Function
-  // Returns an Action which is an OBJECT
-    // The action has 2 props: a Type and a Payload
-
