@@ -80,6 +80,24 @@ class ModalComponent extends React.Component {
         </Modal>
       );
     }
+    if (this.props.modal.type === 'displaySolution') {
+      return (
+        <Modal show={this.props.modal.show} onHide={this.props.closeModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.sessionData.sessionArray[this.props.currentQuestion].promptName}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>{this.props.sessionData.sessionArray[this.props.currentQuestion].lengthOfSession}</h4>
+            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].solution}</h5>
+          </Modal.Body>
+          <Modal.Footer>
+            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTestsPassed} /
+                {this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTests}
+            </h5>
+          </Modal.Footer>
+        </Modal>
+      );
+    }
   }
 
   render() {
@@ -92,7 +110,9 @@ class ModalComponent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     buttonStatus: state.buttonStatus,
-    modal: state.modal
+    currentQuestion: state.currentQuestion,
+    modal: state.modal,
+    sessionData: state.sessionData
   };
 };
 

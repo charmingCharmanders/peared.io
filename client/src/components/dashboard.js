@@ -25,23 +25,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    let questionModal =
-      this.props.sessionData.sessionArray ? 
-        <Modal show={this.props.questionModal} onHide={this.props.closeQuestionModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>{this.props.sessionData.sessionArray[this.props.currentQuestion].promptName}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <h4>{this.props.sessionData.sessionArray[this.props.currentQuestion].lengthOfSession}</h4>
-            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].solution}</h5>
-          </Modal.Body>
-          <Modal.Footer>
-            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTestsPassed} /
-              {this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTests}
-            </h5>
-          </Modal.Footer>
-        </Modal> : '';
-
     return (
       <div>
         <Grid>
@@ -51,7 +34,6 @@ class Dashboard extends React.Component {
           <Row className='show-grid'>
             <Col md={12}><h2>Welcome, {this.props.userProfileData.firstName}! </h2></Col>
           </Row>
-          {questionModal}
           <br />
           <Row className='show-grid'>
             <Col md={9}><HistoryTable /></Col>
@@ -73,16 +55,13 @@ const mapStateToProps = (state) => {
     currentQuestion: state.currentQuestion,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
-    userProfileData: state.userProfileData,
-    questionModal: state.questionModal
+    userProfileData: state.userProfileData
   };
 };
 
 var mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
-      populateUserToyProblems: populateUserToyProblems,
-      closeQuestionModal: closeQuestionModal,
       closeModal: closeModal,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,

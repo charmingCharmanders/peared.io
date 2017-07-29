@@ -80,7 +80,6 @@ const closeQuestionModal = () => {
   };
 };
 
-
 const dashboardToSession = () => {
   return {
     type: 'DASHBOARD_TO_SESSION'
@@ -354,8 +353,6 @@ const setNewSolutionCode = (code) => {
 export {
   openModal,
   closeModal,
-  openQuestionModal,
-  closeQuestionModal,
   dashboardToSession,
   sessionToDashboard,
   updatePrompt,
