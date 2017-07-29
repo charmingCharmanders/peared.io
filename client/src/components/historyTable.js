@@ -46,7 +46,7 @@ var mapStateToProps = function(state) {
   return {
     sessionData: state.sessionData,
     userProfileData:  state.userProfileData
-  };
+  }
 };
 
 var mapDispatchToProps = function(dispatch) {

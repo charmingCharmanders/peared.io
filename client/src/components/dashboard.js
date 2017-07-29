@@ -8,7 +8,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
+import {closeQuestionModal, updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 
@@ -57,7 +57,7 @@ class Dashboard extends React.Component {
       </Modal>;
 
     let questionModal =
-      <Modal show={this.props.questionModal} onHide={this.closeButton}>
+      <Modal show={this.props.questionModal} onHide={this.props.closeQuestionModal}>
         <Modal.Header closeButton>
           <Modal.Title>The Question was helper..</Modal.Title>
         </Modal.Header>
@@ -98,13 +98,15 @@ const mapStateToProps = (state) => {
     modal: state.modal,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
-    userProfileData:  state.userProfileData
+    userProfileData:  state.userProfileData,
+    questionModal: state.questionModal
   };
 };
 
 var mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
+      closeQuestionModal: closeQuestionModal,
       closeModal: closeModal,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,

@@ -13,8 +13,12 @@ import {updateUsersFriends} from './reducer-friends';
 import {toggleDashboard} from './reducer-dashboard';
 import {populateLeaderboard} from './reducer-leaderboard';
 import {updateCurrentTime} from './reducer-current-time';
+import {updateCurrentQuestion} from './reducer-current-question';
+import {toggleQuestionModal} from './reducer-question-modal.js';
 
 export default combineReducers({
+  questionModal: toggleQuestionModal,
+  currentQuestion: updateCurrentQuestion,
   modal: toggleModal,
   nav: toggleNav,
   prompt: updatePrompt,

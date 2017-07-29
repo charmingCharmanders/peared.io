@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
+import {updateCurrentQuestion, openQuestionModal} from '../actions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 class TableRow extends React.Component {
   constructor(props) {
@@ -10,6 +13,8 @@ class TableRow extends React.Component {
 
   openQuestion() {
     console.log('this is: ', this);
+    this.props.updateCurrentQuestion(this.props.id-1);
+    this.props.openQuestionModal();
     //update the current question number as the value - 1
   }
 
@@ -25,16 +30,15 @@ class TableRow extends React.Component {
       </tr>
     );
   }
-
 }
-var mapStateToProps = function(state) {
-  return {
-  };
-};
+
+var mapStateToProps = function(state) { return {}; };
 
 var mapDispatchToProps = function(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({
+    openQuestionModal: openQuestionModal,
+    updateCurrentQuestion: updateCurrentQuestion
+  }, dispatch);
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableRow);
