@@ -4,7 +4,6 @@ const helpers = require('./helpers');
 import axios from 'axios';
 
 const openModal = (type) => {
-  console.log('inside openModal');
   return {
     type: 'OPEN_MODAL',
     payload: type
