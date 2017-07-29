@@ -1,5 +1,5 @@
-function updateCode(state = '', action) {
-  var newState = '';
+function updateCode(state = null, action) {
+  var newState = null;
   switch(action.type) {
     case 'UPDATE_CODE':
       newState = action.payload;

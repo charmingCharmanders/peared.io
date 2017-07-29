@@ -3,11 +3,19 @@ import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {closeModal, endSession, sessionToDashboard} from '../actions';
+import {LinkContainer} from 'react-router-bootstrap';
 
 class TextEditorButtons extends React.Component {
-  
+
   minifyString(string) {
     return string.replace(/\s+/g, ' ');
+  }
+
+  codeSubmit() {
+    console.log(2222, 'testing');
+    this.props.endSession(this.props.sessionData, this.props.currentSession, this.props.code, this.props.testResults);
+    this.props.socketConnection.emit('submit code');
   }
 
   codeTest() {
@@ -18,7 +26,7 @@ class TextEditorButtons extends React.Component {
     return (
       <div className="editor-buttons">
         <Button bsStyle="info" onClick={() => this.codeTest()}>Run</Button>
-        <Button bsStyle="success">Submit</Button>
+        <Button bsStyle="success" onClick={() => this.codeSubmit()}>Submit</Button>
       </div>
     );
   }
@@ -27,9 +35,20 @@ class TextEditorButtons extends React.Component {
 var mapStateToProps = function (state) {
   return {
     code: state.code,
+    currentSession: state.currentSession,
     promptId: state.prompt.id,
-    roomId: state.roomId
+    roomId: state.roomId,
+    sessionData: state.sessionData.sessionArray,
+    testResults: state.testResults
   };
 };
 
-export default connect(mapStateToProps)(TextEditorButtons);
+var mapDispatchToProps = function (dispatch) {
+  return bindActionCreators({
+    closeModal: closeModal,
+    endSession: endSession,
+    sessionToDashboard: sessionToDashboard
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextEditorButtons);

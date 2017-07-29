@@ -1,7 +1,4 @@
 let userProfileId;
-let partnerId;
-let sessionId;
-let sessionStartTime;
 
 const helpers = require('./helpers');
 import axios from 'axios';
@@ -42,6 +39,13 @@ const updateCode = (code) => {
   return {
     type: 'UPDATE_CODE',
     payload: code
+  };
+};
+
+const updateCurrentSession = (session) => {
+  return {
+    type: 'UPDATE_CURRENT_SESSION',
+    payload: session
   };
 };
 
@@ -147,77 +151,48 @@ const populateUserProfileFriendsAndSessionData = () => {
   };
 };
 
-const startSession = ({profileId1, profileId2, prompt}) => {
-  return dispatch => {
-    dispatch({
-      type: 'START_SESSION',
-      payload: {
-        profileId1: profileId1,
-        profileId2: profileId2,
-        promptId: prompt.id,
-        difficulty: prompt.difficulty
-      }
-    })
-    sessionStartTime = Date();
-    axios.post('/api/sessions', {
-      profileId1: profileId1,
-      profileId2: profileId2,
-      promptId: prompt.id
-    })
-    .then(result => {
-      sessionId = result.data.id;
-      Number(result.data.profileId1) === userProfileId ? partnerId = result.data.profileId2 : partnerId = result.data.profileId1;
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-}
+const endSession = (sessions, session, code, testResults) => {
+  const sessionEndedAt = new Date();
+  const sessionScore = helpers.calculateSessionScore(
+    3600,
+    (Date.parse(sessionEndedAt) - Date.parse(session.startedAt)) / 1000,
+    session.prompt.difficulty,
+    testResults.testsCount,
+    testResults.testsPassed
+  );
 
-const endSession = (userSessionsArray, currentSessionObject) => {
-  userSessionsArray.push(currentSessionObject);
   return dispatch => {
-    dispatch({
-      type: 'END_SESSION',
-      payload: userSessionsArray
-    })
-    axios.get(`/api/profiles/${userProfileId}`)
-    .then((result) => {
-      let sessionEndTime = new Date();
-      let sessionScore = helpers.calculateSessionScore(3600, (Date.parse(sessionEndTime) - Date.parse(sessionStartTime))/1000, currentSessionObject.difficulty, currentSessionObject.numberOfTests, currentSessionObject.numberOfTestsPassed);
-      let newRating;
-      if (result.data.rating === null || result.data.rating === NaN) {
-        newRating = sessionScore;
-      } else {
-        newRating = sessionScore + result.data.rating;
-      }
-      axios.put(`/api/profiles/${userProfileId}`, {
-        rating: Math.floor(newRating)
-      })
-      .then(() => {
-        axios.get(`/api/profiles/${partnerId.toString()}`)
-        .then(results => {
-          if (!results.data.rating) {
-            newRating = sessionScore;
-          } else {
-            newRating = sessionScore + results.data.rating;
-          }
-          axios.put(`/api/profiles/${partnerId}`, {
-            rating: Math.floor(newRating)
-          })
-          .then(() => {
-            axios.put(`/api/sessions/${sessionId}`, {
-              endedAt: sessionEndTime,
-              solutionCode: 'solution code here', //currentSessionObject.solutionCode,
-              rating: Math.round(sessionScore),
-              numberOfTests: 'tests here', //currentSessionObject.numberOfTests,
-              numberOfTestsPassed: 'tests passed here' //currentSessionObject.numberOfTestsPassed
-            });
-          });
+    // dispatch({
+    //   type: 'END_SESSION',
+    //   payload: sessions.push(session)
+    // });
+
+    axios.post('/api/sessions', {
+      profileId1: session.profileId1,
+      profileId2: session.profileId2,
+      promptId: session.prompt.id,
+      rating: sessionScore,
+      solutionCode: code,
+      numberOfTests: testResults.testsCount,
+      numberOfTestsPassed: testResults.testsPassed,
+      startedAt: session.startedAt,
+      endedAt: sessionEndedAt
+    });
+
+    axios.get(`/api/profiles/${session.profileId1}`)
+      .then(profile => {
+        axios.put(`/api/profiles/${session.profileId1}`, {
+          rating: Number(profile.data.rating) + sessionScore
         });
       });
-    });
-  }
+
+    axios.get(`/api/profiles/${session.profileId2}`)
+      .then(profile => {
+        axios.put(`/api/profiles/${session.profileId2}`, {
+          rating: Number(profile.data.rating) + sessionScore
+        });
+      });
+  };
 };
 
 export {
@@ -230,12 +205,12 @@ export {
   setCurrentTimeToZero,
   updateOnlineUsers,
   updateCode,
+  updateCurrentSession,
   updateRoomId,
   updateButtonStatus,
   updateTestResults,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
-  startSession,
   endSession
 };
 
