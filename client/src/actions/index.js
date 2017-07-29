@@ -4,7 +4,6 @@ const helpers = require('./helpers');
 import axios from 'axios';
 
 const openModal = () => {
-  console.log('inside openModal');
   return {
     type: 'OPEN_MODAL'
   };
@@ -15,6 +14,19 @@ const closeModal = () => {
     type: 'CLOSE_MODAL'
   };
 };
+
+const openQuestionModal = () => {
+  return {
+    type: 'OPEN_QUESTION_MODAL'
+  };
+};
+
+const closeQuestionModal = () => {
+  return {
+    type: 'CLOSE_QUESTION_MODAL'
+  };
+};
+
 
 const dashboardToSession = () => {
   return {
@@ -41,6 +53,11 @@ const updateCode = (code) => {
     payload: code
   };
 };
+
+const updateCurrentQuestion = (questionNumber) => {
+  return {
+    type: 'UPDATE_CURRENT_QUESTION',
+    payload: questionNumber
 
 const updateCurrentSession = (session) => {
   return {
@@ -198,6 +215,8 @@ const endSession = (sessions, session, code, testResults) => {
 export {
   openModal,
   closeModal,
+  openQuestionModal,
+  closeQuestionModal,
   dashboardToSession,
   sessionToDashboard,
   updatePrompt,
@@ -211,7 +230,9 @@ export {
   updateTestResults,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
-  endSession
+  startSession,
+  endSession,
+  updateCurrentQuestion
 };
 
 
