@@ -36,7 +36,6 @@ module.exports = [
     hint: 'Loop through the array and use typeof to test the data type of each element.',
     skeletonCode: 'const arrayOfStrings = function (array) { }',
     solutionCode: 'const arrayofStrings = function(array) { let result = []; for (var i = 0; i < array.length; i++) { if (typeof array[i] === `string`) { result.push(array[i]) } } return result }',
-    rating: null,
     userId: 4,
     difficulty: 4
   },
@@ -47,7 +46,6 @@ module.exports = [
     hint: 'Use the indexOf() method in the Object prototype.',
     skeletonCode: 'const findIndexOfTarget = function (target, array) { }',
     solutionCode: 'const findIndexOfTarget = function (target, array) { return array.indexOf(target); }',
-    rating: null,
     userId: 4,
     difficulty: 2
   }

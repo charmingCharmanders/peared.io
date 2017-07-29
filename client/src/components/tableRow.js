@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
-import {updateCurrentQuestion, openQuestionModal} from '../actions';
+import {openModal, updateCurrentQuestion} from '../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -13,8 +13,8 @@ class TableRow extends React.Component {
 
   openQuestion() {
     this.props.updateCurrentQuestion(this.props.id - 1);
-    this.props.openQuestionModal();
-    //update the current question number as the value - 1
+    this.props.openModal('displaySolution');
+    // update the current question number as the value - 1
   }
 
   render() {
@@ -35,7 +35,7 @@ var mapStateToProps = function(state) { return {}; };
 
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators({
-    openQuestionModal: openQuestionModal,
+    openModal: openModal,
     updateCurrentQuestion: updateCurrentQuestion
   }, dispatch);
 };

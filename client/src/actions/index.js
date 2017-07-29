@@ -3,9 +3,10 @@ let userProfileId;
 const helpers = require('./helpers');
 import axios from 'axios';
 
-const openModal = () => {
+const openModal = (type) => {
   return {
-    type: 'OPEN_MODAL'
+    type: 'OPEN_MODAL',
+    payload: type
   };
 };
 
@@ -77,7 +78,6 @@ const closeQuestionModal = () => {
     type: 'CLOSE_QUESTION_MODAL'
   };
 };
-
 
 const dashboardToSession = () => {
   return {
@@ -352,8 +352,6 @@ const setNewSolutionCode = (code) => {
 export {
   openModal,
   closeModal,
-  openQuestionModal,
-  closeQuestionModal,
   dashboardToSession,
   sessionToDashboard,
   updatePrompt,
@@ -375,7 +373,6 @@ export {
   postUserToyProblem,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
-  // startSession,
   endSession,
   updateToyProblemTests,
   updateSkeletonCode,

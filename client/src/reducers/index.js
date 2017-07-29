@@ -23,10 +23,8 @@ import {updateSolutionCode} from './reducer-solution';
 import {setNewSkeletonCode} from './reducer-new-skeleton';
 import {setNewSolutionCode} from './reducer-new-solution';
 import {updateCurrentQuestion} from './reducer-current-question';
-import {toggleQuestionModal} from './reducer-question-modal.js';
 
 export default combineReducers({
-  questionModal: toggleQuestionModal,
   currentQuestion: updateCurrentQuestion,
   modal: toggleModal,
   nav: toggleNav,

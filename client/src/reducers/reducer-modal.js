@@ -1,15 +1,24 @@
-function toggleModal(state = false, action) {
-  switch(action.type) {
-    case 'OPEN_MODAL':
-      state = true;
-      break;
-    case 'CLOSE_MODAL':
-      state = false;
-      break;
+const toggleModal = (state = {
+  show: false,
+  type: null
+}, action) => {
+  switch (action.type) {
+  case 'OPEN_MODAL':
+    state = {
+      show: true,
+      type: action.payload
+    };
+    break;
+  case 'CLOSE_MODAL':
+    state = {
+      show: false,
+      type: null
+    };
+    break;
   }
-  return state
-}
+  return state;
+};
 
 export {
   toggleModal
-}
+};

@@ -16,17 +16,13 @@ class Navigation extends React.Component {
 
   joinRoom() {
     console.log('this.props.socket:', this);
-    this.props.openModal();
+    this.props.openModal('startSession');
     this.props.socket.emit('join room'); 
   }
 
   leaveRoom() {
-    this.props.sessionToDashboard();
-    this.props.updateCode(null);
-    this.props.updateCurrentSession(null);
-    this.props.updateRoomId(null);
-    this.props.updateTestResults(null);
-    this.props.socket.emit('leave room');
+    this.props.socket.emit('end session', 'endSession');
+    //this.props.socket.emit('leave room');
   }
 
   render() {
