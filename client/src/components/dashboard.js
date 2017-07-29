@@ -68,6 +68,7 @@ var mapDispatchToProps = (dispatch) => {
       updatePrompt: updatePrompt,
       updateCode: updateCode,
       populateLeaderboard: populateLeaderboard,
+      populateUserToyProblems: populateUserToyProblems,
       updateButtonStatus: updateButtonStatus
     },
     dispatch);
