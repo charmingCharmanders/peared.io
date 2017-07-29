@@ -22,7 +22,10 @@ class Navigation extends React.Component {
 
   leaveRoom() {
     this.props.sessionToDashboard();
-    this.props.closeModal();
+    this.props.updateCode(null);
+    this.props.updateCurrentSession(null);
+    this.props.updateRoomId(null);
+    this.props.updateTestResults(null);
     this.props.socket.emit('leave room');
   }
 

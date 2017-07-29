@@ -4,6 +4,7 @@ import {toggleNav} from './reducer-nav.js';
 import {updatePrompt} from './reducer-prompt';
 import {updateCode} from './reducer-code';
 import {updateOnlineUsers} from './reducer-online-users';
+import {updateCurrentSession} from './reducer-current-session';
 import {updateRoomId} from './reducer-room-id';
 import {updateButtonStatus} from './reducer-button-status';
 import {updateTestResults} from './reducer-test-results';
@@ -25,6 +26,7 @@ export default combineReducers({
   currentTime: updateCurrentTime,
   code: updateCode,
   onlineUsers: updateOnlineUsers,
+  currentSession: updateCurrentSession,
   roomId: updateRoomId,
   buttonStatus: updateButtonStatus,
   testResults: updateTestResults,
@@ -35,4 +37,3 @@ export default combineReducers({
   isDashboard: toggleDashboard,
   leaderboard: populateLeaderboard
 });
-
