@@ -3,10 +3,10 @@ const db = require('../');
 const Prompt = db.Model.extend({
   tableName: 'prompts',
   session: function() {
-    return this.hasOne('Session');
+    return this.hasMany('Session', '');
   },
-  test: function() {
-    return this.hasOne('Test');
+  tests: function() {
+    return this.hasMany('Test', 'promptId');
   }
 });
 

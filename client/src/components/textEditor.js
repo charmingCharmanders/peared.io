@@ -43,7 +43,7 @@ class TextEditor extends React.Component {
       theme: 'material'
     };
 
-    return ( 
+    return (
       <div className="editor-container">
         <CodeMirror 
           value={this.props.code}

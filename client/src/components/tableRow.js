@@ -12,8 +12,7 @@ class TableRow extends React.Component {
   }
 
   openQuestion() {
-    console.log('this is: ', this);
-    this.props.updateCurrentQuestion(this.props.id-1);
+    this.props.updateCurrentQuestion(this.props.id - 1);
     this.props.openQuestionModal();
     //update the current question number as the value - 1
   }

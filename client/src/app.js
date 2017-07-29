@@ -70,10 +70,9 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.populateUserProfileFriendsAndSessionData()
-    .then(()=>{
-      console.log('this is:', this);
-      this.openConnection();
-    });
+      .then(()=>{
+        this.openConnection();
+      });
   }
 
   render() {
@@ -97,6 +96,7 @@ class App extends React.Component {
                   );
                 } }
               />
+              <Route path='/' component={Dashboard} />
             </Switch>
           </div>
         </div>

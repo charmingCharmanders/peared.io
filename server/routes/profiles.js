@@ -20,4 +20,8 @@ router.route('/:id/sessions')
   .get(ProfilesController.getSessions)
   ;
 
+router.route('/:id/prompts')
+  .get(ProfilesController.getPrompts)
+  ;
+
 module.exports = router;

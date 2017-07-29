@@ -29,7 +29,7 @@ class HistoryTable extends React.Component {
           {this.props.sessionData.sessionArray ? this.props.sessionData.sessionArray.map((row, index) =>
             <TableRow
               key={index}
-              id={index+1}
+              id={index + 1}
               partner={row.name}
               name={row.promptName}
               time={row.lengthOfSession}
@@ -45,8 +45,8 @@ class HistoryTable extends React.Component {
 var mapStateToProps = function(state) {
   return {
     sessionData: state.sessionData,
-    userProfileData:  state.userProfileData
-  }
+    userProfileData: state.userProfileData
+  };
 };
 
 var mapDispatchToProps = function(dispatch) {

@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HistoryTable from './historyTable';
 import FriendsList from './friendsList';
+import YourToyProblems from './yourToyProblems';
 import Leaderboard from './leaderboard';
 import Stats from './stats';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeQuestionModal, updateButtonStatus, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
+import {closeQuestionModal, updateButtonStatus, populateUserToyProblems, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 
@@ -21,6 +22,7 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount() {
+    this.props.populateUserToyProblems();
     this.props.populateLeaderboard();
   }
 
@@ -58,20 +60,20 @@ class Dashboard extends React.Component {
 
     let questionModal =
       this.props.sessionData.sessionArray ? 
-      <Modal show={this.props.questionModal} onHide={this.props.closeQuestionModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>{this.props.sessionData.sessionArray[this.props.currentQuestion].promptName}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>{this.props.sessionData.sessionArray[this.props.currentQuestion].lengthOfSession}</h4>
-          <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].solution}</h5>
-        </Modal.Body>
-        <Modal.Footer>
-          <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTestsPassed} /
+        <Modal show={this.props.questionModal} onHide={this.props.closeQuestionModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.sessionData.sessionArray[this.props.currentQuestion].promptName}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>{this.props.sessionData.sessionArray[this.props.currentQuestion].lengthOfSession}</h4>
+            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].solution}</h5>
+          </Modal.Body>
+          <Modal.Footer>
+            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTestsPassed} /
               {this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTests}
-          </h5>
-        </Modal.Footer>
-      </Modal> : '';
+            </h5>
+          </Modal.Footer>
+        </Modal> : '';
 
     return (
       <div>
@@ -90,6 +92,7 @@ class Dashboard extends React.Component {
             <Col md={3}><FriendsList /></Col>
             <Col md={3}><Leaderboard /></Col>
           </Row>
+          <YourToyProblems />
           <Stats />
         </Grid>
       </div>
@@ -103,7 +106,7 @@ const mapStateToProps = (state) => {
     currentQuestion: state.currentQuestion,
     buttonStatus: state.buttonStatus,
     sessionData: state.sessionData,
-    userProfileData:  state.userProfileData,
+    userProfileData: state.userProfileData,
     questionModal: state.questionModal
   };
 };
@@ -111,6 +114,7 @@ const mapStateToProps = (state) => {
 var mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
+      populateUserToyProblems: populateUserToyProblems,
       closeQuestionModal: closeQuestionModal,
       closeModal: closeModal,
       dashboardToSession: dashboardToSession,
