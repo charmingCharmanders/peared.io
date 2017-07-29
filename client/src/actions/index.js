@@ -352,14 +352,14 @@ const setNewSolutionCode = (code) => {
 const populateUsers = () => {
   return dispatch => {
     axios.get('/api/profiles?properties=id,firstName,lastName')
-    .then(results => {
-      dispatch({
-        type: 'POPULATE_USERS',
-        payload: results
-      })
-    })
-  }
-}
+      .then(results => {
+        dispatch({
+          type: 'POPULATE_USERS',
+          payload: results
+        });
+      });
+  };
+};
 
 const updateSearch = (searchObj) => {
   return dispatch => {
@@ -372,13 +372,13 @@ const updateSearch = (searchObj) => {
           id: prof.id
         });
       }
-    })
+    });
     dispatch({
       type: 'UPDATE_SEARCH_RESULTS',
       payload: {
         searchResults: searchResults
       }
-    })
+    });
   };
 };
 
@@ -389,17 +389,17 @@ const addFriend = (userId, friendId, friendArray) => {
       friendId: friendId,
       status: 'pending',
       updatedBy: userId
-    }
-    friendArray.friendArray.push(friendObj)
+    };
+    friendArray.friendArray.push(friendObj);
     axios.post('api/friends', friendObj)
-    .then(() => {
-      dispatch({
-        type: 'ADD_FRIEND',
-        payload: friendArray
+      .then(() => {
+        dispatch({
+          type: 'ADD_FRIEND',
+          payload: friendArray
+        });
       });
-    })
-  }
-}
+  };
+};
 
 const acceptOrUnfriend = (userId, friendId, friendArray) => {
   return dispatch => {
@@ -410,20 +410,20 @@ const acceptOrUnfriend = (userId, friendId, friendArray) => {
         friendIndex = index;
         id = friend.id;
       }
-    })
+    });
     friendArray.friendArray.splice(friendIndex, 1);
     axios.delete(`/api/friends/${id}`)
-    .then(() => {
-      axios.delete(`/api/friends/${id + 1}`)
-    })
-    .then(() => {
-      dispatch({
-        type: 'UPDATE_FRIENDS',
-        payload: friendArray
+      .then(() => {
+        axios.delete(`/api/friends/${id + 1}`);
+      })
+      .then(() => {
+        dispatch({
+          type: 'UPDATE_FRIENDS',
+          payload: friendArray
+        });
       });
-    })
-  }
-}
+  };
+};
 
 export {
   openModal,
@@ -455,7 +455,6 @@ export {
   setNewSkeletonCode,
   setNewSolutionCode,
   updateCurrentQuestion,
-  startSession,
   updateSearch,
   populateUsers,
   addFriend,
