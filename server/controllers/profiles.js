@@ -20,6 +20,17 @@ module.exports.getAll = (req, res) => {
       .catch(err => {
         res.status(503).send(err);
       });
+  } else if (req.query.hasOwnProperty('properties')) {
+    let props = req.query.properties.split(',');
+    models.Profile.fetchAll({
+      columns: props
+    })
+      .then(profiles => {
+        res.status(200).send(profiles);
+      })
+      .catch(err => {
+        res.status(503).send(err);
+      });
   }
 };
 
