@@ -5,12 +5,12 @@ import { Button, Modal } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Countdown from './countdown';
 
 class ModalComponent extends React.Component {
   constructor(props) {
     super(props);
     this.leaveSession = this.leaveSession.bind(this);
-    this.switchToSession = this.switchToSession.bind(this);
   }
 
   closeModal() {
@@ -26,11 +26,6 @@ class ModalComponent extends React.Component {
     this.props.socket.emit('leave room');
   }
 
-  switchToSession() {
-    this.props.closeModal();
-    this.props.dashboardToSession();
-  }
-
   renderModal() {
     if (this.props.modal.type === 'startSession') {
       return (
@@ -39,13 +34,14 @@ class ModalComponent extends React.Component {
             <Modal.Title>Our servers are searching for a partner</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h5>Please be patient.</h5>
+            {
+              this.props.buttonStatus ?
+                (<h5>Please be patient.</h5>) :
+                (<Countdown />)
+            }
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.leaveSession}>Close</Button>
-            <LinkContainer to='/session'>
-              <Button bsStyle='primary' disabled={this.props.buttonStatus} onClick={this.switchToSession}>Join Session!</Button>
-            </LinkContainer>
           </Modal.Footer>
         </Modal>
       );
