@@ -53,6 +53,7 @@ const getUserToyProblemTests = (userId) => {
   };
 };
 
+
 const setCurrentUserToyProblem = (toyProblem) => {
   return {
     type: 'SET_CURRENT_USER_TOY_PROBLEM',
@@ -215,13 +216,16 @@ const updateToyProblemTests = (testArray) => {
   };
 };
 
-const updateUserToyProblem = ({name, description, category, difficulty, updatedAt, id}) => {
+const updateUserToyProblem = ({name, description, hint, category, difficulty, updatedAt, id, skeletonCode, solutionCode}) => {
   axios.put(`/api/prompts/${id}`, {
     name: name,
     description: description,
     category: category,
+    hint: hint,
     difficulty: difficulty,
-    updatedAt: updatedAt
+    updatedAt: updatedAt,
+    skeletonCode: skeletonCode,
+    solutionCode: solutionCode
   });
 
   return {
@@ -229,11 +233,23 @@ const updateUserToyProblem = ({name, description, category, difficulty, updatedA
     payload: {
       name: name,
       description: description,
+      hint: hint,
       category: category,
       difficulty: difficulty,
       updatedAt: updatedAt,
-      id: id
+      id: id,
+      skeletonCode: skeletonCode,
+      solutionCode: solutionCode
     }
+  };
+};
+
+const deleteToyProblem = (toyProblemId) => {
+  axios.delete(`/api/prompts/${toyProblemId}`);
+
+  return {
+    type: 'DELETE_TOY_PROBLEM',
+    payload: toyProblemId
   };
 };
 
@@ -458,5 +474,6 @@ export {
   updateSearch,
   populateUsers,
   addFriend,
-  acceptOrUnfriend
+  acceptOrUnfriend,
+  deleteToyProblem,
 };
