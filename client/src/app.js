@@ -86,7 +86,13 @@ class App extends React.Component {
             <Switch>
               <Route 
                 exact path='/'
-                render={()=>{ return (<Dashboard socket={this.state.socket}/>); }}
+                render={ () => {
+                  return (
+                    this.props.isDashboard ? 
+                      (<Dashboard socket={this.state.socket} />) :    
+                      (<Redirect to='/session' />)
+                  );
+                } }
               />
               <Route 
                 path='/session'
@@ -94,7 +100,7 @@ class App extends React.Component {
                   return (
                     this.props.isDashboard ? 
                       (<Redirect to='/' />) :    
-                      (<Session socketConnection={this.state.socket}/>)
+                      (<Session socketConnection={this.state.socket} />)
                   );
                 } }
               />
