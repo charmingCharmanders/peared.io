@@ -1,0 +1,46 @@
+LOG:  database system was shut down at 2017-07-31 10:51:29 PDT
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  role "danderson" does not exist
+FATAL:  role "postgres" does not exist
+FATAL:  role "postgresql" does not exist
+FATAL:  role "postgres" does not exist
+FATAL:  database "Danderson" does not exist
+ERROR:  database "thesis_devel" does not exist
+STATEMENT:  drop database thesis_devel
+	;
+FATAL:  role "postgres" does not exist
+ERROR:  syntax error at or near "destroy" at character 1
+STATEMENT:  destroy role postgres;
+ERROR:  syntax error at or near "role" at character 8
+STATEMENT:  delete role postgres;
+FATAL:  role "postgres" is not permitted to log in
+ERROR:  syntax error at or near "," at character 36
+STATEMENT:  create role postgres with SUPERUSER, LOGIN, CREATEROLE, CREATEDB, CREATEUSER;
+ERROR:  syntax error at or near "|" at character 37
+STATEMENT:  create role postgres with SUPERUSER | LOGIN | CREATEROLE | CREATEDB | CREATEUSER;
+ERROR:  unrecognized role option "createuser" at character 63
+STATEMENT:  create role postgres with SUPERUSER LOGIN CREATEROLE CREATEDB CREATEUSER;
+ERROR:  duplicate key value violates unique constraint "friends_profileid_friendid_unique"
+DETAIL:  Key ("profileId", "friendId")=(1, 1) already exists.
+STATEMENT:  insert into "friends" ("friendId", "profileId", "status", "updatedBy") values ($1, $2, $3, $4) returning "id"
+ERROR:  duplicate key value violates unique constraint "friends_profileid_friendid_unique"
+DETAIL:  Key ("profileId", "friendId")=(1, 1) already exists.
+STATEMENT:  insert into "friends" ("friendId", "profileId", "status", "updatedBy") values ($1, $2, $3, $4) returning "id"
+ERROR:  duplicate key value violates unique constraint "friends_profileid_friendid_unique"
+DETAIL:  Key ("profileId", "friendId")=(1, 19) already exists.
+STATEMENT:  insert into "friends" ("friendId", "profileId", "status", "updatedBy") values ($1, $2, $3, $4) returning "id"
+ERROR:  duplicate key value violates unique constraint "friends_profileid_friendid_unique"
+DETAIL:  Key ("profileId", "friendId")=(1, 3) already exists.
+STATEMENT:  insert into "friends" ("friendId", "profileId", "status", "updatedBy") values ($1, $2, $3, $4) returning "id"
+ERROR:  invalid input syntax for integer: "undefined"
+STATEMENT:  select "friends".* from "friends" where "profileId" = $1
+ERROR:  invalid input syntax for integer: "undefined"
+STATEMENT:  select "friends".* from "friends" where "profileId" = $1
+ERROR:  invalid input syntax for integer: "undefined"
+STATEMENT:  select "friends".* from "friends" where "profileId" = $1
+ERROR:  invalid input syntax for integer: "undefined"
+STATEMENT:  select "friends".* from "friends" where "profileId" = $1
+ERROR:  invalid input syntax for integer: "undefined"
+STATEMENT:  select "sessions".* from "sessions" where "profileId1" = $1 or ("profileId2" = $2)

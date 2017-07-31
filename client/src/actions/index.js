@@ -207,8 +207,6 @@ const updateToyProblemTests = (testArray) => {
   for (let i = 0; i < testArray.length; i++) {
     axios.put(`/api/tests/${testArray[i].promptId}`, testArray[i]);
   }
-  // axios.put(`/api/tests/${testObj.promptId}`, testObj);
-
   return {
     type: 'UPDATE_TOY_PROBLEM_TESTS',
     payload: testArray
@@ -237,8 +235,7 @@ const updateUserToyProblem = ({name, description, category, difficulty, updatedA
   };
 };
 
-const populateUserProfileFriendsAndSessionData = () => {
-
+const populateUserData = () => {
   return dispatch => {
     return axios.get('/loggedin')
       .then(result => {
@@ -247,31 +244,38 @@ const populateUserProfileFriendsAndSessionData = () => {
           payload: result.data
         });
         return result;
-      })
-      .then((result) => {
-        userProfileId = result.data.id;
-        axios.get(`/api/profiles/${userProfileId}/sessions`)
-          .then(result => {
-            let sessionInfo;
-            if (result.data) {
-              sessionInfo = helpers.formatSessionsData(result.data, userProfileId);
-            } else {
-              sessionInfo = [];
-            }
-            dispatch({
-              type: 'POPULATE_USER_SESSIONS',
-              payload: sessionInfo
-            });
-          })
-          .then(() => {
-            axios.get(`/api/friends?profileId=${userProfileId}`)
-              .then(result => {
-                dispatch({
-                  type: 'POPULATE_USERS_FRIENDS',
-                  payload: result.data
-                });
-              });
-          });
+      });
+  };
+};
+
+const populateUserSessionsData = (userProfileId) => {
+  return dispatch => {
+    return axios.get(`/api/profiles/${userProfileId}/sessions`)
+      .then(result => {
+        let sessionInfo;
+        if (result.data) {
+          sessionInfo = helpers.formatSessionsData(result.data, userProfileId);
+        } else {
+          sessionInfo = [];
+        }
+        dispatch({
+          type: 'POPULATE_USER_SESSIONS',
+          payload: sessionInfo
+        });
+      });
+  };
+};
+
+
+
+const populateUserFriendsData = (userProfileId) => {
+  return dispatch => {
+    return axios.get(`/api/friends?profileId=${userProfileId}`)
+      .then(result => {
+        dispatch({
+          type: 'POPULATE_USERS_FRIENDS',
+          payload: result.data
+        });
       });
   };
 };
@@ -287,11 +291,6 @@ const endSession = (sessions, session, code, testResults) => {
   );
 
   return dispatch => {
-    // dispatch({
-    //   type: 'END_SESSION',
-    //   payload: sessions.push(session)
-    // });
-
     axios.post('/api/sessions', {
       profileId1: session.profileId1,
       profileId2: session.profileId2,
@@ -447,7 +446,9 @@ export {
   getUserToyProblemTests,
   postUserToyProblem,
   populateLeaderboard,
-  populateUserProfileFriendsAndSessionData,
+  populateUserData,
+  populateUserSessionsData,
+  populateUserFriendsData,
   endSession,
   updateToyProblemTests,
   updateSkeletonCode,

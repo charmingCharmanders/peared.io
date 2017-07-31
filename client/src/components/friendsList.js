@@ -23,13 +23,13 @@ class FriendsList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userFriendData:  state.userFriendData,
-    userProfileData:  state.userProfileData
+    userFriendData: state.userFriendData,
+    userProfileData: state.userProfileData
   };
 };
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = function (dispatch) {
   return bindActionCreators({}, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsList);

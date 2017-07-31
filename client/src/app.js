@@ -6,7 +6,7 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {closeModal, openModal, populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
+import {closeModal, openModal, populateUserFriendsData, populateUserSessionsData, populateUserData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 
@@ -71,9 +71,15 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.props.populateUserProfileFriendsAndSessionData()
+    this.props.populateUserData()
       .then(()=>{
         this.openConnection();
+        this.props.populateUserFriendsData(this.props.profile.id)
+        .then(()=>{
+          console.log('friends data', this.props);
+          this.state.socket.emit('friends list', this.props.friendsList);
+        });
+        this.props.populateUserSessionsData(this.props.profile.id);
       });
   }
 
@@ -116,7 +122,7 @@ class App extends React.Component {
 var mapStateToProps = function(state) {
   return {
     isDashboard: state.isDashboard,
-    nav: state.nav,
+    friendsList: state.userFriendData,
     profile: state.userProfileData
   };
 };
@@ -126,7 +132,9 @@ var mapDispatchToProps = function(dispatch) {
     {
       closeModal: closeModal,
       openModal: openModal,
-      populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
+      populateUserFriendsData: populateUserFriendsData,
+      populateUserData: populateUserData,
+      populateUserSessionsData: populateUserSessionsData,
       updateButtonStatus: updateButtonStatus,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,
