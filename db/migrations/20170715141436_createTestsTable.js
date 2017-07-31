@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTableIfNotExists('tests', function (table) {
       table.increments('id').unsigned().primary();
       table.integer('promptId').unsigned();
-      table.foreign('promptId').references('id').inTable('prompts');
+      table.foreign('promptId').references('id').inTable('prompts').onDelete('CASCADE');
       table.string('description');
       table.string('arguments');
       table.string('expectedOutput');
