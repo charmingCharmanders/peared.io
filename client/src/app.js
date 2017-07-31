@@ -38,7 +38,7 @@ class App extends React.Component {
   openConnection() {
     console.log('profile id:', this);
     this.setState({
-      socket: io.connect(this.connectionUrl(), { query: { profileId: this.props.profile.id } })
+      socket: io.connect(this.connectionUrl(), { query: { profileId: this.props.profile.id, rating: this.props.profile.rating } })
     });
     this.state.socket.on('connect', ()=>{
       this.state.socket.on('startSession', (sessionData) =>{
