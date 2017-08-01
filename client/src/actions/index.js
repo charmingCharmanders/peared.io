@@ -382,6 +382,7 @@ const updateSearch = (searchObj) => {
 };
 
 const addFriend = (userId, friendId, friendArray) => {
+  console.log(userId, friendId, friendArray);
   return dispatch => {
     let friendObj = {
       profileId: userId,
@@ -389,7 +390,7 @@ const addFriend = (userId, friendId, friendArray) => {
       status: 'pending',
       updatedBy: userId
     };
-    friendArray.friendArray.push(friendObj);
+    friendArray.friendsList.push(friendObj);
     axios.post('api/friends', friendObj)
       .then(() => {
         dispatch({
@@ -404,13 +405,13 @@ const acceptOrUnfriend = (userId, friendId, friendArray) => {
   return dispatch => {
     let friendIndex;
     let id;
-    friendArray.friendArray.forEach((friend, index) => {
+    friendArray.forEach((friend, index) => {
       if (friend.friendId === friendId) {
         friendIndex = index;
         id = friend.id;
       }
     });
-    friendArray.friendArray.splice(friendIndex, 1);
+    friendArray.splice(friendIndex, 1);
     axios.delete(`/api/friends/${id}`)
       .then(() => {
         axios.delete(`/api/friends/${id + 1}`);

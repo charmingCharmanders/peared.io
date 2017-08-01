@@ -11,24 +11,25 @@ class SearchProfiles extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-  };
+  }
 
   handleChange(e) {
     this.props.updateSearch({ users: this.props.users.data.data, value: e.target.value});
-  };
+  }
 
   render() {
     let userId = this.props.userProfileData.id;
-    let friendArrayData = this.props.userFriendData;
+    let friendArrayData = {};
+    friendArrayData['friendsList'] = this.props.friendsList;
 
     let friendArray;
 
-    if (this.props.userFriendData.friendArray) {
-      friendArray = this.props.userFriendData.friendArray.map(friend => friend.friend.id);
+    if (this.props.friendsList) {
+      friendArray = this.props.friendsList.map(friend => friend.id);
     }
 
     let results;
-    if (!this.props.searchResults.searchResults || this.props.searchResults.searchResults.searchResults.length === this.props.users.data.data.length) { results = ''}
+    if (!this.props.searchResults.searchResults || this.props.searchResults.searchResults.searchResults.length === this.props.users.data.data.length) { results = ''; }
     else {
       results =
       <Panel collapsible defaultExpanded header="Users">
@@ -40,17 +41,17 @@ class SearchProfiles extends React.Component {
 
           let unfriendButton =
             <ButtonToolbar>
-              <Button bsStyle="danger" onClick={() => this.props.acceptOrUnfriend.call(this, userId, profile.id, friendArrayData)}>Unfriend</Button>
+              <Button bsStyle="danger" onClick={() => this.props.acceptOrUnfriend.call(this, userId, profile.id, this.props.friendsList)}>Unfriend</Button>
             </ButtonToolbar>;
 
           return (<div key={index}>
             <div key={index}>{profile.name}
             </div>
             {friendArray.includes(profile.id) ? unfriendButton : addButton}
-          </div>)
+          </div>);
         })}
       </Panel>
-    };
+    }
 
     return (
       <div>
@@ -71,13 +72,13 @@ class SearchProfiles extends React.Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   return {
     searchResults: state.searchResults,
     users: state.users,
-    userFriendData: state.userFriendData,
+    friendsList: state.friendsList,
     userProfileData:  state.userProfileData
   };
 };
@@ -88,6 +89,6 @@ function mapDispatchToProps(dispatch) {
     addFriend: addFriend,
     acceptOrUnfriend: acceptOrUnfriend
   }, dispatch);
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchProfiles);

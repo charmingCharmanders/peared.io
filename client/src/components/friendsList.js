@@ -15,7 +15,7 @@ class FriendsList extends React.Component {
   render() {
     return (
       <Panel collapsible defaultExpanded header="Friends List">
-        {this.props.userFriendData.friendArray ? this.props.userFriendData.friendArray.map((friend, index) => <ListGroupItem key={index} fill>{friend.friend.firstName}<Badge>{friend.status === 'pending' ? friend.status : ''}</Badge></ListGroupItem> ) : ''}
+        {this.props.friendsList ? this.props.friendsList.map((friend, index) => <ListGroupItem key={index} fill>{friend.friend.firstName}<Badge>{friend.status === 'pending' ? friend.status : ''}</Badge></ListGroupItem> ) : ''}
       </Panel>
     );
   }
@@ -23,7 +23,7 @@ class FriendsList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userFriendData: state.userFriendData,
+    friendsList: state.friendsList,
     userProfileData: state.userProfileData
   };
 };

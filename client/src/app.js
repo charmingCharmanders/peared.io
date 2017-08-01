@@ -122,7 +122,7 @@ class App extends React.Component {
 var mapStateToProps = function(state) {
   return {
     isDashboard: state.isDashboard,
-    friendsList: state.userFriendData,
+    friendsList: state.friendsList,
     profile: state.userProfileData
   };
 };
