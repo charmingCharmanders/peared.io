@@ -280,6 +280,14 @@ const populateUserFriendsData = (userProfileId) => {
   };
 };
 
+const updateUserFriendsData = (friendsList) => {
+  return {
+    type: 'POPULATE_USERS_FRIENDS',
+    payload: friendsList
+  };
+};
+
+
 const endSession = (sessions, session, code, testResults) => {
   const sessionEndedAt = new Date();
   const sessionScore = helpers.calculateSessionScore(
@@ -450,6 +458,7 @@ export {
   populateUserSessionsData,
   populateUserFriendsData,
   endSession,
+  updateUserFriendsData,
   updateToyProblemTests,
   updateSkeletonCode,
   updateSolutionCode,

@@ -6,7 +6,7 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {closeModal, openModal, populateUserFriendsData, populateUserSessionsData, populateUserData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
+import {closeModal, openModal, updateUserFriendsData, populateUserFriendsData, populateUserSessionsData, populateUserData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 
@@ -77,6 +77,10 @@ class App extends React.Component {
         this.props.populateUserFriendsData(this.props.profile.id)
         .then(()=>{
           console.log('friends data', this.props);
+          this.state.socket.on('friends list', (friendsList)=>{
+            console.log('friends list is:', friendsList);
+            this.props.updateUserFriendsData(friendsList);
+          });
           this.state.socket.emit('friends list', this.props.friendsList);
         });
         this.props.populateUserSessionsData(this.props.profile.id);
@@ -139,6 +143,7 @@ var mapDispatchToProps = function(dispatch) {
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,
       updateCode: updateCode,
+      updateUserFriendsData: updateUserFriendsData,
       updateCurrentSession: updateCurrentSession,
       updatePrompt: updatePrompt,
       updateTestResults: updateTestResults,
