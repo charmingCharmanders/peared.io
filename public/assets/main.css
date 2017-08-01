@@ -25,6 +25,7 @@ body {
 .navbar {
   border: 0;
   margin-bottom: 0;
+  padding: 5px 0;
   position: absolute;
   width: 100%;
 }
