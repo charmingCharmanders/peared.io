@@ -78,6 +78,10 @@ class App extends React.Component {
         .then(()=>{
           console.log('friends data', this.props);
           this.state.socket.emit('friends list', this.props.friendsList);
+          this.state.socket.on('update friends list', (friendsList)=>{
+            console.log('friendsListBack:', friendsList);
+          });
+
         });
         this.props.populateUserSessionsData(this.props.profile.id);
       });
