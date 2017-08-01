@@ -11,9 +11,17 @@ class ModalComponent extends React.Component {
   constructor(props) {
     super(props);
     this.leaveSession = this.leaveSession.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   closeModal() {
+    this.props.closeModal();
+  }
+
+  acceptRequestToPair() {
+    this.props.closeModal();
+  }
+  rejectRequestToPair() {
     this.props.closeModal();
   }
 
@@ -57,6 +65,22 @@ class ModalComponent extends React.Component {
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.closeModal}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      );
+    }
+    if (this.props.modal.type === 'roomRequest') {
+      return (
+        <Modal show={this.props.modal.show} onHide={this.closeModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>*Some name* sent you a pairing request</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h5>Would you like to join?</h5>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.acceptRequestToPair}>Accept</Button>
+            <Button onClick={this.rejectRequestToPair}>Reject</Button>
           </Modal.Footer>
         </Modal>
       );

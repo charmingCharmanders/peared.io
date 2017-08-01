@@ -41,6 +41,13 @@ const toggleUpdateUserToyProblemModal = (show, toyProblem) => {
   };
 };
 
+const toggleRoomRequestModal = (show, roomData) => {
+  return {
+    type: 'TOGGLE_ROOM_REQUEST_MODAL',
+    payload: show,
+  };
+};
+
 const getUserToyProblemTests = (userId) => {
   return dispatch => {
     axios.get(`/api/tests/${userId}`)
@@ -497,6 +504,7 @@ export {
   populateUserToyProblems,
   toggleUpdateUserToyProblemModal,
   toggleNewUserToyProblemModal,
+  toggleRoomRequestModal,
   setCurrentUserToyProblem,
   updateUserToyProblem,
   getUserToyProblemTests,
