@@ -17,10 +17,19 @@ class SearchProfiles extends React.Component {
     this.props.updateSearch({ users: this.props.users.data.data, value: e.target.value});
   }
 
+  add(userId, profileId, friendArray) {
+    this.props.addFriend(userId, profileId, friendArray);
+    document.getElementById('search').value = '';
+  }
+
+  removeFriend(userId, profileId, friendArray) {
+    this.props.unfriend(userId, profileId, friendArray);
+    document.getElementById('search').value = '';
+  }
+
   render() {
     let userId = this.props.userProfileData.id;
     let friendArrayData = this.props.userFriendData;
-
     let friendArray;
     let results;
 
@@ -35,10 +44,10 @@ class SearchProfiles extends React.Component {
         <Panel collapsible defaultExpanded header="Users">
           {this.props.searchResults.searchResults.searchResults.map((profile, index) => {
             let addButton =
-              <Button bsStyle="primary" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightGreen"}}onClick={() => this.props.addFriend(userId, profile.id, friendArrayData.friendArray)}>Add</Button>;
+              <Button bsStyle="primary" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightGreen"}}onClick={() => this.add(userId, profile.id, friendArrayData.friendArray)}>Add</Button>;
 
             let unfriendButton =
-              <Button bsStyle="danger" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightRed"}}onClick={() => this.props.unfriend(userId, profile.id, friendArrayData.friendArray)}>Unfriend</Button>;
+              <Button bsStyle="danger" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightRed", marginBottom: "5px"}}onClick={() => this.removeFriend(userId, profile.id, friendArrayData.friendArray)}>Unfriend</Button>;
 
             return (<ListGroupItem key={index} fill>{profile.name}{friendArray.includes(profile.id) ? unfriendButton : addButton}
             </ListGroupItem>);
@@ -50,7 +59,7 @@ class SearchProfiles extends React.Component {
       <div>
         <form>
           <FormGroup
-            controlId="formBasicText"
+            controlId="search"
           >
             <ControlLabel>Search For Friends</ControlLabel>
             <FormControl
