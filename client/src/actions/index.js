@@ -397,8 +397,8 @@ const updateSearch = (searchObj) => {
   };
 };
 
-const addFriend = (userId, friendId, friendArray) => {
-  console.log(userId, friendId, friendArray);
+const addFriend = (userId, friendId, friendsList) => {
+  console.log(userId, friendId, friendsList);
   return dispatch => {
     let friendObj = {
       profileId: userId,
@@ -406,10 +406,10 @@ const addFriend = (userId, friendId, friendArray) => {
       status: 'pending',
       updatedBy: userId
     };
-    friendArray.friendsList.push(friendObj);
+    friendsList.push(friendObj);
     axios.post('api/friends', friendObj)
       .then(() => {
-        axios.get(`/api/friends?profileId=${userProfileId}`)
+        axios.get(`/api/friends?profileId=${userId}`)
           .then(result => {
             dispatch({
               type: 'POPULATE_USERS_FRIENDS',

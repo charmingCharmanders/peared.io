@@ -23,7 +23,7 @@ class FriendsList extends React.Component {
 
     return (
       <Panel collapsible defaultExpanded header="Friends List">
-        {this.props.friendsList ? this.props.friendsList.map((friend, index) => <ListGroupItem key={index} fill>{friend.friend.firstName}<Badge>{friend.status === 'pending' ? friend.status : ''}</Badge></ListGroupItem> ) : ''}
+        {this.props.friendsList ? this.props.friendsList.map((friend, index) => {
           if (friend.status === 'pending') {
             startSessionButton = '';
             pendingFlag = <button style={{float:"right", borderRadius: "5px", borderStyle: "none", backgroundColor: "lightGrey", margin: "0px 5px 0px 5px"}}>Pending</button>;
