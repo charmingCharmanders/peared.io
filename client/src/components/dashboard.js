@@ -1,8 +1,8 @@
 import FriendsList from './friendsList';
-import HistoryTable from './historyTable';
 import Leaderboard from './leaderboard';
 import Modal from './modal';
 import React from 'react';
+import Sessions from './sessions';
 import Statistics from './statistics';
 import YourToyProblems from './yourToyProblems';
 import { Col, Grid, Row} from 'react-bootstrap';
@@ -32,7 +32,7 @@ class Dashboard extends React.Component {
           </Row>
           <Statistics />
           <Row className='show-grid'>
-            <Col md={9}><HistoryTable /></Col>
+            <Col md={9}><Sessions /></Col>
             <Col md={3}><Leaderboard /></Col>
           </Row>
           <Row className='show-grid'>

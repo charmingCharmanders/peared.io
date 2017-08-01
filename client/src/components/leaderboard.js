@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import TableRow from './tableRow';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
