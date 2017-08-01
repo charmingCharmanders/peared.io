@@ -3,7 +3,7 @@ import HistoryTable from './historyTable';
 import Leaderboard from './leaderboard';
 import Modal from './modal';
 import React from 'react';
-import Stats from './stats';
+import Statistics from './statistics';
 import YourToyProblems from './yourToyProblems';
 import { Col, Grid, Row} from 'react-bootstrap';
 import { bindActionCreators} from 'redux';
@@ -30,11 +30,7 @@ class Dashboard extends React.Component {
               <h2>Welcome, {this.props.userProfileData.firstName}!</h2>
             </Col>
           </Row>
-          <Row className='show-grid'>
-            <Col md={12}>
-              <Stats />
-            </Col>
-          </Row>
+          <Statistics />
           <Row className='show-grid'>
             <Col md={9}><HistoryTable /></Col>
             <Col md={3}><Leaderboard /></Col>
