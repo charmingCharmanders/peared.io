@@ -47,8 +47,8 @@ class FriendsList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userFriendData:  state.userFriendData,
-    userProfileData:  state.userProfileData
+    userFriendData: state.userFriendData,
+    userProfileData: state.userProfileData
   };
 };
 
