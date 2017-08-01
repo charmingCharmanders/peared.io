@@ -497,6 +497,7 @@ export {
   getUserToyProblemTests,
   postUserToyProblem,
   populateLeaderboard,
+  populateUserProfileFriendsAndSessionData,
   populateUserData,
   populateUserSessionsData,
   populateUserFriendsData,

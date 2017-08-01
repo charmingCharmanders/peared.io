@@ -13,8 +13,7 @@ class TextEditorButtons extends React.Component {
   }
 
   codeSubmit() {
-    this.props.endSession(this.props.sessionData, this.props.currentSession, this.props.code, this.props.testResults);
-    this.props.socketConnection.emit('end session', 'submitSession');
+    this.props.socketConnection.emit('submit code', 'submitSession', this.props.currentSession, this.props.code);
   }
 
   codeTest() {
