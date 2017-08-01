@@ -289,9 +289,14 @@ const populateUserFriendsData = (userProfileId) => {
   return dispatch => {
     return axios.get(`/api/friends?profileId=${userProfileId}`)
       .then(result => {
+        let friendArray = result.data.map((friend)=>{
+          friend.online = false;
+          friend.inRoom = false;
+          return friend;
+        })
         dispatch({
           type: 'POPULATE_USERS_FRIENDS',
-          payload: result.data
+          payload: friendArray
         });
       });
   };
