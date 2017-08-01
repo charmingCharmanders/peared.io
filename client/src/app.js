@@ -66,6 +66,11 @@ class App extends React.Component {
       this.state.socket.on('testResults', (testResults)=>{
         this.props.updateTestResults(testResults);
       });
+      this.state.socket.on('room request', (requestData)=>{
+        console.log('request Data:', requestData);
+        //TODO figure out what needs to happen here...
+      });
+
     });
   }
 
