@@ -1,9 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class Leaderboard extends React.Component {
   constructor(props) {
@@ -12,7 +10,7 @@ class Leaderboard extends React.Component {
 
   render() {
     return (
-      <Table responsive bordered condensed hover striped>
+      <Table bordered>
         <thead>
           <tr>
             <th>Rank</th>
@@ -21,12 +19,16 @@ class Leaderboard extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.leaderboard.leaderArray ? this.props.leaderboard.leaderArray.map((leader, index) =>
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{leader.name}</td>
-              <td>{Number(leader.rating).toFixed()}</td>
-            </tr>) : ''}
+          {this.props.leaderboard.leaderArray ?
+            this.props.leaderboard.leaderArray.map((leader, index) => {
+              return (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{leader.name}</td>
+                  <td>{Number(leader.rating).toFixed()}</td>
+                </tr>
+              );
+            }) : null}
         </tbody>
       </Table>
     );
@@ -35,8 +37,6 @@ class Leaderboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userFriendData:  state.userFriendData,
-    userProfileData:  state.userProfileData,
     leaderboard: state.leaderboard
   };
 };
