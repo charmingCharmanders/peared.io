@@ -105,7 +105,10 @@ module.exports.getSessions = (req, res) => {
       where: { profileId1: req.params.id },
       orWhere: { profileId2: req.params.id }
     })
-    .fetchAll({
+    .orderBy('endedAt', 'DESC')
+    .fetchPage({
+      limit: req.query.limit || 10,
+      offset: req.query.offset || 0,
       withRelated: ['profile1', 'profile2', 'prompt']
     })
     .then(friends => {
