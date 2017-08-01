@@ -16,10 +16,10 @@ const userToyProblems = (state = [], action) => {
         obj.updatedAt = action.payload.updatedAt;
         obj.skeletonCode = action.payload.skeletonCode;
         obj.solutionCode = action.payload.solutionCode;
+        obj.hint = action.payload.hint;
 
         obj.id = state[i].id;
         obj.createdAt = state[i].createdAt;
-        obj.hint = state[i].hint;
         obj.key = state[i].key;
         obj.userId = state[i].userId;
 
@@ -38,13 +38,34 @@ const userToyProblems = (state = [], action) => {
     break;
   case 'UPDATE_TOY_PROBLEM_TESTS':
 
+  let result2 = [];
+
     for (let i = 0; i < state.length; i++) {
       if (state[i].id === action.payload[0].promptId) {
-        state[i].tests = action.payload;
+        result2.push(state[i]);
+        result2[i].tests = action.payload
+      } else {
+        result2.push(state[i])
       }
     }
 
-    return state;
+    return result2;
+    break;
+  case 'ADD_TEST':
+
+    let result = [];
+
+    for (let i = 0; i < state.length; i++) {
+      if (state[i].id === action.payload) {
+        result.push(state[i]);
+        result[i].tests[result[i].tests.length] = {};
+      } else {
+        result.push(state[i])
+      }
+    }
+
+
+    return result;
     break;
   case 'DELETE_TOY_PROBLEM':
     let resultArr = [];

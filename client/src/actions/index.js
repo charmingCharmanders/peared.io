@@ -34,6 +34,20 @@ const postUserToyProblem = (newToyProblem, newToyProblemTest) => {
   };
 };
 
+const setInitialSkeletonCode = (skeleton) => {
+  return {
+    type: 'SET_INITIAL_SKELETON_CODE',
+    payload: skeleton
+  };
+};
+
+const setInitialSolutionCode = (solution) => {
+  return {
+    type: 'SET_INITIAL_SOLUTION_CODE',
+    payload: solution
+  };
+};
+
 const toggleUpdateUserToyProblemModal = (show, toyProblem) => {
   return {
     type: 'TOGGLE_UPDATE_USER_TOY_PROBLEM_MODAL',
@@ -53,6 +67,12 @@ const getUserToyProblemTests = (userId) => {
   };
 };
 
+const addTest = (id) => {
+  return {
+    type: 'ADD_TEST',
+    payload: id
+  };
+};
 
 const setCurrentUserToyProblem = (toyProblem) => {
   return {
@@ -514,4 +534,8 @@ export {
   addFriend,
   unfriend,
   acceptFriend
+  deleteToyProblem,
+  addTest,
+  setInitialSkeletonCode,
+  setInitialSolutionCode
 };
