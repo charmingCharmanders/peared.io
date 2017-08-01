@@ -36,7 +36,11 @@ class FriendsList extends React.Component {
           } else if (friend.inRoom === false && friend.online === true) {
             pendingFlag = '';
             acceptButton = '';
-            startSessionButton = <button style={{float:"right", borderRadius: "5px", borderStyle: "none", backgroundColor: "lightGreen", margin: "0px 5px 0px 5px"}} onClick={() => console.log('clicked to start coding with friend')}>Code</button>;
+            startSessionButton = <button style={{float:"right", borderRadius: "5px", borderStyle: "none", backgroundColor: "lightGreen", margin: "0px 5px 0px 5px"}} onClick={() => this.props.socket.emit('request session', friend)}>Code</button>;
+          } else {
+            startSessionButton = '';
+            acceptButton = '';
+            pendingFlag = '';
           }
           return (<ListGroupItem key={index} fill>{friend.friend.firstName}{acceptButton}{startSessionButton}{pendingFlag}</ListGroupItem>)}) : ''
         }

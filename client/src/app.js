@@ -75,9 +75,7 @@ class App extends React.Component {
         this.openConnection();
         this.props.populateUserFriendsData(this.props.profile.id)
         .then(()=>{
-          console.log('friends data', this.props);
           this.state.socket.on('friends list', (friendsList)=>{
-            console.log('friends list is:', friendsList);
             this.props.updateUserFriendsData(friendsList);
           });
           this.state.socket.emit('friends list', this.props.friendsList);
