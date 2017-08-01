@@ -1,10 +1,10 @@
 import FriendsList from './friendsList';
 import Leaderboard from './leaderboard';
 import Modal from './modal';
+import Prompts from './prompts';
 import React from 'react';
 import Sessions from './sessions';
 import Statistics from './statistics';
-import YourToyProblems from './yourToyProblems';
 import { Col, Grid, Row} from 'react-bootstrap';
 import { bindActionCreators} from 'redux';
 import { connect} from 'react-redux';
@@ -36,7 +36,7 @@ class Dashboard extends React.Component {
             <Col md={3}><Leaderboard /></Col>
           </Row>
           <Row className='show-grid'>
-            <Col md={9}><YourToyProblems /></Col>
+            <Col md={9}><Prompts /></Col>
             <Col md={3}><FriendsList /></Col>
           </Row>
         </Grid>
