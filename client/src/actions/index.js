@@ -293,7 +293,7 @@ const populateUserFriendsData = (userProfileId) => {
           friend.online = false;
           friend.inRoom = false;
           return friend;
-        })
+        });
         dispatch({
           type: 'POPULATE_USERS_FRIENDS',
           payload: friendArray
