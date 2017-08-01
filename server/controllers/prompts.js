@@ -37,6 +37,19 @@ module.exports.getOne = (req, res) => {
     });
 };
 
+module.exports.deleteOne = (req, res) => {
+
+  models.Prompt
+    .where({id: req.params.id})
+    .destroy()
+    .then(prompt => {
+      res.status(200).send(prompt);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+};
+
 
 module.exports.update = (req, res) => {
   models.Prompt.where({ id: req.params.id }).fetch()
@@ -44,7 +57,7 @@ module.exports.update = (req, res) => {
       if (!prompt) {
         throw prompt;
       }
-      return prompt.save(req.body, { method: 'update' })
+      return prompt.save(req.body, { method: 'update' });
     })
     .then(() => {
       res.sendStatus(200);

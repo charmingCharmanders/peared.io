@@ -6,7 +6,7 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {closeModal, openModal, populateUserProfileFriendsAndSessionData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
+import {closeModal, openModal, updateUserFriendsData, populateUserFriendsData, populateUserSessionsData, populateUserData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 
@@ -36,9 +36,8 @@ class App extends React.Component {
   }
 
   openConnection() {
-    console.log('profile id:', this);
     this.setState({
-      socket: io.connect(this.connectionUrl(), { query: { profileId: this.props.profile.id } })
+      socket: io.connect(this.connectionUrl(), { query: { profileId: this.props.profile.id, rating: this.props.profile.rating } })
     });
     this.state.socket.on('connect', ()=>{
       this.state.socket.on('startSession', (sessionData) =>{
@@ -71,9 +70,19 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.props.populateUserProfileFriendsAndSessionData()
+    this.props.populateUserData()
       .then(()=>{
         this.openConnection();
+        this.props.populateUserFriendsData(this.props.profile.id)
+        .then(()=>{
+          console.log('friends data', this.props);
+          this.state.socket.on('friends list', (friendsList)=>{
+            console.log('friends list is:', friendsList);
+            this.props.updateUserFriendsData(friendsList);
+          });
+          this.state.socket.emit('friends list', this.props.friendsList);
+        });
+        this.props.populateUserSessionsData(this.props.profile.id);
       });
   }
 
@@ -86,7 +95,13 @@ class App extends React.Component {
             <Switch>
               <Route 
                 exact path='/'
-                render={()=>{ return (<Dashboard socket={this.state.socket}/>); }}
+                render={ () => {
+                  return (
+                    this.props.isDashboard ? 
+                      (<Dashboard socket={this.state.socket} />) :    
+                      (<Redirect to='/session' />)
+                  );
+                } }
               />
               <Route 
                 path='/session'
@@ -94,7 +109,7 @@ class App extends React.Component {
                   return (
                     this.props.isDashboard ? 
                       (<Redirect to='/' />) :    
-                      (<Session socketConnection={this.state.socket}/>)
+                      (<Session socketConnection={this.state.socket} />)
                   );
                 } }
               />
@@ -110,7 +125,7 @@ class App extends React.Component {
 var mapStateToProps = function(state) {
   return {
     isDashboard: state.isDashboard,
-    nav: state.nav,
+    friendsList: state.userFriendData,
     profile: state.userProfileData
   };
 };
@@ -120,11 +135,14 @@ var mapDispatchToProps = function(dispatch) {
     {
       closeModal: closeModal,
       openModal: openModal,
-      populateUserProfileFriendsAndSessionData: populateUserProfileFriendsAndSessionData,
+      populateUserFriendsData: populateUserFriendsData,
+      populateUserData: populateUserData,
+      populateUserSessionsData: populateUserSessionsData,
       updateButtonStatus: updateButtonStatus,
       dashboardToSession: dashboardToSession,
       updateRoomId: updateRoomId,
       updateCode: updateCode,
+      updateUserFriendsData: updateUserFriendsData,
       updateCurrentSession: updateCurrentSession,
       updatePrompt: updatePrompt,
       updateTestResults: updateTestResults,

@@ -1,7 +1,7 @@
 const models = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
-  models.Friend 
+  models.Friend
     .where({ profileId: req.query.profileId })
     .fetchAll({
       withRelated: ['friend']
@@ -77,5 +77,17 @@ module.exports.update = (req, res) => {
     })
     .catch(() => {
       res.sendStatus(404);
+    });
+};
+
+module.exports.delete = (req, res) => {
+  models.Friend
+    .where({id: req.params.id})
+    .destroy()
+    .then(friends => {
+      res.status(200).send(friends);
+    })
+    .catch(err => {
+      res.status(500).send(err);
     });
 };

@@ -10,7 +10,7 @@ router.route('/')
   ;
 
 router.route('/:id')
-  //.delete(FriendsController.delete)
+  .delete(FriendsController.delete)
   ;
 
 module.exports = router;
