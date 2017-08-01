@@ -53,6 +53,7 @@ const getUserToyProblemTests = (userId) => {
   };
 };
 
+
 const setCurrentUserToyProblem = (toyProblem) => {
   return {
     type: 'SET_CURRENT_USER_TOY_PROBLEM',
@@ -213,13 +214,16 @@ const updateToyProblemTests = (testArray) => {
   };
 };
 
-const updateUserToyProblem = ({name, description, category, difficulty, updatedAt, id}) => {
+const updateUserToyProblem = ({name, description, hint, category, difficulty, updatedAt, id, skeletonCode, solutionCode}) => {
   axios.put(`/api/prompts/${id}`, {
     name: name,
     description: description,
     category: category,
+    hint: hint,
     difficulty: difficulty,
-    updatedAt: updatedAt
+    updatedAt: updatedAt,
+    skeletonCode: skeletonCode,
+    solutionCode: solutionCode
   });
 
   return {
@@ -227,15 +231,28 @@ const updateUserToyProblem = ({name, description, category, difficulty, updatedA
     payload: {
       name: name,
       description: description,
+      hint: hint,
       category: category,
       difficulty: difficulty,
       updatedAt: updatedAt,
-      id: id
+      id: id,
+      skeletonCode: skeletonCode,
+      solutionCode: solutionCode
     }
   };
 };
 
+const deleteToyProblem = (toyProblemId) => {
+  axios.delete(`/api/prompts/${toyProblemId}`);
+
+  return {
+    type: 'DELETE_TOY_PROBLEM',
+    payload: toyProblemId
+  };
+};
+
 const populateUserData = () => {
+
   return dispatch => {
     return axios.get('/loggedin')
       .then(result => {
@@ -397,37 +414,63 @@ const addFriend = (userId, friendId, friendArray) => {
       status: 'pending',
       updatedBy: userId
     };
-    friendArray.friendArray.push(friendObj);
     axios.post('api/friends', friendObj)
       .then(() => {
-        dispatch({
-          type: 'ADD_FRIEND',
-          payload: friendArray
-        });
+        axios.get(`/api/friends?profileId=${userProfileId}`)
+          .then(result => {
+            dispatch({
+              type: 'POPULATE_USERS_FRIENDS',
+              payload: result.data
+            });
+          });
       });
   };
 };
 
-const acceptOrUnfriend = (userId, friendId, friendArray) => {
+const unfriend = (userId, friendId, friendArray) => {
   return dispatch => {
     let friendIndex;
     let id;
-    friendArray.friendArray.forEach((friend, index) => {
+    friendArray.forEach((friend, index) => {
       if (friend.friendId === friendId) {
         friendIndex = index;
         id = friend.id;
       }
     });
-    friendArray.friendArray.splice(friendIndex, 1);
+    friendArray.splice(friendIndex, 1);
     axios.delete(`/api/friends/${id}`)
       .then(() => {
         axios.delete(`/api/friends/${id + 1}`);
       })
       .then(() => {
-        dispatch({
-          type: 'UPDATE_FRIENDS',
-          payload: friendArray
-        });
+        axios.get(`/api/friends?profileId=${userProfileId}`)
+          .then(result => {
+            dispatch({
+              type: 'POPULATE_USERS_FRIENDS',
+              payload: result.data
+            });
+          });
+      });
+  };
+};
+
+const acceptFriend = (friendId, userId) => {
+  return dispatch => {
+    let friendObj = {
+      profileId: userId,
+      friendId: friendId,
+      status: 'friends',
+      updatedBy: userId
+    };
+    axios.put('api/friends', friendObj)
+      .then(() => {
+        axios.get(`/api/friends?profileId=${userProfileId}`)
+          .then(result => {
+            dispatch({
+              type: 'POPULATE_USERS_FRIENDS',
+              payload: result.data
+            });
+          });
       });
   };
 };
@@ -465,8 +508,10 @@ export {
   setNewSkeletonCode,
   setNewSolutionCode,
   updateCurrentQuestion,
+  deleteToyProblem,
   updateSearch,
   populateUsers,
   addFriend,
-  acceptOrUnfriend
+  unfriend,
+  acceptFriend
 };
