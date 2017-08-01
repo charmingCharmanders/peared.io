@@ -416,7 +416,7 @@ const addFriend = (userId, friendId, friendArray) => {
     };
     axios.post('api/friends', friendObj)
       .then(() => {
-        axios.get(`/api/friends?profileId=${userProfileId}`)
+        axios.get(`/api/friends?profileId=${userId}`)
           .then(result => {
             dispatch({
               type: 'POPULATE_USERS_FRIENDS',
@@ -443,7 +443,7 @@ const unfriend = (userId, friendId, friendArray) => {
         axios.delete(`/api/friends/${id + 1}`);
       })
       .then(() => {
-        axios.get(`/api/friends?profileId=${userProfileId}`)
+        axios.get(`/api/friends?profileId=${userId}`)
           .then(result => {
             dispatch({
               type: 'POPULATE_USERS_FRIENDS',
@@ -464,7 +464,7 @@ const acceptFriend = (friendId, userId) => {
     };
     axios.put('api/friends', friendObj)
       .then(() => {
-        axios.get(`/api/friends?profileId=${userProfileId}`)
+        axios.get(`/api/friends?profileId=${userId}`)
           .then(result => {
             dispatch({
               type: 'POPULATE_USERS_FRIENDS',
@@ -497,7 +497,6 @@ export {
   getUserToyProblemTests,
   postUserToyProblem,
   populateLeaderboard,
-  populateUserProfileFriendsAndSessionData,
   populateUserData,
   populateUserSessionsData,
   populateUserFriendsData,
