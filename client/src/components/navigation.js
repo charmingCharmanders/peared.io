@@ -22,7 +22,6 @@ class Navigation extends React.Component {
 
   leaveRoom() {
     this.props.socket.emit('end session', 'endSession');
-    //this.props.socket.emit('leave room');
   }
 
   render() {

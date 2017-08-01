@@ -292,50 +292,6 @@ const populateUserProfileFriendsAndSessionData = () => {
   };
 };
 
-const endSession = (sessions, session, code, testResults) => {
-  const sessionEndedAt = new Date();
-  const sessionScore = helpers.calculateSessionScore(
-    3600,
-    (Date.parse(sessionEndedAt) - Date.parse(session.startedAt)) / 1000,
-    session.prompt.difficulty,
-    testResults.testsCount,
-    testResults.testsPassed
-  );
-
-  return dispatch => {
-    // dispatch({
-    //   type: 'END_SESSION',
-    //   payload: sessions.push(session)
-    // });
-
-    axios.post('/api/sessions', {
-      profileId1: session.profileId1,
-      profileId2: session.profileId2,
-      promptId: session.prompt.id,
-      rating: sessionScore,
-      solutionCode: code,
-      numberOfTests: testResults.testsCount,
-      numberOfTestsPassed: testResults.testsPassed,
-      startedAt: session.startedAt,
-      endedAt: sessionEndedAt
-    });
-
-    axios.get(`/api/profiles/${session.profileId1}`)
-      .then(profile => {
-        axios.put(`/api/profiles/${session.profileId1}`, {
-          rating: Number(profile.data.rating) + sessionScore
-        });
-      });
-
-    axios.get(`/api/profiles/${session.profileId2}`)
-      .then(profile => {
-        axios.put(`/api/profiles/${session.profileId2}`, {
-          rating: Number(profile.data.rating) + sessionScore
-        });
-      });
-  };
-};
-
 const updateSkeletonCode = (code) => {
   return {
     type: 'UPDATE_SKELETON_CODE',
@@ -490,7 +446,6 @@ export {
   postUserToyProblem,
   populateLeaderboard,
   populateUserProfileFriendsAndSessionData,
-  endSession,
   updateToyProblemTests,
   updateSkeletonCode,
   updateSolutionCode,
