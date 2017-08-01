@@ -5,7 +5,7 @@ import TableRow from './tableRow';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Form, FormControl, Panel, ListGroupItem, Badge, FormGroup, ControlLabel, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
-import {acceptOrUnfriend, addFriend, updateSearch} from '../actions';
+import {unfriend, addFriend, updateSearch} from '../actions';
 
 class SearchProfiles extends React.Component {
   constructor(props) {
@@ -23,34 +23,29 @@ class SearchProfiles extends React.Component {
     friendArrayData['friendsList'] = this.props.friendsList;
 
     let friendArray;
+    let results;
 
     if (this.props.friendsList) {
       friendArray = this.props.friendsList.map(friend => friend.id);
     }
 
     let results;
-    if (!this.props.searchResults.searchResults || this.props.searchResults.searchResults.searchResults.length === this.props.users.data.data.length) { results = ''; }
-    else {
+    if (!this.props.searchResults.searchResults || this.props.searchResults.searchResults.searchResults.length === this.props.users.data.data.length) {
+      results = '';
+    } else {
       results =
-      <Panel collapsible defaultExpanded header="Users">
-        {this.props.searchResults.searchResults.searchResults.map((profile, index) => {
-          let addButton =
-            <ButtonToolbar>
-              <Button bsStyle="primary" onClick={() => this.props.addFriend.call(this, userId, profile.id, friendArrayData)}>Add</Button>
-            </ButtonToolbar>;
+        <Panel collapsible defaultExpanded header="Users">
+          {this.props.searchResults.searchResults.searchResults.map((profile, index) => {
+            let addButton =
+              <Button bsStyle="primary" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightGreen"}}onClick={() => this.props.addFriend(userId, profile.id, friendArrayData.friendArray)}>Add</Button>;
 
-          let unfriendButton =
-            <ButtonToolbar>
-              <Button bsStyle="danger" onClick={() => this.props.acceptOrUnfriend.call(this, userId, profile.id, this.props.friendsList)}>Unfriend</Button>
-            </ButtonToolbar>;
+            let unfriendButton =
+              <Button bsStyle="danger" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightRed"}}onClick={() => this.props.unfriend(userId, profile.id, friendArrayData.friendArray)}>Unfriend</Button>;
 
-          return (<div key={index}>
-            <div key={index}>{profile.name}
-            </div>
-            {friendArray.includes(profile.id) ? unfriendButton : addButton}
-          </div>);
-        })}
-      </Panel>
+            return (<ListGroupItem key={index} fill>{profile.name}{friendArray.includes(profile.id) ? unfriendButton : addButton}
+            </ListGroupItem>);
+          })}
+        </Panel>;
     }
 
     return (
@@ -83,11 +78,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     updateSearch: updateSearch,
     addFriend: addFriend,
-    acceptOrUnfriend: acceptOrUnfriend
+    unfriend: unfriend
   }, dispatch);
 }
 
