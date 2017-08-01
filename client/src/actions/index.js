@@ -1,5 +1,3 @@
-let userProfileId;
-
 const helpers = require('./helpers');
 import axios from 'axios';
 
@@ -393,36 +391,27 @@ const setNewSolutionCode = (code) => {
   };
 };
 
-const populateUsers = () => {
+const updateSearch = (value) => {
+  let searchResults;
   return dispatch => {
     axios.get('/api/profiles?properties=id,firstName,lastName')
       .then(results => {
+        searchResults = [];
+        results.data.forEach(prof => {
+          name = prof.firstName + ' ' + prof.lastName;
+          if (name.toLowerCase().includes(value.toLowerCase())) {
+            searchResults.push({
+              name: name,
+              id: prof.id
+            });
+          }
+        });
+        console.log(searchResults);
         dispatch({
-          type: 'POPULATE_USERS',
-          payload: results
+          type: 'UPDATE_SEARCH_RESULTS',
+          payload: searchResults
         });
       });
-  };
-};
-
-const updateSearch = (searchObj) => {
-  return dispatch => {
-    let searchResults = [];
-    searchObj.users.forEach(prof => {
-      name = prof.firstName + ' ' + prof.lastName;
-      if (name.toLowerCase().includes(searchObj.value.toLowerCase())) {
-        searchResults.push({
-          name: name,
-          id: prof.id
-        });
-      }
-    });
-    dispatch({
-      type: 'UPDATE_SEARCH_RESULTS',
-      payload: {
-        searchResults: searchResults
-      }
-    });
   };
 };
 
@@ -530,7 +519,6 @@ export {
   updateCurrentQuestion,
   deleteToyProblem,
   updateSearch,
-  populateUsers,
   addFriend,
   unfriend,
   acceptFriend

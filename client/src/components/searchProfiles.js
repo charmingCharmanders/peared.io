@@ -14,7 +14,7 @@ class SearchProfiles extends React.Component {
   }
 
   handleChange(e) {
-    this.props.updateSearch({ users: this.props.users.data.data, value: e.target.value});
+    this.props.updateSearch(e.target.value);
   }
 
   add(userId, profileId, friendArray) {
@@ -37,12 +37,13 @@ class SearchProfiles extends React.Component {
       friendArray = this.props.userFriendData.friendArray.map(friend => friend.friend.id);
     }
 
-    if (!this.props.searchResults.searchResults || this.props.searchResults.searchResults.searchResults.length === this.props.users.data.data.length) {
+    if (!this.props.searchResults || document.getElementById('search').value === '') {
       results = '';
     } else {
       results =
         <Panel collapsible defaultExpanded header="Users">
-          {this.props.searchResults.searchResults.searchResults.map((profile, index) => {
+          {this.props.searchResults.map((profile, index) => {
+
             let addButton =
               <Button bsStyle="primary" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightGreen"}}onClick={() => this.add(userId, profile.id, friendArrayData.friendArray)}>Add</Button>;
 
@@ -58,9 +59,7 @@ class SearchProfiles extends React.Component {
     return (
       <div>
         <form>
-          <FormGroup
-            controlId="search"
-          >
+          <FormGroup controlId="search">
             <ControlLabel>Search For Friends</ControlLabel>
             <FormControl
               type="text"
@@ -78,8 +77,7 @@ class SearchProfiles extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.searchResults,
-    users: state.users,
+    searchResults: state.searchResults.searchArray,
     userFriendData: state.userFriendData,
     userProfileData:  state.userProfileData
   };
