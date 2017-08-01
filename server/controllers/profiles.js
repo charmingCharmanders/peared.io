@@ -12,7 +12,7 @@ module.exports.getAll = (req, res) => {
       });
   } else if (req.query.hasOwnProperty('sortBy')) {
     models.Profile.forge().orderBy(req.query.sortBy, 'DESC').query((qb) => {
-      qb.limit(Number(req.query.limit) || null)
+      qb.limit(Number(req.query.limit) || null);
     }).fetchAll()
       .then(profiles => {
         res.status(200).send(profiles);
@@ -85,12 +85,14 @@ module.exports.getFriends = (req, res) => {
 
 module.exports.getPrompts = (req, res) => {
   models.Prompt
+    .forge()
+    .orderBy('id', 'ASC')
     .where({ userId: req.params.id })
     .fetchAll({
       withRelated: ['tests']
     })
     .then(promptWithTest => {
-      res.status(200).send(promptWithTest)
+      res.status(200).send(promptWithTest);
     })
     .catch(err => {
       res.status(500).send(err);
@@ -103,7 +105,10 @@ module.exports.getSessions = (req, res) => {
       where: { profileId1: req.params.id },
       orWhere: { profileId2: req.params.id }
     })
-    .fetchAll({
+    .orderBy('endedAt', 'DESC')
+    .fetchPage({
+      limit: req.query.limit || 10,
+      offset: req.query.offset || 0,
       withRelated: ['profile1', 'profile2', 'prompt']
     })
     .then(friends => {
