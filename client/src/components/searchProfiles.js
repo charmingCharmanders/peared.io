@@ -19,14 +19,16 @@ class SearchProfiles extends React.Component {
 
   render() {
     let userId = this.props.userProfileData.id;
-    let friendArrayData = this.props.userFriendData;
+    let friendArrayData = {};
+    friendArrayData['friendsList'] = this.props.friendsList;
 
     let friendArray;
     let results;
 
-    if (this.props.userFriendData.friendArray) {
-      friendArray = this.props.userFriendData.friendArray.map(friend => friend.friend.id);
+    if (this.props.friendsList) {
+      friendArray = this.props.friendsList.map(friend => friend.id);
     }
+    console.log('friend Array:', friendArray)
 
     if (!this.props.searchResults.searchResults || this.props.searchResults.searchResults.searchResults.length === this.props.users.data.data.length) {
       results = '';
@@ -35,10 +37,10 @@ class SearchProfiles extends React.Component {
         <Panel collapsible defaultExpanded header="Users">
           {this.props.searchResults.searchResults.searchResults.map((profile, index) => {
             let addButton =
-              <Button bsStyle="primary" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightGreen"}}onClick={() => this.props.addFriend(userId, profile.id, friendArrayData.friendArray)}>Add</Button>;
+              <Button bsStyle="primary" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightGreen"}}onClick={() => this.props.addFriend(userId, profile.id, this.props.friendsList)}>Add</Button>;
 
             let unfriendButton =
-              <Button bsStyle="danger" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightRed"}}onClick={() => this.props.unfriend(userId, profile.id, friendArrayData.friendArray)}>Unfriend</Button>;
+              <Button bsStyle="danger" style={{float:"right", borderRadius: "5px", borderStyle: "none", color: "black", backgroundColor: "lightRed"}}onClick={() => this.props.unfriend(userId, profile.id, this.props.friendsList)}>Unfriend</Button>;
 
             return (<ListGroupItem key={index} fill>{profile.name}{friendArray.includes(profile.id) ? unfriendButton : addButton}
             </ListGroupItem>);
@@ -71,7 +73,7 @@ const mapStateToProps = (state) => {
   return {
     searchResults: state.searchResults,
     users: state.users,
-    userFriendData: state.userFriendData,
+    friendsList: state.friendsList,
     userProfileData:  state.userProfileData
   };
 };
@@ -82,6 +84,6 @@ const mapDispatchToProps = (dispatch) => {
     addFriend: addFriend,
     unfriend: unfriend
   }, dispatch);
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchProfiles);

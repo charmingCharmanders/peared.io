@@ -23,7 +23,7 @@ class FriendsList extends React.Component {
 
     return (
       <Panel collapsible defaultExpanded header="Friends List">
-        {this.props.userFriendData.friendArray ? this.props.userFriendData.friendArray.map((friend, index) => {
+        {this.props.friendsList ? this.props.friendsList.map((friend, index) => {
           if (friend.status === 'pending') {
             startSessionButton = '';
             pendingFlag = <button style={{float:"right", borderRadius: "5px", borderStyle: "none", backgroundColor: "lightGrey", margin: "0px 5px 0px 5px"}}>Pending</button>;
@@ -47,10 +47,11 @@ class FriendsList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userFriendData:  state.userFriendData,
-    userProfileData:  state.userProfileData
+    friendsList: state.friendsList,
+    userProfileData: state.userProfileData
   };
 };
+
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({

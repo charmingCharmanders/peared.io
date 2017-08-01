@@ -41,7 +41,7 @@ export default combineReducers({
   sessionData: updateSessionsData,
   userProfileData: updateUserProfileData,
   testResults: updateTestResults,
-  userFriendData: updateUsersFriends,
+  friendsList: updateUsersFriends,
   isDashboard: toggleDashboard,
   userToyProblems: userToyProblems,
   updateUserToyProblemModal: updateUserToyProblemModal,
