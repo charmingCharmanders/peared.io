@@ -28,6 +28,7 @@ class SearchProfiles extends React.Component {
     if (this.props.friendsList) {
       friendArray = this.props.friendsList.map(friend => friend.id);
     }
+    console.log('friend Array:', friendArray)
 
     if (!this.props.searchResults.searchResults || this.props.searchResults.searchResults.searchResults.length === this.props.users.data.data.length) {
       results = '';

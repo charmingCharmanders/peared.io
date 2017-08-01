@@ -397,8 +397,7 @@ const updateSearch = (searchObj) => {
   };
 };
 
-const addFriend = (userId, friendId, friendsList) => {
-  console.log(userId, friendId, friendsList);
+const addFriend = (userId, friendId) => {
   return dispatch => {
     let friendObj = {
       profileId: userId,
@@ -421,6 +420,7 @@ const addFriend = (userId, friendId, friendsList) => {
 };
 
 const unfriend = (userId, friendId, friendArray) => {
+  console.log(userId, friendId, friendArray);
   return dispatch => {
     let friendIndex;
     let id;
