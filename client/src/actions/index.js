@@ -408,10 +408,13 @@ const addFriend = (userId, friendId, friendArray) => {
     };
     axios.post('api/friends', friendObj)
       .then(() => {
-        dispatch({
-          type: 'ADD_FRIEND',
-          payload: friendArray
-        });
+        axios.get(`/api/friends?profileId=${userProfileId}`)
+          .then(result => {
+            dispatch({
+              type: 'POPULATE_USERS_FRIENDS',
+              payload: result.data
+            });
+          });
       });
   };
 };
@@ -420,22 +423,46 @@ const unfriend = (userId, friendId, friendArray) => {
   return dispatch => {
     let friendIndex;
     let id;
-    friendArray.friendArray.forEach((friend, index) => {
+    friendArray.forEach((friend, index) => {
       if (friend.friendId === friendId) {
         friendIndex = index;
         id = friend.id;
       }
     });
-    friendArray.friendArray.splice(friendIndex, 1);
+    friendArray.splice(friendIndex, 1);
     axios.delete(`/api/friends/${id}`)
       .then(() => {
         axios.delete(`/api/friends/${id + 1}`);
       })
       .then(() => {
-        dispatch({
-          type: 'UPDATE_FRIENDS',
-          payload: friendArray
-        });
+        axios.get(`/api/friends?profileId=${userProfileId}`)
+          .then(result => {
+            dispatch({
+              type: 'POPULATE_USERS_FRIENDS',
+              payload: result.data
+            });
+          });
+      });
+  };
+};
+
+const acceptFriend = (friendId, userId) => {
+  return dispatch => {
+    let friendObj = {
+      profileId: userId,
+      friendId: friendId,
+      status: 'friends',
+      updatedBy: userId
+    };
+    axios.put('api/friends', friendObj)
+      .then(() => {
+        axios.get(`/api/friends?profileId=${userProfileId}`)
+          .then(result => {
+            dispatch({
+              type: 'POPULATE_USERS_FRIENDS',
+              payload: result.data
+            });
+          });
       });
   };
 };
@@ -474,5 +501,6 @@ export {
   updateSearch,
   populateUsers,
   addFriend,
-  unfriend
+  unfriend,
+  acceptFriend
 };
