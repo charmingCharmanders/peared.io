@@ -1,15 +1,15 @@
-function updateSearch(state = {}, action) {
+const updateSearch = (state = {}, action) => {
   switch (action.type) {
-    case 'UPDATE_SEARCH_RESULTS':
-      return Object.assign({}, state,
+  case 'UPDATE_SEARCH_RESULTS':
+    return Object.assign({}, state,
       {
-        searchResults: action.payload
+        searchArray: action.payload
       });
-    default:
-      return {searchResults: ''};
+  default:
+    return {searchResults: ''};
   }
-}
+};
 
 export {
   updateSearch
-}
+};

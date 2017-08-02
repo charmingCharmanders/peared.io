@@ -10,7 +10,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {closeQuestionModal, updateButtonStatus, populateUserToyProblems, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard, populateUsers} from '../actions';
+import {closeQuestionModal, updateButtonStatus, populateUserToyProblems, updateRoomId, updatePrompt, updateCode, updateTestResults, closeModal, dashboardToSession, populateLeaderboard} from '../actions';
 import {LinkContainer} from 'react-router-bootstrap';
 import io from 'socket.io-client';
 import Modal from './modal';
@@ -23,7 +23,6 @@ class Dashboard extends React.Component {
   componentWillMount() {
     this.props.populateUserToyProblems();
     this.props.populateLeaderboard();
-    this.props.populateUsers();
   }
 
   render() {
@@ -73,7 +72,6 @@ var mapDispatchToProps = (dispatch) => {
       populateLeaderboard: populateLeaderboard,
       populateUserToyProblems: populateUserToyProblems,
       updateButtonStatus: updateButtonStatus,
-      populateUsers: populateUsers
     },
     dispatch);
 };

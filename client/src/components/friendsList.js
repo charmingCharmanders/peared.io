@@ -24,12 +24,18 @@ class FriendsList extends React.Component {
     let acceptButton;
     let startSessionButton;
     let pendingFlag;
+    let dot;
 
     this.props.userProfileData ? userId = this.props.userProfileData.id : userId = '';
 
     return (
       <Panel collapsible defaultExpanded header="Friends List">
         {this.props.userFriendData.friendArray ? this.props.userFriendData.friendArray.map((friend, index) => {
+          if (friend.online) {
+            dot = <h3 style={{float: "left", height: "12px", width: "12px", backgroundColor: "lightGreen", borderRadius: "6px", margin: "4px 5px 0px 0px"}}></h3>;
+          } else {
+            dot = <h3 style={{float: "left", height: "12px", width: "12px", backgroundColor: "lightGrey", borderRadius: "6px", margin: "4px 5px 0px 0px"}}></h3>;
+          }
           if (friend.status === 'pending') {
             startSessionButton = '';
             pendingFlag = <button style={{float:"right", borderRadius: "5px", borderStyle: "none", backgroundColor: "lightGrey", margin: "0px 5px 0px 5px"}}>Pending</button>;
@@ -48,7 +54,7 @@ class FriendsList extends React.Component {
             acceptButton = '';
             pendingFlag = '';
           }
-          return (<ListGroupItem key={index} fill>{friend.friend.firstName}{acceptButton}{startSessionButton}{pendingFlag}</ListGroupItem>)}) : ''
+          return (<ListGroupItem key={index} fill>{dot}{friend.friend.firstName}{acceptButton}{startSessionButton}{pendingFlag}</ListGroupItem>)}) : ''
         }
       </Panel>
     );

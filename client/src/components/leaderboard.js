@@ -26,7 +26,7 @@ class Leaderboard extends React.Component {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{leader.name}</td>
-              <td>{leader.rating}</td>
+              <td>{Number(leader.rating).toFixed()}</td>
             </tr>) : ''}
         </tbody>
       </Table>
@@ -42,8 +42,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({}, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Leaderboard);
