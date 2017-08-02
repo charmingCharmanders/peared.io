@@ -20,32 +20,32 @@ class Statistics extends React.Component {
   render() {
     return (
       <Row>
-        <Col md={2}>
+        <Col xs={2}>
           <Panel header="Ranking" bsStyle="info">
             {this.renderRanking(this.props.userProfileData.rating)}
           </Panel>
         </Col>
-        <Col md={2}>
+        <Col xs={2}>
           <Panel header="Completed" bsStyle="info">
             {this.props.sessionData.sessionArray ? this.props.sessionData.sessionArray.length : null}
           </Panel>
         </Col>
-        <Col md={2}>
+        <Col xs={2}>
           <Panel header="Statistic" bsStyle="info">
             0
           </Panel>
         </Col>
-        <Col md={2}>
+        <Col xs={2}>
           <Panel header="Statistic" bsStyle="info">
             0
           </Panel>
         </Col>
-        <Col md={2}>
+        <Col xs={2}>
           <Panel header="Statistic" bsStyle="info">
             0
           </Panel>
         </Col>
-        <Col md={2}>
+        <Col xs={2}>
           <Panel header="Statistic" bsStyle="info">
             0
           </Panel>

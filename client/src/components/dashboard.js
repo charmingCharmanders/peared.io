@@ -26,27 +26,27 @@ class Dashboard extends React.Component {
       <div className="dashboard-container">
         <Grid>
           <Row>
-            <Col md={12}>
+            <Col xs={12}>
               <h2>Welcome, {this.props.userProfileData.firstName}!</h2>
             </Col>
           </Row>
           <Statistics />
           <Row>
-            <Col md={8}>
+            <Col xs={8}>
               <h3>Recent Sessions</h3>
               <Sessions />
             </Col>
-            <Col md={4}>
+            <Col xs={4}>
               <h3>Leaderboard</h3>
               <Leaderboard />
             </Col>
           </Row>
           <Row>
-            <Col md={9}>
+            <Col xs={9}>
               <h3>My Prompts</h3>
               <Prompts />
             </Col>
-            <Col md={3}>
+            <Col xs={3}>
               <h3>Friends</h3>
               <FriendsList socket={this.props.socket}/>
             </Col>
