@@ -46,7 +46,7 @@ class TextEditor extends React.Component {
     return (
       <div className="editor-container">
         <CodeMirror 
-          value={js_beautify(this.props.code)}
+          value={this.props.code}
           onChange={this.codeChange}
           options={options} 
         />
