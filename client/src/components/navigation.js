@@ -1,6 +1,7 @@
 import NavigationButtons from './navigationButtons';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Search from './search';
 import { Navbar } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -33,6 +34,7 @@ class Navigation extends React.Component {
           </Navbar.Brand>
           <Navbar.Text>{this.renderText()}</Navbar.Text>
           <NavigationButtons socket={this.props.socket} />
+          <Search />
       </Navbar>
     );
   }
