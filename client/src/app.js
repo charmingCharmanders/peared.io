@@ -86,6 +86,13 @@ class App extends React.Component {
         this.props.updatePartnerData(requestData);
         this.props.openModal('receivingRoomRequest');
       });
+      this.state.socket.on('session request canceled', ()=>{
+        this.props.closeModal();
+        this.props.updateCode(null);
+        this.props.updateCurrentSession(null);
+        this.props.updateRoomId(null);
+        this.props.updateTestResults(null);
+      });
 
     });
   }

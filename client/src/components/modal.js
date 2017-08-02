@@ -34,6 +34,9 @@ class ModalComponent extends React.Component {
     this.props.updateCode(null);
     this.props.updatePrompt(null);
     this.props.updateRoomId(null);
+    if(this.props.partnerData) {
+      this.props.socket.emit('cancel session request', this.props.partnerData.id);
+    }
     this.props.socket.emit('leave room');
   }
 
