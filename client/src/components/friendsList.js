@@ -6,11 +6,17 @@ import {Badge, ListGroup, ListGroupItem, Panel, Table, ButtonToolbar, Button, Na
   CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {acceptFriend} from '../actions';
+import {acceptFriend, openModal} from '../actions';
 
 class FriendsList extends React.Component {
   constructor(props) {
     super(props);
+    this.requestSession = this.requestSession.bind(this);
+  }
+
+  requestSession(friend) {
+    this.props.openModal('startSession');
+    this.props.socket.emit('request session', friend);
   }
 
   render() {
@@ -36,7 +42,7 @@ class FriendsList extends React.Component {
           } else if (friend.inRoom === false && friend.online === true) {
             pendingFlag = '';
             acceptButton = '';
-            startSessionButton = <button style={{float:"right", borderRadius: "5px", borderStyle: "none", backgroundColor: "lightGreen", margin: "0px 5px 0px 5px"}} onClick={() => this.props.socket.emit('request session', friend.friend)}>Code</button>;
+            startSessionButton = <button style={{float:"right", borderRadius: "5px", borderStyle: "none", backgroundColor: "lightGreen", margin: "0px 5px 0px 5px"}} onClick={() => this.requestSession(friend.friend)}>Code</button>;
           } else {
             startSessionButton = '';
             acceptButton = '';
@@ -58,6 +64,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    openModal: openModal,
     acceptFriend: acceptFriend
   }, dispatch);
 };

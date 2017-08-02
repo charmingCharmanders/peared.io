@@ -12,6 +12,8 @@ class ModalComponent extends React.Component {
     super(props);
     this.leaveSession = this.leaveSession.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.acceptRequestToPair = this.acceptRequestToPair.bind(this);
+    this.rejectRequestToPair = this.rejectRequestToPair.bind(this);
   }
 
   closeModal() {
@@ -19,10 +21,11 @@ class ModalComponent extends React.Component {
   }
 
   acceptRequestToPair() {
-    this.props.closeModal();
+    this.props.socket.emit('approve session request', this.props.roomId);
   }
   rejectRequestToPair() {
     this.props.closeModal();
+    this.props.socket.emit('reject session request', this.props.roomId);
   }
 
   leaveSession() {
@@ -71,12 +74,16 @@ class ModalComponent extends React.Component {
     }
     if (this.props.modal.type === 'roomRequest') {
       return (
-        <Modal show={this.props.modal.show} onHide={this.closeModal}>
+        <Modal show={this.props.modal.show} onHide={this.rejectRequestToPair}>
           <Modal.Header closeButton>
             <Modal.Title>*Some name* sent you a pairing request</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h5>Would you like to join?</h5>
+            {
+              this.props.buttonStatus ?
+                (<h5>Would you like to join?</h5>) :
+                (<Countdown />)
+            }
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.acceptRequestToPair}>Accept</Button>
@@ -132,6 +139,7 @@ const mapStateToProps = (state) => {
     buttonStatus: state.buttonStatus,
     currentQuestion: state.currentQuestion,
     modal: state.modal,
+    roomId: state.roomId,
     sessionData: state.sessionData
   };
 };

@@ -57,6 +57,10 @@ class App extends React.Component {
         this.props.updateTestResults(null);
         this.state.socket.emit('leave room');
       });
+      this.state.socket.on('session request rejected', (modalType) => {
+        this.props.closeModal();
+        this.state.socket.emit('leave room');
+      });
       this.state.socket.on('users online', (userCount)=>{
         this.props.updateOnlineUsers(userCount);
       });
