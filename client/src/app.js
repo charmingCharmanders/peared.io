@@ -72,6 +72,7 @@ class App extends React.Component {
       });
       this.state.socket.on('users online', (userCount)=>{
         this.props.updateOnlineUsers(userCount);
+        this.state.socket.emit('friends list', this.props.friendsList);
       });
       this.state.socket.on('edit', (code)=>{
         this.props.updateCode(code);
@@ -84,7 +85,14 @@ class App extends React.Component {
         this.props.updateRoomId(requestData.roomId);
         delete requestData['roomId'];
         this.props.updatePartnerData(requestData);
-        this.props.openModal('roomRequest');
+        this.props.openModal('receivingRoomRequest');
+      });
+      this.state.socket.on('session request canceled', ()=>{
+        this.props.closeModal();
+        this.props.updateCode(null);
+        this.props.updateCurrentSession(null);
+        this.props.updateRoomId(null);
+        this.props.updateTestResults(null);
       });
 
     });

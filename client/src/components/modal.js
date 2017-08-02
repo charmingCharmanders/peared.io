@@ -34,6 +34,9 @@ class ModalComponent extends React.Component {
     this.props.updateCode(null);
     this.props.updatePrompt(null);
     this.props.updateRoomId(null);
+    if(this.props.partnerData) {
+      this.props.socket.emit('cancel session request', this.props.partnerData.id);
+    }
     this.props.socket.emit('leave room');
   }
 
@@ -57,6 +60,25 @@ class ModalComponent extends React.Component {
         </Modal>
       );
     }
+    if (this.props.modal.type === 'sendingRoomRequest') {
+      return (
+        <Modal show={this.props.modal.show} onHide={this.leaveSession}>
+          <Modal.Header closeButton>
+            <Modal.Title>Currently waiting on {this.props.partnerData.firstName} {this.props.partnerData.lastName} to Accept</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {
+              this.props.buttonStatus ?
+                (<h5>Please be patient.</h5>) :
+                (<Countdown />)
+            }
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.leaveSession}>Cancel Request</Button>
+          </Modal.Footer>
+        </Modal>
+      );
+    }
     if (this.props.modal.type === 'endSession') {
       return (
         <Modal show={this.props.modal.show} onHide={this.closeModal}>
@@ -72,7 +94,7 @@ class ModalComponent extends React.Component {
         </Modal>
       );
     }
-    if (this.props.modal.type === 'roomRequest') {
+    if (this.props.modal.type === 'receivingRoomRequest') {
       return (
         <Modal show={this.props.modal.show} onHide={this.rejectRequestToPair}>
           <Modal.Header closeButton>
