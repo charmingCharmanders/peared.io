@@ -1,3 +1,4 @@
+import Footer from './components/footer';
 import React from 'react';
 import Session from './components/session';
 import Dashboard from './components/dashboard';
@@ -124,6 +125,7 @@ class App extends React.Component {
               <Route path='/' component={Dashboard} />
             </Switch>
           </div>
+          <Footer />
         </div>
       </Router>
     );
