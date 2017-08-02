@@ -39,7 +39,7 @@ class Dashboard extends React.Component {
           <Row className='show-grid'>
             <Col md={9}><SearchProfiles /></Col>
             <Col md={9}><HistoryTable /></Col>
-            <Col md={3}><FriendsList /></Col>
+            <Col md={3}><FriendsList socket={this.props.socket}/></Col>
             <Col md={3}><Leaderboard /></Col>
           </Row>
           <YourToyProblems />

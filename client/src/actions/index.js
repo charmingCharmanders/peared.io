@@ -53,6 +53,13 @@ const toggleUpdateUserToyProblemModal = (show, toyProblem) => {
   };
 };
 
+const toggleRoomRequestModal = (show, roomData) => {
+  return {
+    type: 'TOGGLE_ROOM_REQUEST_MODAL',
+    payload: show,
+  };
+};
+
 const getUserToyProblemTests = (userId) => {
   return dispatch => {
     axios.get(`/api/tests/${userId}`)
@@ -307,9 +314,14 @@ const populateUserFriendsData = (userProfileId) => {
   return dispatch => {
     return axios.get(`/api/friends?profileId=${userProfileId}`)
       .then(result => {
+        let friendArray = result.data.map((friend)=>{
+          friend.online = false;
+          friend.inRoom = false;
+          return friend;
+        });
         dispatch({
           type: 'POPULATE_USERS_FRIENDS',
-          payload: result.data
+          payload: friendArray
         });
       });
   };
@@ -501,6 +513,7 @@ export {
   populateUserToyProblems,
   toggleUpdateUserToyProblemModal,
   toggleNewUserToyProblemModal,
+  toggleRoomRequestModal,
   setCurrentUserToyProblem,
   updateUserToyProblem,
   getUserToyProblemTests,
