@@ -8,7 +8,7 @@ import Statistics from './statistics';
 import { Col, Grid, Row} from 'react-bootstrap';
 import { bindActionCreators} from 'redux';
 import { connect} from 'react-redux';
-import { populateLeaderboard, populateUsers, populateUserToyProblems} from '../actions';
+import { populateLeaderboard, populateUserToyProblems} from '../actions';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -17,7 +17,6 @@ class Dashboard extends React.Component {
 
   componentWillMount() {
     this.props.populateLeaderboard();
-    this.props.populateUsers();
     this.props.populateUserToyProblems();
   }
 
@@ -56,7 +55,6 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       populateLeaderboard: populateLeaderboard,
-      populateUsers: populateUsers,
       populateUserToyProblems: populateUserToyProblems
     },
     dispatch);
