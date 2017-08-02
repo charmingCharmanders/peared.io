@@ -6,8 +6,13 @@
 
 html,
 body {
+  background: #f5f8fa;
   height: 100%;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Structure
+/* -------------------------------------------------------------------------- */
 
 #root {
   height: 100%;
@@ -20,14 +25,6 @@ body {
 .main-container {
   height: 100%;
   padding: 60px 0 0 0;
-}
-
-.navbar {
-  border: 0;
-  margin-bottom: 0;
-  padding: 5px 0;
-  position: absolute;
-  width: 100%;
 }
 
 .session {
@@ -77,6 +74,29 @@ body {
   top: 20px;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Bootstrap Overrides
+/* -------------------------------------------------------------------------- */
+
+h1,
+h2,
+h3 {
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.table {
+  background-color: #fff;
+}
+
+.table-bordered {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Session
+/* -------------------------------------------------------------------------- */
+
 .ReactCodeMirror {
   height: 100%;
   width: 100%;
@@ -85,21 +105,25 @@ body {
 .CodeMirror {
   height: 100%;
 }
+
 .console {
   background-color: #f7f3ef;
   height: 100%;
   width: 100%;
 }
+
 .testDescription {
   font-weight: bold;
 }
+
 .testContainer {
   margin-left: 5px;
 }
+
 .testPass {
   color: #35e21b;
 }
+
 .testFail {
   color: #f91111;
 }
-

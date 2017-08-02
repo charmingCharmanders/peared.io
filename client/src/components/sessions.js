@@ -10,8 +10,14 @@ class Sessions extends React.Component {
   }
 
   render() {
+    const styles = {
+      table: {
+        background: '#fff'
+      }
+    };
+
     return (
-      <Table bordered hover>
+      <Table bordered hover styles={styles.table}>
         <thead>
           <tr>
             <th>Partner</th>

@@ -18,8 +18,16 @@ class Navigation extends React.Component {
   }
 
   render() {
+    const styles = {
+      navbar: {
+        background: '#fff',
+        border: 0,
+        padding: '5px 0'
+
+      }
+    };
     return (
-      <Navbar>
+      <Navbar fixedTop style={styles.navbar}>
           <Navbar.Brand>
             <a href="/">Peared.io</a>
           </Navbar.Brand>
