@@ -6,8 +6,13 @@
 
 html,
 body {
+  background: #f5f8fa;
   height: 100%;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Structure
+/* -------------------------------------------------------------------------- */
 
 #root {
   height: 100%;
@@ -18,15 +23,9 @@ body {
 }
 
 .main-container {
-  height: 100%;
-  padding: 50px 0 0 0;
-}
-
-.navbar {
-  border: 0;
-  margin-bottom: 0;
-  position: absolute;
-  width: 100%;
+  margin: 0 0 40px 0;
+  min-height: 100%;
+  padding: 60px 0 0 0;
 }
 
 .session {
@@ -76,6 +75,58 @@ body {
   top: 20px;
 }
 
+.footer {
+  background: #fff;
+  height: 60px;
+}
+
+.footer p {
+  margin: 20px 0;
+}
+
+.navbar-search {
+  margin: 8px auto;
+  width: 300px;
+}
+
+.navbar-search input[type="text"] {
+  margin: 0 0 5px 0;
+  text-align: center;
+}
+
+.navbar-search .panel {
+  position: absolute;
+  width: 300px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Bootstrap Overrides
+/* -------------------------------------------------------------------------- */
+
+h1,
+h2,
+h3 {
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.table {
+  background-color: #fff;
+  margin-bottom: 0;
+}
+
+.table-bordered {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.panel {
+  margin-bottom: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Session
+/* -------------------------------------------------------------------------- */
+
 .ReactCodeMirror {
   height: 100%;
   width: 100%;
@@ -84,21 +135,41 @@ body {
 .CodeMirror {
   height: 100%;
 }
+
 .console {
   background-color: #f7f3ef;
   height: 100%;
   width: 100%;
 }
+
 .testDescription {
   font-weight: bold;
 }
+
 .testContainer {
   margin-left: 5px;
 }
+
 .testPass {
   color: #35e21b;
 }
+
 .testFail {
   color: #f91111;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Miscellaneous
+/* -------------------------------------------------------------------------- */
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}

@@ -1,22 +1,58 @@
+import CodeMirror from '@skidding/react-codemirror';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import TrashIcon from './trashIcon';
 import UpdateToyProblemModal from './updateToyProblemModal';
-import { setInitialSkeletonCode, setInitialSolutionCode, addTest, deleteToyProblem, setNewSkeletonCode, setNewSolutionCode, updateSkeletonCode, updateSolutionCode, updateToyProblemTests, postUserToyProblem, setCurrentUserToyProblem, updateUserToyProblem, toggleUpdateUserToyProblemModal, toggleNewUserToyProblemModal} from '../actions';
-import {form, FieldGroup, Modal, Table, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
-import CodeMirror from '@skidding/react-codemirror';
-// var js_beautify = require('js-beautify');
-require('codemirror/mode/javascript/javascript');
+import jsBeautify from 'js-beautify';
+import jsMode from 'codemirror/mode/javascript/javascript';
+import { Button, Col, FieldGroup, Grid, Modal, Row, Table} from 'react-bootstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {
+  addTest,
+  deleteToyProblem,
+  postUserToyProblem,
+  setCurrentUserToyProblem,
+  setInitialSkeletonCode,
+  setInitialSolutionCode,
+  setNewSkeletonCode,
+  setNewSolutionCode,
+  toggleNewUserToyProblemModal,
+  toggleUpdateUserToyProblemModal,
+  updateSkeletonCode,
+  updateSolutionCode,
+  updateToyProblemTests,
+  updateUserToyProblem
+} from '../actions';
 
-class YourToyProblems extends React.Component {
-
+class Prompts extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
     this.onNewSkeletonCodeChange = this.onNewSkeletonCodeChange.bind(this);
     this.onNewSolutionCodeChange = this.onNewSolutionCodeChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      codeMirrorOptions: {
+        extraKeys: {
+          Tab: this.convertToSoftTabs
+        },
+        lineNumbers: true,
+        mode: 'text/javascript',
+        tabSize: 2,
+        theme: 'material'
+      }
+    });
+  }
+
+  convertToSoftTabs(cm) {
+    if (cm.somethingSelected()) {
+      cm.indentSelection();
+    } else {
+      const spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
+      cm.replaceSelection(spaces);
+    }
   }
 
   onNewSkeletonCodeChange(newCode) {
@@ -28,34 +64,13 @@ class YourToyProblems extends React.Component {
   }
 
   render() {
-
-    var convertToSoftTabs = function(cm) {
-      if (cm.somethingSelected()) {
-        cm.indentSelection();
-      } else {
-        var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
-        cm.replaceSelection(spaces);
-      }
-    };
- 
-    var options = {
-      lineNumbers: true,
-      extraKeys: {
-        Tab: convertToSoftTabs
-      },
-      mode: 'text/javascript',
-      tabSize: 2,
-      theme: 'material'
-    };
-
     let newModal = 
-      <Modal show={this.props.newUserToyProblemModal} onHide={ () => this.props.toggleNewUserToyProblemModal(false) }>
+      <Modal show={this.props.newUserToyProblemModal} onHide={() => this.props.toggleNewUserToyProblemModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add Your Own Toy Problem!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
-          <Row className="show-grid">
+          <Row>
             <Col md={12}>
               <h5>Name</h5>
               <input 
@@ -67,8 +82,7 @@ class YourToyProblems extends React.Component {
               />
             </Col>
           </Row>
-
-          <Row className="show-grid">
+          <Row>
             <Col md={12}>
               <h5>Description</h5>
               <input 
@@ -80,8 +94,7 @@ class YourToyProblems extends React.Component {
               />
             </Col>
           </Row>
-
-          <Row className="show-grid">
+          <Row>
             <Col md={12}>
               <h5>Hint</h5>
               <input 
@@ -93,8 +106,7 @@ class YourToyProblems extends React.Component {
               />
             </Col>
           </Row>
-
-          <Row className="show-grid">
+          <Row>
             <Col md={6}>
               <h5>Category</h5>
               <input 
@@ -115,37 +127,31 @@ class YourToyProblems extends React.Component {
               </select>
             </Col>
           </Row>
-
-          <Row className="show-grid">
+          <Row>
             <Col md={12}>
               <h5>Skeleton Code</h5>
               <div className="editor-container" id='newToyProblemSkeletonCode'>
                 <CodeMirror
-                  value={this.props.newSkeletonCode}
                   onChange={this.onNewSkeletonCodeChange}
-                  options={options} 
-                />
+                  options={this.state.codeMirrorOptions}
+                  value={this.props.newSkeletonCode} />
               </div>
             </Col>
           </Row>
-
-          <Row className="show-grid">
+          <Row>
             <Col md={12}>
               <h5>Solution Code</h5>
               <div className="editor-container" id='newToyProblemSolutionCode'>
                 <CodeMirror 
-                  value={this.props.newSolutionCode}
                   onChange={this.onNewSolutionCodeChange}
-                  options={options} 
-                />
+                  options={this.state.codeMirrorOptions}
+                  value={this.props.newSolutionCode} />
               </div>
             </Col>
           </Row>
-
           <hr />
           <h4>Tests</h4>
-          
-          <Row className="show-grid">
+          <Row>
             <Col md={12}>
               <h5>Description</h5>
               <input 
@@ -157,7 +163,7 @@ class YourToyProblems extends React.Component {
               />
             </Col>
           </Row>
-          <Row className="show-grid">
+          <Row>
             <Col md={6}>
               <h5>Arguments</h5>
               <input 
@@ -179,35 +185,30 @@ class YourToyProblems extends React.Component {
               />
             </Col>
           </Row>
-
           <br />
-          <Row className="show-grid">
+          <Row>
             <Col md={6}>
-              <Button 
-                bsStyle="info" 
+              <Button
                 bsSize="xsmall"
-                onClick = { () => this.props.addTest() }
-              >+ Test
-              </Button>
+                bsStyle="info"
+                onClick = {() => this.props.addTest()}
+              >+ Test</Button>
             </Col>
           </Row>
-
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.props.toggleNewUserToyProblemModal(false) }>Close</Button>
           <Button bsStyle='primary' onClick={() => {
-
-            let newName = document.getElementById('newToyProblemName').value;
-            let newDescription = document.getElementById('newToyProblemDescription').value;
             let newCategory = document.getElementById('newToyProblemCategory').value;
-            let newHint = document.getElementById('newToyProblemHint').value;
+            let newDescription = document.getElementById('newToyProblemDescription').value;
             let newDifficulty = document.getElementById('newToyProblemDifficulty');
             let newDifficulty2 = newDifficulty.options[newDifficulty.selectedIndex].text;
+            let newHint = document.getElementById('newToyProblemHint').value;
+            let newName = document.getElementById('newToyProblemName').value;
             let newSkeletonCode = this.props.newSkeletonCode;
             let newSolutionCode = this.props.newSolutionCode;
-
-            let newTestDescription = document.getElementById('newTestDescription').value;
             let newTestArguments = document.getElementById('newTestArguments').value;
+            let newTestDescription = document.getElementById('newTestDescription').value;
             let newTestOutput = document.getElementById('newTestOutput').value;
 
             this.props.toggleNewUserToyProblemModal(false);
@@ -227,160 +228,98 @@ class YourToyProblems extends React.Component {
               arguments: newTestArguments,
               description: newTestDescription,
               expectedOutput: newTestOutput,
-              promptId: '',
+              promptId: ''
             };
 
             this.props.postUserToyProblem(newToyProblem, newToyProblemTest);
-
           }}>Submit</Button>
         </Modal.Footer>
       </Modal>;
-
-
-
     
     return (
       <div>
         {newModal}
         <UpdateToyProblemModal test={this.props.currentUserToyProblem} test2={this.props.userToyProblems}/>
-        <Table responsive bordered condensed hover striped>
+        <Table bordered>
           <thead>
             <tr>
-              <th>#</th>
               <th>Name</th>
               <th>Description</th>
               <th>Category</th>
               <th>Difficulty</th>
-              <th><Button 
-                bsStyle="success" 
-                bsSize="xsmall"
-                onClick={ () => {
-                  this.props.toggleNewUserToyProblemModal(true);
-                }}>+ New</Button>
+              <th>
+                <Button
+                  bsSize="xsmall"
+                  bsStyle="success"
+                  onClick={() => {
+                    this.props.toggleNewUserToyProblemModal(true);
+                  }}>+ New</Button>
               </th>
-              <th>Delete?</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>
-            { this.props.userToyProblems ?
+            {this.props.userToyProblems ?
               this.props.userToyProblems.map((row, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
                   <td>{row.name}</td>
                   <td>{row.description}</td>
                   <td>{row.category}</td>
                   <td>{row.difficulty}</td>
-                  <td><Button 
-                    bsStyle="warning" 
-                    bsSize="xsmall" 
-                    onClick={ () => {
-                      this.props.toggleUpdateUserToyProblemModal(true);
-                      this.props.setCurrentUserToyProblem(row);
-                    }}>Update</Button>
+                  <td>
+                    <Button
+                      bsSize="xsmall" 
+                      bsStyle="warning"
+                      onClick={ () => {
+                        this.props.toggleUpdateUserToyProblemModal(true);
+                        this.props.setCurrentUserToyProblem(row);
+                      }}>Update</Button>
                   </td>
                   <td>
-                    <div onClick={ () => this.props.deleteToyProblem(row.id) }>
+                    <div onClick={() => this.props.deleteToyProblem(row.id)}>
                       <TrashIcon />
                     </div>
                   </td>
                 </tr> )
-              ) :
-              ('Loading')}
+              ) : null}
           </tbody>
         </Table>
       </div>
     );
-
-
-
-
-    // return (
-    //   <div>
-    //     {newModal}
-    //     <UpdateToyProblemModal test={this.props.currentUserToyProblem} test2={this.props.userToyProblems}/>
-    //     <Table responsive>
-    //       <thead>
-    //         <tr>
-    //           <th>#</th>
-    //           <th>Name</th>
-    //           <th>Description</th>
-    //           <th>Category</th>
-    //           <th>Difficulty</th>
-    //           <th><Button 
-    //             bsStyle="success" 
-    //             bsSize="xsmall"
-    //             onClick={ () => {
-    //               this.props.toggleNewUserToyProblemModal(true);
-    //             }}>+ New</Button>
-    //           </th>
-    //           <th> </th>
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-    //         { this.props.userToyProblems ?
-    //           this.props.userToyProblems.map((row, index) => (
-    //             <tr key={index}>
-    //               <td>{index + 1}</td>
-    //               <td>{row.name}</td>
-    //               <td>{row.description}</td>
-    //               <td>{row.category}</td>
-    //               <td>{row.difficulty}</td>
-    //               <td><Button 
-    //                 bsStyle="warning" 
-    //                 bsSize="xsmall" 
-    //                 onClick={ () => {
-    //                   this.props.toggleUpdateUserToyProblemModal(true);
-    //                   this.props.setCurrentUserToyProblem(row);
-    //                 }}>Update</Button>
-    //               </td>
-    //               <td>
-    //                 <div onClick={ () => this.props.deleteToyProblem(row.id) }>
-    //                   <TrashIcon />
-    //                 </div>
-    //               </td>
-    //             </tr> )
-    //           ) :
-    //           ('Loading')}
-    //       </tbody>
-    //     </Table>
-    //   </div>
-    // );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    userToyProblems: state.userToyProblems,
-    updateUserToyProblemModal: state.updateUserToyProblemModal,
-    newUserToyProblemModal: state.newUserToyProblemModal,
     currentUserToyProblem: state.currentUserToyProblem,
-    userProfileData: state.userProfileData,
+    newSkeletonCode: state.newSkeletonCode,
+    newSolutionCode: state.newSolutionCode,
+    newUserToyProblemModal: state.newUserToyProblemModal,
     skeletonCode: state.skeletonCode,
     solutionCode: state.solutionCode,
-    newSkeletonCode: state.newSkeletonCode,
-    newSolutionCode: state.newSolutionCode
+    userProfileData: state.userProfileData,
+    userToyProblems: state.userToyProblems,
+    updateUserToyProblemModal: state.updateUserToyProblemModal,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    updateUserToyProblem: updateUserToyProblem, 
-    toggleNewUserToyProblemModal: toggleNewUserToyProblemModal,
-    toggleUpdateUserToyProblemModal: toggleUpdateUserToyProblemModal,
-    setCurrentUserToyProblem: setCurrentUserToyProblem,
+    addTest: addTest,
+    deleteToyProblem: deleteToyProblem,
     postUserToyProblem: postUserToyProblem,
-    updateToyProblemTests: updateToyProblemTests,
-    updateSkeletonCode: updateSkeletonCode,
-    updateSolutionCode: updateSolutionCode,
+    setCurrentUserToyProblem: setCurrentUserToyProblem,
     setNewSkeletonCode: setNewSkeletonCode,
     setNewSolutionCode: setNewSolutionCode,
-    deleteToyProblem: deleteToyProblem,
     setInitialSkeletonCode: setInitialSkeletonCode,
     setInitialSolutionCode: setInitialSolutionCode,
-    addTest: addTest
+    toggleNewUserToyProblemModal: toggleNewUserToyProblemModal,
+    toggleUpdateUserToyProblemModal: toggleUpdateUserToyProblemModal,
+    updateSkeletonCode: updateSkeletonCode,
+    updateSolutionCode: updateSolutionCode,
+    updateToyProblemTests: updateToyProblemTests,
+    updateUserToyProblem: updateUserToyProblem
   }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(YourToyProblems);
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(Prompts);
