@@ -76,7 +76,7 @@ class ModalComponent extends React.Component {
       return (
         <Modal show={this.props.modal.show} onHide={this.rejectRequestToPair}>
           <Modal.Header closeButton>
-            <Modal.Title>*Some name* sent you a pairing request</Modal.Title>
+            <Modal.Title>{this.props.partnerData.firstName} {this.props.partnerData.lastName} sent you a pairing request</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {
@@ -140,6 +140,7 @@ const mapStateToProps = (state) => {
     currentQuestion: state.currentQuestion,
     modal: state.modal,
     roomId: state.roomId,
+    partnerData: state.partnerData,
     sessionData: state.sessionData
   };
 };

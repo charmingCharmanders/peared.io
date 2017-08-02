@@ -7,7 +7,7 @@ import {browserHistory, Redirect} from 'react-router';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import io from 'socket.io-client';
-import {closeModal, openModal, updateUserFriendsData, populateUserFriendsData, populateUserSessionsData, populateUserData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
+import {updatePartnerData, closeModal, openModal, updateUserFriendsData, populateUserFriendsData, populateUserSessionsData, populateUserData, updateButtonStatus, dashboardToSession, updateRoomId, sessionToDashboard, startSession, updatePrompt, updateCode, updateCurrentSession, updateTestResults, updateOnlineUsers} from './actions';
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 
@@ -38,7 +38,15 @@ class App extends React.Component {
 
   openConnection() {
     this.setState({
-      socket: io.connect(this.connectionUrl(), { query: { profileId: this.props.profile.id, rating: this.props.profile.rating } })
+      socket: io.connect(this.connectionUrl(),
+        { query:
+        {
+          profileId: this.props.profile.id,
+          rating: this.props.profile.rating,
+          firstName: this.props.profile.firstName,
+          lastName: this.props.profile.lastName
+        }
+        })
     });
     this.state.socket.on('connect', ()=>{
       this.state.socket.on('startSession', (sessionData) =>{
@@ -74,6 +82,8 @@ class App extends React.Component {
       this.state.socket.on('room request', (requestData)=>{
         console.log('request Data:', requestData);
         this.props.updateRoomId(requestData.roomId);
+        delete requestData['roomId'];
+        this.props.updatePartnerData(requestData);
         this.props.openModal('roomRequest');
       });
 
@@ -143,6 +153,7 @@ var mapStateToProps = function(state) {
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators(
     {
+      updatePartnerData: updatePartnerData,
       closeModal: closeModal,
       openModal: openModal,
       populateUserFriendsData: populateUserFriendsData,

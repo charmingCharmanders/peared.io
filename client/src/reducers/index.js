@@ -24,8 +24,10 @@ import {setNewSkeletonCode} from './reducer-new-skeleton';
 import {setNewSolutionCode} from './reducer-new-solution';
 import {updateCurrentQuestion} from './reducer-current-question';
 import {updateSearch} from './reducer-updateSearch';
+import {updatePartnerData} from './reducer-partner-data';
 
 export default combineReducers({
+  partnerData: updatePartnerData,
   currentQuestion: updateCurrentQuestion,
   modal: toggleModal,
   nav: toggleNav,
