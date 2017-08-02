@@ -6,7 +6,7 @@ import {Badge, ListGroup, ListGroupItem, Panel, Table, ButtonToolbar, Button, Na
   CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {acceptFriend, openModal} from '../actions';
+import {updatePartnerData, acceptFriend, openModal} from '../actions';
 
 class FriendsList extends React.Component {
   constructor(props) {
@@ -15,7 +15,9 @@ class FriendsList extends React.Component {
   }
 
   requestSession(friend) {
-    this.props.openModal('startSession');
+    console.log('friendData:', friend);
+    this.props.updatePartnerData({firstName: friend.firstName, lastName: friend.lastName});
+    this.props.openModal('sendingRoomRequest');
     this.props.socket.emit('request session', friend);
   }
 
@@ -70,6 +72,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    updatePartnerData: updatePartnerData,
     openModal: openModal,
     acceptFriend: acceptFriend
   }, dispatch);

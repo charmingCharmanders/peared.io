@@ -84,7 +84,7 @@ class App extends React.Component {
         this.props.updateRoomId(requestData.roomId);
         delete requestData['roomId'];
         this.props.updatePartnerData(requestData);
-        this.props.openModal('roomRequest');
+        this.props.openModal('receivingRoomRequest');
       });
 
     });
