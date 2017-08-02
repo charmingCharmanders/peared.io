@@ -31,11 +31,11 @@ class Dashboard extends React.Component {
           </Row>
           <Statistics />
           <Row>
-            <Col md={9}>
+            <Col md={8}>
               <h3>Recent Sessions</h3>
               <Sessions />
             </Col>
-            <Col md={3}>
+            <Col md={4}>
               <h3>Leaderboard</h3>
               <Leaderboard />
             </Col>

@@ -13,9 +13,9 @@ class Leaderboard extends React.Component {
       <Table bordered>
         <thead>
           <tr>
-            <th>Rank</th>
+            <th className="center">Rank</th>
             <th>Name</th>
-            <th>Rating</th>
+            <th className="center">Rating</th>
           </tr>
         </thead>
         <tbody>
@@ -23,9 +23,9 @@ class Leaderboard extends React.Component {
             this.props.leaderboard.leaderArray.map((leader, index) => {
               return (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td className="center">{index + 1}</td>
                   <td>{leader.name}</td>
-                  <td>{Number(leader.rating).toFixed()}</td>
+                  <td className="center">{Number(leader.rating).toFixed()}</td>
                 </tr>
               );
             }) : null}

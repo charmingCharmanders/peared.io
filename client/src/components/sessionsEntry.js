@@ -18,10 +18,10 @@ class SessionsEntry extends React.Component {
     return (
       <tr onClick={this.displaySolution}>
         <td>{this.props.partner}</td>
-        <td>{this.props.name}</td>
-        <td>{this.props.time}</td>
-        <td>{this.props.category}</td>
-        <td>{this.props.rating}</td>
+        <td className="center">{this.props.name}</td>
+        <td className="center">{this.props.time}</td>
+        <td className="center">{this.props.category}</td>
+        <td className="center">{this.props.rating}</td>
       </tr>
     );
   }

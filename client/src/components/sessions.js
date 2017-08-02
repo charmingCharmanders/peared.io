@@ -15,10 +15,10 @@ class Sessions extends React.Component {
         <thead>
           <tr>
             <th>Partner</th>
-            <th>Prompt</th>
-            <th>Time</th>
-            <th>Category</th>
-            <th>Score</th>
+            <th className="center">Prompt</th>
+            <th className="center">Time</th>
+            <th className="center">Category</th>
+            <th className="center">Score</th>
           </tr>
         </thead>
         <tbody>
