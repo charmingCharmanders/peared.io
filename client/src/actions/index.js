@@ -521,8 +521,7 @@ export {
   updateSearch,
   addFriend,
   unfriend,
-  acceptFriend
-  deleteToyProblem,
+  acceptFriend,
   addTest,
   setInitialSkeletonCode,
   setInitialSolutionCode
