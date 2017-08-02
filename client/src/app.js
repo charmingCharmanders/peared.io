@@ -135,7 +135,6 @@ class App extends React.Component {
               <Route path='/' component={Dashboard} />
             </Switch>
           </div>
-          <Footer />
         </div>
       </Router>
     );

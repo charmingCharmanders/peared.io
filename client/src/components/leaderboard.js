@@ -24,7 +24,7 @@ class Leaderboard extends React.Component {
               return (
                 <tr key={index}>
                   <td className="center">{index + 1}</td>
-                  <td>{leader.name}</td>
+                  <td>{leader.firstName} {leader.lastName}</td>
                   <td className="center">{Number(leader.rating).toFixed()}</td>
                 </tr>
               );

@@ -102,7 +102,7 @@ class ModalComponent extends React.Component {
             <h5>Here is a summary of your performance.</h5>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.leaveSession}>Close</Button>
+            <Button onClick={this.closeModal}>Close</Button>
           </Modal.Footer>
         </Modal>
       );

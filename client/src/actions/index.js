@@ -197,7 +197,8 @@ const populateLeaderboard = () => {
       .then(result => {
         let ratingArray = result.data.map(profile => {
           return {
-            name: profile.firstName,
+            firstName: profile.firstName,
+            lastName: profile.lastName,
             rating: profile.rating
           };
         });

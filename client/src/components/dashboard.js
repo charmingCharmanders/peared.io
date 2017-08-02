@@ -1,3 +1,4 @@
+import Footer from './footer';
 import FriendsList from './friendsList';
 import Leaderboard from './leaderboard';
 import Modal from './modal';
@@ -22,7 +23,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="dashboard-container">
         <Grid>
           <Row>
             <Col md={12}>
@@ -51,6 +52,7 @@ class Dashboard extends React.Component {
             </Col>
           </Row>
         </Grid>
+        <Footer />
         <Modal socket={this.props.socket} />
       </div>
     );
