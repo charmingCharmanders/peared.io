@@ -1,7 +1,7 @@
 module.exports.calculateSessionScore = (timeLimitInSeconds, promptTime, promptDifficulty, tests, testsPassed) => {
   let diffObj = {1: 10, 2: 50, 3: 250, 4: 1000};
   let percentageOfTimeLimit = (timeLimitInSeconds - (promptTime)) / timeLimitInSeconds;
-  let score = ((percentageOfTimeLimit * .40) + .60) * diffObj[promptDifficulty] * (testsPassed / tests);
+  let score = ((percentageOfTimeLimit * .40) + .60) * diffObj[promptDifficulty] * ((testsPassed / tests) || 0);
   if (promptDifficulty === 1) {
     return score;
   } else {
