@@ -15,7 +15,7 @@ class Leaderboard extends React.Component {
           <tr>
             <th className="center">Rank</th>
             <th>Name</th>
-            <th className="center">Rating</th>
+            <th className="center">Score</th>
           </tr>
         </thead>
         <tbody>

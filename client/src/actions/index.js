@@ -396,6 +396,13 @@ const setNewSkeletonCode = (code) => {
   };
 };
 
+const updatePartnerData = (partnerData) => {
+  return {
+    type: 'UPDATE_PARTNER_DATA',
+    payload: partnerData
+  };
+};
+
 const setNewSolutionCode = (code) => {
   return {
     type: 'SET_NEW_SOLUTION_CODE',
@@ -497,6 +504,7 @@ const acceptFriend = (friendId, userId) => {
 };
 
 export {
+  updatePartnerData,
   openModal,
   closeModal,
   dashboardToSession,

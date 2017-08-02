@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
             </Col>
             <Col md={3}>
               <h3>Friends</h3>
-              <FriendsList />
+              <FriendsList socket={this.props.socket}/>
             </Col>
           </Row>
         </Grid>
