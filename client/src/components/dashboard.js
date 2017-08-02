@@ -24,19 +24,31 @@ class Dashboard extends React.Component {
     return (
       <div>
         <Grid>
-          <Row className='show-grid'>
+          <Row>
             <Col md={12}>
               <h2>Welcome, {this.props.userProfileData.firstName}!</h2>
             </Col>
           </Row>
           <Statistics />
-          <Row className='show-grid'>
-            <Col md={9}><Sessions /></Col>
-            <Col md={3}><Leaderboard /></Col>
+          <Row>
+            <Col md={9}>
+              <h3>Recent Sessions</h3>
+              <Sessions />
+            </Col>
+            <Col md={3}>
+              <h3>Leaderboard</h3>
+              <Leaderboard />
+            </Col>
           </Row>
-          <Row className='show-grid'>
-            <Col md={9}><Prompts /></Col>
-            <Col md={3}><FriendsList /></Col>
+          <Row>
+            <Col md={9}>
+              <h3>My Prompts</h3>
+              <Prompts />
+            </Col>
+            <Col md={3}>
+              <h3>Friends</h3>
+              <FriendsList />
+            </Col>
           </Row>
         </Grid>
         <Modal socket={this.props.socket} />
