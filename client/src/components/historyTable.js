@@ -34,7 +34,7 @@ class HistoryTable extends React.Component {
               name={row.promptName}
               time={row.lengthOfSession}
               category={row.category}
-              rating={row.rating}
+              rating={Number(row.rating).toFixed()}
             />) : ''}
         </tbody>
       </Table>
