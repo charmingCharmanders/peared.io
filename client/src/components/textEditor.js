@@ -1,16 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Video from './video';
 import CodeMirror from '@skidding/react-codemirror';
-import { LinkContainer } from 'react-router-bootstrap';
-import js_beautify from 'js-beautify';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import {ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
-import {updateCode} from '../actions';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import CodeMirrorJS from 'codemirror/mode/javascript/javascript';
+import React from 'react';
 import TextEditorButtons from './textEditorButtons';
-require('codemirror/mode/javascript/javascript');
+import Video from './video';
+import jsBeautify from 'js-beautify';
+import { LinkContainer } from 'react-router-bootstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateCode } from '../actions';
 
 class TextEditor extends React.Component {
   constructor(props) {
@@ -23,20 +20,25 @@ class TextEditor extends React.Component {
     this.props.socketConnection.emit('edit', newCode, this.props.roomId);
   }
 
-  render() {
-    var convertToSoftTabs = function(cm) {
-      if (cm.somethingSelected()) {
-        cm.indentSelection();
-      } else {
-        var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
-        cm.replaceSelection(spaces);
-      }
+  convertToSoftTabs(cm) {
+    if (cm.somethingSelected()) {
+      cm.indentSelection();
+    } else {
+      var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
+      cm.replaceSelection(spaces);
+    }
+  }
+
+  render() { 
+    const jsBeautifyOptions = {
+      indent_size: 2,
+      wrap_line_length: 60
     };
- 
-    var options = {
+
+    const codeMirrorOptions = {
       lineNumbers: true,
       extraKeys: {
-        Tab: convertToSoftTabs
+        Tab: this.convertToSoftTabs
       },
       mode: 'text/javascript',
       tabSize: 2,
@@ -45,10 +47,11 @@ class TextEditor extends React.Component {
 
     return (
       <div className="editor-container">
-        <CodeMirror 
-          value={this.props.code}
+        <CodeMirror
+          defaultValue={jsBeautify(this.props.code, jsBeautifyOptions)}
           onChange={this.codeChange}
-          options={options} 
+          options={codeMirrorOptions}
+          value={this.props.code}
         />
         <TextEditorButtons socketConnection={this.props.socketConnection} />
       </div>
@@ -57,15 +60,17 @@ class TextEditor extends React.Component {
   }
 }
 
-var mapStateToProps = function (state) {
+const mapStateToProps = function (state) {
   return {
     code: state.code,
     roomId: state.roomId
   };
 };
 
-var mapDispatchToProps = function(dispatch) {
-  return bindActionCreators({updateCode: updateCode}, dispatch);
+const mapDispatchToProps = function(dispatch) {
+  return bindActionCreators({
+    updateCode: updateCode
+  }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TextEditor);
