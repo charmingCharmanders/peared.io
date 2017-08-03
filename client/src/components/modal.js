@@ -6,6 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Countdown from './countdown';
+import CodeMirror from '@skidding/react-codemirror';
 
 class ModalComponent extends React.Component {
   constructor(props) {
@@ -41,6 +42,26 @@ class ModalComponent extends React.Component {
   }
 
   renderModal() {
+    const convertToSoftTabs = function(cm) {
+      if (cm.somethingSelected()) {
+        cm.indentSelection();
+      } else {
+        var spaces = Array(cm.getOption('indentUnit') + 1).join(' ');
+        cm.replaceSelection(spaces);
+      }
+    };
+
+    let options = {
+      readOnly: true,
+      lineNumbers: true,
+      extraKeys: {
+        Tab: convertToSoftTabs
+      },
+      mode: 'text/javascript',
+      tabSize: 2,
+      theme: 'material'
+    };
+
     if (this.props.modal.type === 'startSession') {
       return (
         <Modal show={this.props.modal.show} onHide={this.leaveSession}>
@@ -133,14 +154,22 @@ class ModalComponent extends React.Component {
       return (
         <Modal show={this.props.modal.show} onHide={this.props.closeModal}>
           <Modal.Header closeButton>
-            <Modal.Title>{this.props.sessionData.sessionArray[this.props.currentQuestion].promptName}</Modal.Title>
+            <div className='clearfix'>
+              <Modal.Title style={{float:'left'}}>{this.props.sessionData.sessionArray[this.props.currentQuestion].promptName}</Modal.Title>
+              <Modal.Title style={{float:'right', marginRight:20}}>Time Elapsed: {this.props.sessionData.sessionArray[this.props.currentQuestion].lengthOfSession}</Modal.Title>
+            </div>
           </Modal.Header>
           <Modal.Body>
-            <h4>{this.props.sessionData.sessionArray[this.props.currentQuestion].lengthOfSession}</h4>
-            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].solution}</h5>
+            <div className="editor-container" id='toyProblemSkeletonCode'>
+              <CodeMirror
+                value={this.props.sessionData.sessionArray[this.props.currentQuestion].solution}
+                options={options} 
+              />
+            </div>
           </Modal.Body>
           <Modal.Footer>
-            <h5>{this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTestsPassed} /
+            <Button style={{float:'right'}} onClick={this.closeModal}>Close</Button>
+            <h5 style={{float:'right', marginRight:20}}>Tests Passed: {this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTestsPassed}/
                 {this.props.sessionData.sessionArray[this.props.currentQuestion].numberOfTests}
             </h5>
           </Modal.Footer>
