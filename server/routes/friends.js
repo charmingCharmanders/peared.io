@@ -7,10 +7,11 @@ router.route('/')
   .get(FriendsController.getAll)
   .post(FriendsController.create)
   .put(FriendsController.update)
-  ;
-
-router.route('/:id')
   .delete(FriendsController.delete)
   ;
+
+// router.route('/:id')
+//   .delete(FriendsController.delete)
+//   ;
 
 module.exports = router;

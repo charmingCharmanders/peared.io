@@ -458,19 +458,7 @@ const addFriend = (userId, friendId, friendArray) => {
 
 const unfriend = (userId, friendId, friendArray) => {
   return dispatch => {
-    let friendIndex;
-    let id;
-    friendArray.forEach((friend, index) => {
-      if (friend.friendId === friendId) {
-        friendIndex = index;
-        id = friend.id;
-      }
-    });
-    friendArray.splice(friendIndex, 1);
-    axios.delete(`/api/friends/${id}`)
-      .then(() => {
-        axios.delete(`/api/friends/${id + 1}`);
-      })
+    axios.delete(`/api/friends?profileId=${userId}&friendId=${friendId}`)
       .then(() => {
         axios.get(`/api/friends?profileId=${userId}`)
           .then(result => {

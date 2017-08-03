@@ -82,12 +82,26 @@ module.exports.update = (req, res) => {
 
 module.exports.delete = (req, res) => {
   models.Friend
-    .where({id: req.params.id})
-    .destroy()
-    .then(friends => {
-      res.status(200).send(friends);
+    .where({
+      profileId: req.query.profileId,
+      friendId: req.query.friendId
     })
+    .destroy()
     .catch(err => {
       res.status(500).send(err);
-    });
+    })
+    .then(() => {
+      models.Friend
+        .where({
+          profileId: req.query.friendId,
+          friendId: req.query.profileId
+        })
+        .destroy()
+        .then(friends => {
+          res.status(200).send(friends);
+        })
+        .catch(err => {
+          res.status(500).send(err);
+        })
+    })
 };
