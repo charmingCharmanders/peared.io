@@ -198,25 +198,27 @@ h3 {
 }
 
 .console {
-  background-color: #f7f3ef;
+  background-color: #263238;
+  color: #fff;
+  font-family: monospace;
+  font-size: 13px;
+  padding: 10px 15px;
   height: 100%;
   width: 100%;
 }
 
-.testDescription {
-  font-weight: bold;
-}
-
-.testContainer {
-  margin-left: 5px;
+.arrow {
+  color: #82b1ff;
+  font-size: 11px;
+  margin: 0 10px 0 0;
 }
 
 .testPass {
-  color: #35e21b;
+  color: #80cbc4;
 }
 
 .testFail {
-  color: #f91111;
+  color: #f77669;
 }
 
 /* -------------------------------------------------------------------------- */
