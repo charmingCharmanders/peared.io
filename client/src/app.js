@@ -73,7 +73,9 @@ class App extends React.Component {
       });
       this.state.socket.on('users online', (userCount)=>{
         this.props.updateOnlineUsers(userCount);
-        this.state.socket.emit('friends list', this.props.friendsList);
+        if (this.props.friendsList.friendsArray) {
+          this.state.socket.emit('friends list', this.props.friendsList);
+        }
       });
       this.state.socket.on('edit', (code)=>{
         this.props.updateCode(code);
@@ -108,7 +110,9 @@ class App extends React.Component {
           this.state.socket.on('friends list', (friendsList)=>{
             this.props.updateUserFriendsData(friendsList);
           });
-          this.state.socket.emit('friends list', this.props.friendsList);
+          if (this.props.friendsList.friendsArray) {
+            this.state.socket.emit('friends list', this.props.friendsList);
+          }
         });
         this.props.populateUserSessionsData(this.props.profile.id);
       });
