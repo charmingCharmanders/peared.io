@@ -59,6 +59,7 @@ class App extends React.Component {
       this.state.socket.on('end session', (modalType) => {
         this.props.sessionToDashboard();
         this.props.openModal(modalType);
+        this.props.populateUserSessionsData(this.props.profile.id);
         this.props.updateButtonStatus(true);
         this.props.updateCode(null);
         this.props.updateCurrentSession(null);
