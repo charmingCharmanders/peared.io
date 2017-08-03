@@ -29,7 +29,7 @@ class TextEditor extends React.Component {
     }
   }
 
-  render() { 
+  render() {
     const jsBeautifyOptions = {
       indent_size: 2,
       wrap_line_length: 60
@@ -56,7 +56,7 @@ class TextEditor extends React.Component {
         <TextEditorButtons socketConnection={this.props.socketConnection} />
       </div>
     );
-     
+
   }
 }
 

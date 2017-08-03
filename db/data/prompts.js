@@ -7,7 +7,7 @@ module.exports = [
     skeletonCode: 'const addTwoNumbers = function (a, b) { }',
     solutionCode: 'const addTwoNumbers = function (a, b) { return a + b; }',
     userId: 1,
-    difficulty: 1
+    difficulty: 3
   },
   {
     name: 'Multiply Two Numbers',
@@ -17,7 +17,7 @@ module.exports = [
     skeletonCode: 'const multiplyTwoNumbers = function (a, b) { }',
     solutionCode: 'const multiplyTwoNumbers = function (a, b) { return a * b; }',
     userId: 2,
-    difficulty: 2
+    difficulty: 3
   },
   {
     name: 'Even or Odd',
@@ -37,7 +37,7 @@ module.exports = [
     skeletonCode: 'const arrayOfStrings = function (array) { }',
     solutionCode: 'const arrayofStrings = function(array) { let result = []; for (var i = 0; i < array.length; i++) { if (typeof array[i] === `string`) { result.push(array[i]) } } return result }',
     userId: 4,
-    difficulty: 4
+    difficulty: 3
   },
   {
     name: 'Find index of x in an array',
@@ -47,7 +47,27 @@ module.exports = [
     skeletonCode: 'const findIndexOfTarget = function (target, array) { }',
     solutionCode: 'const findIndexOfTarget = function (target, array) { return array.indexOf(target); }',
     userId: 4,
-    difficulty: 2
+    difficulty: 3
+  },
+  {
+    name: 'Balanced Parens',
+    description: 'write a function that takes a string of text and returns true if the parentheses are balanced and false otherwise. Example:  balancedParens("(");  // false,   balancedParens("()"); // true,  balancedParens(")(");  // false',
+    category: 'String Manipulation',
+    hint: 'Check all types of brackets.',
+    skeletonCode: 'const balancedParens = function (target, array) { }',
+    solutionCode: 'const balancedParens = function (target, array) {   var stack = []; var pairs = {`{`: `}`,`[`: `]`,`(`:`)`};for (var i = 0; i < input.length; i++) {var chr = input[i];if (pairs[chr]) {stack.push(chr);} else if (chr === `}` || chr === `]` || chr === `)`) {if (pairs[stack.pop()] !== chr) {return false;}}}return stack.length === 0; }',
+    userId: 3,
+    difficulty: 3
+  },
+  {
+    name: 'Binary Search Array',
+    description: 'Given a sorted array, find the index of an element using a binary search algorithm.Example usage: var index = binarySearch([1, 2, 3, 4, 5], 4); console.log(index); // 3; var index = binarySearch([1, 2, 3, 4, 5], 8); console.log(index); // null',
+    category: 'Trees',
+    hint: 'User Recursion.',
+    skeletonCode: 'const binarySearchArray = function () { }',
+    solutionCode: 'const binarySearchArray = function () { }',
+    userId: 3,
+    difficulty: 3
   }
 ];
 
