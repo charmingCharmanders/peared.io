@@ -1,29 +1,36 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { LinkContainer } from 'react-router-bootstrap';
-import {Tabs, Tab} from 'react-bootstrap';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { Tab, Tabs } from 'react-bootstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class ConsoleAndTest extends React.Component {
-  
   renderTestResults() {
     const testResults = this.props.testResults;
     if (testResults.error) {
       return (
         <div className="testContainer">
-          <div>{testResults.error}</div>
+          <div>
+            <span className="arrow">&gt;</span>
+            {testResults.error}
+          </div>
         </div>
       );
     }
+
     return (
       <div className="testContainer">
         {testResults.tests.map((test, index) => {
           return (
             <div key={index}>
-              <span className="testDescription">{test.description}</span>
+              <span className="testDescription">
+                <span className="arrow">&gt;</span>
+                {test.description}
+              </span>
               <br />
-              <span className={test.result === 'test passed' ? 'testPass' : 'testFail'}>{test.result}</span>
+              <span className={test.result === 'test passed' ? 'testPass' : 'testFail'}>
+                <span className="arrow">&gt;</span>
+                {test.result}
+              </span>
             </div>
           );
         })}
@@ -40,10 +47,14 @@ class ConsoleAndTest extends React.Component {
   }
 }
 
-var mapStateToProps = function (state) {
+const mapStateToProps = function (state) {
   return {
     testResults: state.testResults
   };
 };
 
-export default connect(mapStateToProps)(ConsoleAndTest);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConsoleAndTest);
