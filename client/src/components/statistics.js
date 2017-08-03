@@ -4,50 +4,93 @@ import { bindActionCreators} from 'redux';
 import { connect} from 'react-redux';
 
 class Statistics extends React.Component {
-  renderRanking(rating) {
-    if (rating < 100) {
-      return 'Novice';
+
+  renderSessionsCompleted(sessionArray) {
+    var sessionsCompleted = 0;
+
+    for (let i = 0; i < sessionArray.length; i++) {
+      if (sessionArray[i].numberOfTests === sessionArray[i].numberOfTestsPassed) {
+        sessionsCompleted++;
+      }
     }
-    if (rating < 5000) {
-      return 'Amateur';
+
+    return sessionsCompleted;
+  }
+
+  renderTotalTime(sessionsArray) {
+    let minutes = 0;
+    let seconds = 0;
+    let hours = 0;
+
+    for (let i = 0; i < sessionsArray.length; i++) {
+      let time = sessionsArray[i].lengthOfSession.split(':');
+      minutes += parseInt(time[0]);
+      seconds += parseInt(time[1]);
     }
-    if (rating < 20000) {
-      return 'Professional';
+
+    minutes += Math.floor(seconds / 60);
+    seconds = ((seconds / 60) - Math.floor(seconds / 60)) * 60;
+
+    hours = Math.floor(minutes / 60);
+    minutes = ((minutes / 60) - Math.floor(minutes / 60)) * 60;
+
+    return `${hours}h : ${minutes}m : ${seconds}s`;
+
+  }
+
+  renderAverageScore(sessionsArray) {
+    let averageScore = 0;
+
+    for (let i = 0; i < sessionsArray.length; i++) {
+      averageScore += parseInt(sessionsArray[i].rating);
     }
-    return 'Expert';
+
+    return Math.round(averageScore / sessionsArray.length);
   }
 
   render() {
     return (
       <Row>
         <Col xs={2}>
-          <Panel header="Ranking" bsStyle="info">
-            {this.renderRanking(this.props.userProfileData.rating)}
+          <Panel header="Rating" bsStyle="info">
+            {Math.round(this.props.userProfileData.rating)}
           </Panel>
         </Col>
         <Col xs={2}>
-          <Panel header="Completed" bsStyle="info">
-            {this.props.sessionData.sessionArray ? this.props.sessionData.sessionArray.length : null}
+          <Panel header="Sessions Completed" bsStyle="info">
+            {this.props.sessionData.sessionArray ?
+              this.renderSessionsCompleted(this.props.sessionData.sessionArray) :
+              ('loading...')
+            }
           </Panel>
         </Col>
         <Col xs={2}>
-          <Panel header="Statistic" bsStyle="info">
-            0
+          <Panel header="Number of Friends" bsStyle="info">
+            {this.props.userFriendData.friendArray ?
+              (this.props.userFriendData.friendArray.length) :
+              ('loading...')
+            }
           </Panel>
         </Col>
         <Col xs={2}>
-          <Panel header="Statistic" bsStyle="info">
-            0
+          <Panel header="Total Time" bsStyle="info">
+            {this.props.sessionData.sessionArray ?
+              this.renderTotalTime(this.props.sessionData.sessionArray) :
+              ('loading...')
+            }
           </Panel>
         </Col>
         <Col xs={2}>
-          <Panel header="Statistic" bsStyle="info">
-            0
+          <Panel header="# of Prompts Added" bsStyle="info">
+            {this.props.userToyProblems.length}
           </Panel>
         </Col>
         <Col xs={2}>
-          <Panel header="Statistic" bsStyle="info">
-            0
+          <Panel header="Average Score" bsStyle="info">
+            {this.props.sessionData.sessionArray ?
+              this.renderAverageScore(this.props.sessionData.sessionArray) :
+              ('loading....')
+            }
           </Panel>
         </Col>
       </Row>
@@ -58,7 +101,9 @@ class Statistics extends React.Component {
 const mapStateToProps = (store) => {
   return {
     sessionData: store.sessionData,
-    userProfileData: store.userProfileData
+    userProfileData: store.userProfileData,
+    userFriendData: store.userFriendData,
+    userToyProblems: store.userToyProblems
   };
 };
 
