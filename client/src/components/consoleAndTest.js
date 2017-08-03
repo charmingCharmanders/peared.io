@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Test from './test.js';
 import { LinkContainer } from 'react-router-bootstrap';
 import {Tabs, Tab} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+// import Sp
 
 class ConsoleAndTest extends React.Component {
   
@@ -20,11 +22,7 @@ class ConsoleAndTest extends React.Component {
       <div className="testContainer">
         {testResults.tests.map((test, index) => {
           return (
-            <div key={index}>
-              <span className="testDescription">{test.description}</span>
-              <br />
-              <span className={test.result === 'test passed' ? 'testPass' : 'testFail'}>{test.result}</span>
-            </div>
+            <Test index={index} wait={(index+1)*900}></Test>
           );
         })}
       </div>
