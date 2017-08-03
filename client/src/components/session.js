@@ -12,9 +12,12 @@ class Session extends React.Component {
   componentDidMount() {
     console.log('about to start the session timer');
     this.props.setCurrentTimeToZero();
-    setInterval(
-      ()=>{this.props.incrementCurrentTime(this.props.currentTime)}, 1000
+    this.incrementTime = setInterval(
+      ()=>{this.props.incrementCurrentTime(this.props.currentTime);}, 1000
     );
+  }
+  componentWillUnmount() {
+    clearInterval(this.incrementTime);
   }
 
   render() {
