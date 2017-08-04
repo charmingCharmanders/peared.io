@@ -73,7 +73,7 @@ class App extends React.Component {
       });
       this.state.socket.on('users online', (userCount)=>{
         this.props.updateOnlineUsers(userCount);
-        if (this.props.friendsList.friendsArray) {
+        if (this.props.friendsList.friendArray) {
           this.state.socket.emit('friends list', this.props.friendsList);
         }
       });
@@ -110,7 +110,7 @@ class App extends React.Component {
           this.state.socket.on('friends list', (friendsList)=>{
             this.props.updateUserFriendsData(friendsList);
           });
-          if (this.props.friendsList.friendsArray) {
+          if (this.props.friendsList.friendArray) {
             this.state.socket.emit('friends list', this.props.friendsList);
           }
         });
