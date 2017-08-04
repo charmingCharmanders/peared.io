@@ -232,6 +232,8 @@ class Prompts extends React.Component {
             };
 
             this.props.postUserToyProblem(newToyProblem, newToyProblemTest);
+            this.props.setNewSkeletonCode('const functionName = function() {}');
+            this.props.setNewSolutionCode('const functionName = function() {}');
           }}>Submit</Button>
         </Modal.Footer>
       </Modal>;
