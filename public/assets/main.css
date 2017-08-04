@@ -175,6 +175,10 @@ h3 {
   width: 100% !important;
 }
 
+.modal-footer {
+  margin-top: 0;
+}
+
 .session-description .panel {
   background-color: transparent;
   border: 0;
