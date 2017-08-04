@@ -3,14 +3,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  /*margin-top: 30px;*/
   background-color: #f5f8fa;
-  /*background-image: url('https://static.pexels.com/photos/34490/keyboard-computer-keys-white.jpg');
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;*/
-  /*background: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);*/
 }
 
 #main {
@@ -23,7 +16,6 @@ body {
   display: table-cell;
   height: 100%;
   vertical-align: middle;
-  /*margin: auto;*/
 }
 
 #logo {
@@ -85,7 +77,6 @@ hr {
   border: 0;
   height: 2px;
   background: #333;
-  /*background-image: linear-gradient(to right, pink, purple, crimson);*/
   background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
 }
 
@@ -94,20 +85,14 @@ h5 {
   font-weight: 700;
   font-size: 16px;
   text-align: center;
-  /*top: 50px;*/
   margin-top: -60px;
 }
 
 #loginbutton {
-  /*background: orange;*/
-  /*border: 2px solid darkorange;*/
   margin-top: 20px;
   border: none;
   background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
-
-    /*background-image: linear-gradient(to right, pink, purple, crimson);*/
   border: 2px solid darkblue;
-
 
   display: block;
   border-collapse: separate;
