@@ -22,8 +22,7 @@ class App extends React.Component {
   httpsRedirect() {
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
-
-    if (hostname === 'peared.io' && protocol === 'http:') {
+    if (hostname !== '127.0.0.1' || hostname !== 'localhost') {
       location.href = 'https://' + hostname;
     }
   }

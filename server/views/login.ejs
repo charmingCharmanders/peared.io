@@ -2,6 +2,13 @@
 <html>
 
 <head>
+    <script>
+      const protocol = window.location.protocol;
+      const hostname = window.location.hostname;
+      if (hostname !== '127.0.0.1' || hostname !== 'localhost') {
+          location.href = 'https://' + hostname;
+      }
+    </script>
     <title>Code with Friends | Peared.io</title>
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800" rel="stylesheet">
