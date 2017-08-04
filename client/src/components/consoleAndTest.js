@@ -1,7 +1,10 @@
 import React from 'react';
-import { Tab, Tabs } from 'react-bootstrap';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+import Test from './test.js';
+import { LinkContainer } from 'react-router-bootstrap';
+import {Tabs, Tab} from 'react-bootstrap';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class ConsoleAndTest extends React.Component {
   renderTestResults() {
@@ -21,17 +24,7 @@ class ConsoleAndTest extends React.Component {
       <div className="testContainer">
         {testResults.tests.map((test, index) => {
           return (
-            <div key={index}>
-              <span className="testDescription">
-                <span className="arrow">&gt;</span>
-                {test.description}
-              </span>
-              <br />
-              <span className={test.result === 'test passed' ? 'testPass' : 'testFail'}>
-                <span className="arrow">&gt;</span>
-                {test.result}
-              </span>
-            </div>
+            <Test index={index} wait={(index+1)*900}></Test>
           );
         })}
       </div>
