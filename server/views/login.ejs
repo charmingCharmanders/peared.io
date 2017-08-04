@@ -1,37 +1,30 @@
-<% include head.ejs%>
+<!doctype html>
+<html>
 
-    <div class="col-sm-6 col-sm-offset-3">
-
-        <h1><span class="fa fa-sign-in"></span> Login</h1>
-
-        <% if (message.length) { %>
-        <div class="alert alert-danger"><%= message %></div>
-        <% } %>
-
-        <!-- LOGIN FORM -->
-        <form action="/login" method="post">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" name="email">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
-
-            <button type="submit" class="btn btn-warning btn-lg">Login</button>
-        </form>
-
-        <hr>
-        <div>
-            Or login with GitHub:<br />
-            <a style="margin-right:15px" href="/auth/github"><img src="/assets/github-logo.png" width="32" /></a>
-        </div>
-        <hr>
-
-        <p>Need to sign up for an account? <a href="/signup">Signup</a></p>
-        <p><a href="/">home</a></p>
-
+<head>
+    <title>Code with Friends | Peared.io</title>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800" rel="stylesheet">
+    <link rel="icon" href="p.png" sizes="32x32" type="image/png">
+    <link rel="stylesheet" href="assets/login.css">
+</head>
+<body>
+<div id="main">
+<div id="container">
+  <h2 id="logo">Peared.io</h2>
+  <h5>code with friends</h5>
+    <div id="loginsquare">
+      <h4>email</h4>
+      <input id="input"></input>
+      <h4>password</h4>
+      <input id="input"></input>
+      <input class='loginbuttons' id="loginbutton" type="submit" value="login"></input>
+      <a href="/auth/github"><input class='loginbuttons' id="github" type="submit" value="sign in with github"></input></a>
     </div>
+  </div>
+  </div>
+</body>
 
-<% include foot.ejs%>
+</html>
+
+

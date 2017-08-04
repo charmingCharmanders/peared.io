@@ -33,7 +33,7 @@ router.route('/signup')
 router.route('/logout')
   .get((req, res) => {
     req.logout();
-    res.redirect('/');
+    res.redirect('/login');
   });
 
 router.get('/auth/github', middleware.passport.authenticate('github', {

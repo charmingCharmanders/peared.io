@@ -1,0 +1,126 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /*margin-top: 30px;*/
+  background-color: #f5f8fa;
+  /*background-image: url('https://static.pexels.com/photos/34490/keyboard-computer-keys-white.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;*/
+  /*background: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);*/
+}
+
+#main {
+  height: 87%;
+  width: 100%;
+  display: table;
+}
+
+#container {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+  /*margin: auto;*/
+}
+
+#logo {
+  font-size: 60px;
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  color: black;
+  top: 5px;
+}
+
+#input {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  height: 30px;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  border: 2px solid lightgrey;
+  border-radius: 4px;
+}
+
+#input:focus {
+  outline-width: 0;
+  border-collapse: separate;
+  -moz-border-image: -moz-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
+  -webkit-border-image: -webkit-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
+  border-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
+  border-image-slice: 1;
+  border-radius: 4px;
+  transition: all 200ms ease;
+}
+
+h4 {
+  font-size: 13px;
+  font-family: 'Nunito', sans-serif;
+  margin-bottom: 5px;
+}
+
+#loginsquare {
+  width: 300px;
+  height: 400px;
+  margin: 0 auto;
+  display: block;
+}
+
+.loginbuttons {
+  width: 100%;
+  height: 35px;
+  cursor:pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  border-radius: 4px;
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  background: #333;
+  /*background-image: linear-gradient(to right, pink, purple, crimson);*/
+  background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
+}
+
+h5 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  /*top: 50px;*/
+  margin-top: -60px;
+}
+
+#loginbutton {
+  /*background: orange;*/
+  /*border: 2px solid darkorange;*/
+  margin-top: 20px;
+  border: none;
+  background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
+
+    /*background-image: linear-gradient(to right, pink, purple, crimson);*/
+  border: 2px solid darkblue;
+
+
+  display: block;
+  border-collapse: separate;
+  -moz-border-image: -moz-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
+  -webkit-border-image: -webkit-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
+  border-image: linear-gradient(to right, #289296 0%, #253287 100%);
+
+  border-image-slice: 1;
+}
+
+#github {
+  margin-top: 7px;
+  background: black;
+  border: none;
+
+}
