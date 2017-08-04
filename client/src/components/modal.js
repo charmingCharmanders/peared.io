@@ -138,11 +138,8 @@ class ModalComponent extends React.Component {
     if (this.props.modal.type === 'submitSession') {
       return (
         <Modal show={this.props.modal.show} onHide={this.closeModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Your code has been submitted</Modal.Title>
-          </Modal.Header>
           <Modal.Body>
-            <h5>Here is a summary of your performance.</h5>
+            <h5>Your session has been submitted.</h5>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.closeModal}>Close</Button>

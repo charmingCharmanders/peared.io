@@ -19,6 +19,15 @@ class App extends React.Component {
     };
   }
 
+  httpsRedirect() {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+
+    if (hostname === 'peared.io' && protocol === 'http:') {
+      location.href = 'https://' + hostname;
+    }
+  }
+
   connectionUrl() { 
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
@@ -27,12 +36,8 @@ class App extends React.Component {
       return 'http://127.0.0.1:3001';
     } else if (hostname === 'staging-peared.herokuapp.com') {
       return `${protocol}//staging-connection-peared.herokuapp.com`;
-    } else if (hostname === 'staging.peared.io') {
-      return `${protocol}//staging.connection.peared.io`;
-    } else if (hostname === 'peared.herokuapp.com') {
-      return `${protocol}//connection-peared.herokuapp.com`;
     } else {
-      return `${protocol}//connection.peared.io`;
+      return `${protocol}//connection-peared.herokuapp.com`;
     }
   }
 
@@ -102,6 +107,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    this.httpsRedirect();
     this.props.populateUserData()
       .then(()=>{
         this.openConnection();
