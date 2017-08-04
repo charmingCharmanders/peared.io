@@ -153,7 +153,6 @@ const updateRoomId = (roomId) => {
 };
 
 const updateOnlineUsers = (userCount) => {
-  console.log('users count is:', userCount);
   return {
     type: 'UPDATE_ONLINE_USERS',
     payload: userCount
@@ -175,7 +174,6 @@ const updateTestResults = (testResults) => {
 };
 
 const incrementCurrentTime = (currentTime) => {
-  console.log('incrementing the current time:', currentTime);
   var result = '00:00:00';
   result = helpers.generateNewTime(...currentTime.split(':'));
   return {
@@ -426,7 +424,6 @@ const updateSearch = (value) => {
             });
           }
         });
-        console.log(searchResults);
         dispatch({
           type: 'UPDATE_SEARCH_RESULTS',
           payload: searchResults

@@ -88,7 +88,6 @@ class App extends React.Component {
         this.props.updateTestResults(testResults);
       });
       this.state.socket.on('room request', (requestData)=>{
-        console.log('request Data:', requestData);
         this.props.updateRoomId(requestData.roomId);
         delete requestData['roomId'];
         this.props.updatePartnerData(requestData);
@@ -111,14 +110,14 @@ class App extends React.Component {
       .then(()=>{
         this.openConnection();
         this.props.populateUserFriendsData(this.props.profile.id)
-        .then(()=>{
-          this.state.socket.on('friends list', (friendsList)=>{
-            this.props.updateUserFriendsData(friendsList);
+          .then(()=>{
+            this.state.socket.on('friends list', (friendsList)=>{
+              this.props.updateUserFriendsData(friendsList);
+            });
+            if (this.props.friendsList.friendArray) {
+              this.state.socket.emit('friends list', this.props.friendsList);
+            }
           });
-          if (this.props.friendsList.friendArray) {
-            this.state.socket.emit('friends list', this.props.friendsList);
-          }
-        });
         this.props.populateUserSessionsData(this.props.profile.id);
       });
   }

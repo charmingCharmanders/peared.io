@@ -10,10 +10,9 @@ import {bindActionCreators} from 'redux';
 class Session extends React.Component {
 
   componentDidMount() {
-    console.log('about to start the session timer');
     this.props.setCurrentTimeToZero();
     this.incrementTime = setInterval(
-      ()=>{this.props.incrementCurrentTime(this.props.currentTime);}, 1000
+      ()=>{ this.props.incrementCurrentTime(this.props.currentTime); }, 1000
     );
   }
   componentWillUnmount() {
