@@ -27,6 +27,6 @@ app.use('/api/profiles', routes.profiles);
 app.use('/api/prompts', routes.prompts);
 app.use('/api/sessions', routes.sessions);
 app.use('/api/tests', routes.tests);
-app.get('*', (req, res) => res.render('index.ejs'));
+app.use('/', (req, res) => res.render('landing.ejs'));
 
 module.exports = app;
