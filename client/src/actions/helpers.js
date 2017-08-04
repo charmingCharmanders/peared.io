@@ -10,7 +10,6 @@ module.exports.calculateSessionScore = (timeLimitInSeconds, promptTime, promptDi
 };
 
 module.exports.generateNewTime = (hours, minutes, seconds) =>{
-  // console.log('the minutes:', minutes);
   if (parseInt(seconds) < 59) {
     return `${hours}:${minutes}:${incrementTimeUnits(seconds)}`;
   } else if (parseInt(minutes) < 59) {
@@ -45,7 +44,6 @@ const convertStartEndToLengthOfTime = (start, end) => {
 
 module.exports.formatSessionsData = (sessionArray, id) => {
   let sessionInfo = [];
-  console.log('session Array:', sessionArray);
   sessionArray.forEach((session) => {
     let lengthOfTime = convertStartEndToLengthOfTime(session.startedAt, session.endedAt);
     let name;

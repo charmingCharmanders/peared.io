@@ -15,7 +15,6 @@ class FriendsList extends React.Component {
   }
 
   requestSession(friend) {
-    console.log('friendData:', friend);
     this.props.updatePartnerData({firstName: friend.firstName, lastName: friend.lastName, id: friend.id});
     this.props.openModal('sendingRoomRequest');
     this.props.socket.emit('request session', friend);
@@ -56,7 +55,8 @@ class FriendsList extends React.Component {
             acceptButton = '';
             pendingFlag = '';
           }
-          return (<ListGroupItem key={index} fill>{dot}{friend.friend.firstName}{acceptButton}{startSessionButton}{pendingFlag}</ListGroupItem>)}) : ''
+          return (<ListGroupItem key={index} fill>{dot}{friend.friend.firstName}{acceptButton}{startSessionButton}{pendingFlag}</ListGroupItem>);
+        }) : ''
         }
       </Panel>
     );
