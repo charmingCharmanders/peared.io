@@ -34,7 +34,7 @@ class Statistics extends React.Component {
     hours = Math.floor(minutes / 60);
     minutes = ((minutes / 60) - Math.floor(minutes / 60)) * 60;
 
-    return `${hours}h : ${minutes}m : ${seconds}s`;
+    return `${Math.round(hours)}h : ${Math.round(minutes)}m : ${Math.round(seconds)}s`;
 
   }
 
