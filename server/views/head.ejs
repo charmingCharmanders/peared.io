@@ -6,7 +6,7 @@
         const protocol = window.location.protocol;
         const hostname = window.location.hostname;
         if ((hostname !== '127.0.0.1' || hostname !== 'localhost') && protocol === 'http:') {
-            location.href = 'https://' + hostname;
+            location.href = location.href.replace('http://', 'https://');
         }
     </script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->

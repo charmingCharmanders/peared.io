@@ -23,7 +23,7 @@ class App extends React.Component {
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
     if ((hostname !== '127.0.0.1' || hostname !== 'localhost') && protocol === 'http:') {
-      location.href = 'https://' + hostname;
+      location.href = location.href.replace('http://', 'https://');
     }
   }
 
