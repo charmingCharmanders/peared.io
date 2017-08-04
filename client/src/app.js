@@ -22,7 +22,7 @@ class App extends React.Component {
   httpsRedirect() {
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
-    if (hostname !== '127.0.0.1' || hostname !== 'localhost') {
+    if ((hostname !== '127.0.0.1' || hostname !== 'localhost') && protocol === 'http:') {
       location.href = 'https://' + hostname;
     }
   }
