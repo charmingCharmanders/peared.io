@@ -36,12 +36,8 @@ class App extends React.Component {
       return 'http://127.0.0.1:3001';
     } else if (hostname === 'staging-peared.herokuapp.com') {
       return `${protocol}//staging-connection-peared.herokuapp.com`;
-    } else if (hostname === 'staging.peared.io') {
-      return `${protocol}//staging.connection.peared.io`;
-    } else if (hostname === 'peared.herokuapp.com') {
-      return `${protocol}//connection-peared.herokuapp.com`;
     } else {
-      return `${protocol}//connection.peared.io`;
+      return `${protocol}//connection-peared.herokuapp.com`;
     }
   }
 
