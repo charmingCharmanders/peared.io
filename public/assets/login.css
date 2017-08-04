@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -30,12 +34,13 @@ body {
   width: 100%;
   display: block;
   margin: 0 auto;
-  height: 30px;
+  height: 35px;
   font-size: 14px;
   font-family: 'Nunito', sans-serif;
   font-weight: 600;
   border: 2px solid lightgrey;
   border-radius: 4px;
+  padding: 0 7px;
 }
 
 #input:focus {
@@ -63,6 +68,7 @@ h4 {
 }
 
 .loginbuttons {
+  line-height: 30px;
   width: 100%;
   height: 35px;
   cursor:pointer;
@@ -89,6 +95,7 @@ h5 {
 }
 
 #loginbutton {
+  line-height: 30px;
   margin-top: 20px;
   border: none;
   background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
@@ -104,6 +111,10 @@ h5 {
 }
 
 #github {
+  line-height: 36px;
+  display: block;
+  text-decoration: none;
+  text-align: center;
   margin-top: 7px;
   background: black;
   border: none;
@@ -124,9 +135,27 @@ h5 {
 }
 
 .signupinvite {
-  width: 150px;
+  text-align: center;
   margin: 0 auto;
   margin-top: 15px;
 }
 
+#error {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: white;
+}
+
+.alert {
+  width: 100%;
+  margin: 0 auto;
+  background-color: LightCoral;
+  border-radius: 4px;
+  border: 2px solid red;
+  height: 35px;
+  opacity: 0.8;
+  text-align: center;
+  line-height: 30px;
+}
 

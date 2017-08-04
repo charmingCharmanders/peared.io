@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
@@ -57,17 +60,23 @@ body {
   font-size: 13px;
   font-family: 'Nunito', sans-serif;
   font-weight: 600;
-  text-decoration: none;
   color: white;
   text-align: right;
   padding: 7px 13px;
-  margin-left: 3px;
 }
 
 #navItem:hover {
   border-radius: 5px;
   border: 2px solid White;
   transition: all 400ms ease;
+}
+
+#navItem:selected {
+  text-decoration: none;
+}
+
+#loginstyle {
+  text-decoration: none;
 }
 
 #loginstyle:visited { 
