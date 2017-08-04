@@ -107,5 +107,26 @@ h5 {
   margin-top: 7px;
   background: black;
   border: none;
-
 }
+
+#signupinvite {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+
+  color: #777;
+  cursor:pointer;
+  text-decoration: none;
+}
+
+#signupinvite:hover{
+  font-weight: 700;
+}
+
+.signupinvite {
+  width: 150px;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+
+
