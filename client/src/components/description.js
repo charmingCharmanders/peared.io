@@ -1,30 +1,35 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Header from './header';
-import { LinkContainer } from 'react-router-bootstrap';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import {Tabs, Tab, ButtonToolbar, Button, Navbar, CollapsibleNav, NavItem, NavDropdown, Nav, MenuItem, Grid, Col, Row} from 'react-bootstrap';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-let question = {
-  question: 'asyncMap has two parameters, an array of asynchronous functions (tasks) and a callback. Each of the tasks takes a separate callback and invokes that callback when complete. The callback passed to asyncMap is then performed on the results of the callbacks of the tasks. The order of these results should be the same as the order of the tasks. It is important to note that this is not the order in which the tasks return, but the order in which they are passed to asyncMap.',
-  hints: 'Once all the callbacks of the tasks are returned, asyncMap should invoke the callback on the results array.',
-  tests: ['asyncMap(1)', 'asyncMap(2)', 'asyncMap(3)']
-};
+import { Button, Panel } from 'react-bootstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class Description extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      open: false
+    };
+  }
+
+  renderArrow() {
+    return this.state.open ? 'Hide Hint' : 'Show Hint';
+  }
+
+  togglePanel() {
+    this.setState({
+      open: !this.state.open
+    });
   }
 
   render() {
     return (
       <div className="session-description">
-        <Tabs defaultActiveKey={1} animation={true} id="noanim-tab-example">
-          <Tab eventKey={1} title="Question" style={{padding: '20px'}}>{this.props.prompt.description}</Tab>
-          <Tab eventKey={2} title="Hint" style={{padding: '20px'}}>{this.props.prompt.hint}</Tab>
-        </Tabs>
+        <h3>{this.props.prompt.name}</h3>
+        <p>{this.props.prompt.description}</p>
+        <h4 onClick={() => this.togglePanel()}>{this.renderArrow()}</h4>
+        <Panel collapsible expanded={this.state.open}>
+          {this.props.prompt.hint}
+        </Panel>
       </div>
     );
   }

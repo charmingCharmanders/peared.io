@@ -44,7 +44,22 @@ body {
 .session-description {
   float: left;
   height: 100%;
+  overflow-x: scroll;
+  padding: 20px;
   width: 25%;
+}
+
+.session-description h3 {
+  margin-top: 0;
+}
+
+.session-description h4:hover {
+  color: #5bc0de;
+  cursor: pointer;
+}
+
+.session-description p {
+  margin-bottom: 20px;
 }
 
 .session-main {
@@ -151,6 +166,16 @@ h3 {
 
 .navbar .container {
   width: 100% !important;
+}
+
+.session-description .panel {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.session-description .panel-body {
+  padding: 0;
 }
 
 .footer {
