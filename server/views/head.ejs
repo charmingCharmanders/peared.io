@@ -1,6 +1,13 @@
 <!doctype html>
 <html>
 <head>
+    <script>
+        const protocol = window.location.protocol;
+        const hostname = window.location.hostname;
+        if (hostname !== '127.0.0.1' || hostname !== 'localhost') {
+            location.href = 'https://' + hostname;
+        }
+    </script>
     <title>Node Authentication</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
