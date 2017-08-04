@@ -19,6 +19,15 @@ class App extends React.Component {
     };
   }
 
+  httpsRedirect() {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+
+    if (hostname === 'peared.io' && protocol === 'http:') {
+      location.href = 'https://' + hostname;
+    }
+  }
+
   connectionUrl() { 
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
@@ -102,6 +111,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    this.httpsRedirect();
     this.props.populateUserData()
       .then(()=>{
         this.openConnection();
