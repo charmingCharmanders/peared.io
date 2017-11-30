@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,700,800');
+
 * {
   box-sizing: border-box;
 }
@@ -8,35 +11,59 @@ body {
   padding: 0;
   height: 100%;
   background-color: #f5f8fa;
+  font-family: 'Nunito', sans-serif;
 }
 
-#main {
-  height: 87%;
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#main-container {
+  margin-bottom: 50px;
+  width: 300px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Logo + Tagline
+/* -------------------------------------------------------------------------- */
+
+#link-container {
   width: 100%;
-  display: table;
-}
-
-#container {
-  display: table-cell;
-  height: 100%;
-  vertical-align: middle;
+  text-align: center;
 }
 
 #logo {
   font-size: 60px;
   font-family: 'Pacifico', cursive;
-  text-align: center;
+  margin: 0px auto;
+  text-decoration: none;
   color: black;
-  top: 5px;
+}
+
+h5 {
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  margin-top: -10px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Form
+/* -------------------------------------------------------------------------- */
+
+h4 {
+  font-size: 13px;
+  margin-bottom: 5px;
 }
 
 #input {
   width: 100%;
-  display: block;
   margin: 0 auto;
   height: 35px;
   font-size: 14px;
-  font-family: 'Nunito', sans-serif;
   font-weight: 600;
   border: 2px solid lightgrey;
   border-radius: 4px;
@@ -54,49 +81,21 @@ body {
   transition: all 200ms ease;
 }
 
-h4 {
-  font-size: 13px;
-  font-family: 'Nunito', sans-serif;
-  margin-bottom: 5px;
-}
-
-#loginsquare {
-  width: 300px;
-  height: 400px;
-  margin: 0 auto;
-  display: block;
-}
-
-.loginbuttons {
+.button {
   line-height: 30px;
   width: 100%;
   height: 35px;
   cursor:pointer;
-  font-family: 'Nunito', sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: white;
   border-radius: 4px;
 }
 
-hr {
-  border: 0;
-  height: 2px;
-  background: #333;
-  background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
-}
-
-h5 {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  text-align: center;
-  margin-top: -60px;
-}
-
-#loginbutton {
-  line-height: 30px;
+.login {
   margin-top: 20px;
+  font-family: 'Nunito', sans-serif;
+
   border: none;
   background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
   border: 2px solid darkblue;
@@ -110,38 +109,46 @@ h5 {
   border-image-slice: 1;
 }
 
-#github {
+/* -------------------------------------------------------------------------- */
+/* Github Button
+/* -------------------------------------------------------------------------- */
+
+.github {
   line-height: 36px;
   display: block;
   text-decoration: none;
   text-align: center;
   margin-top: 7px;
   background: black;
-  border: none;
 }
 
-#signupinvite {
-  font-family: 'Nunito', sans-serif;
+/* -------------------------------------------------------------------------- */
+/* Signup
+/* -------------------------------------------------------------------------- */
+
+.signup-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+#signup-invite {
   font-weight: 600;
   font-size: 13px;
 
   color: #777;
-  cursor:pointer;
+  cursor: pointer;
   text-decoration: none;
 }
 
-#signupinvite:hover{
+#signup-invite:hover{
   font-weight: 700;
 }
 
-.signupinvite {
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 15px;
-}
+/* -------------------------------------------------------------------------- */
+/* Error Message
+/* -------------------------------------------------------------------------- */
 
 #error {
-  font-family: 'Nunito', sans-serif;
   font-weight: 600;
   font-size: 13px;
   color: white;

@@ -2,45 +2,46 @@
 <html>
 
 <head>
-    <title>Code with Friends | Peared.io</title>
-    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800" rel="stylesheet">
-    <link rel="shortcut icon" href="assets/p.ico">
-    <link rel="stylesheet" href="assets/login.css">
+  <title>Code with Friends | Peared.io</title>
+  <link rel="shortcut icon" href="assets/p.ico">
+  <link rel="stylesheet" href="assets/login.css">
 </head>
+
 <body>
-  <div id="main">
-    <div id="container">
-      <h2 id="logo">Peared.io</h2>
-      <h5>sign up!</h5>
-      <div id="loginsquare">
-
-
-        <% if (message.length) { %>
-        <div class="alert alert-danger"><span id="error"><%= message %></span></div>
-        <% } %>
-
-        <form action='/signup' method="post">
-
-          <h4>first name</h4>
-          <input type="text" name="firstName" id="input"></input>
-
-          <h4>last name</h4>
-          <input type="text" name="lastName" id="input"></input>
-
-          <h4>email</h4>
-          <input type="text" name="email" id="input"></input>
-
-          <h4>password</h4>
-          <input id="input" type="password" name="password"></input>
-
-          <input class='loginbuttons' id="loginbutton" type="submit" value="sign up"></input>
-        </form>
-
-        <a href="/auth/github" class='loginbuttons' id="github">sign in with github</a>
-
-        <div class='signupinvite'><a href='/login' id="signupinvite">already have an account? <span style="color:black">go to login<span></a></div>
+  <div id="main-container" style="margin-bottom:23px">
+  
+    <!-- Logo + Tagline -->
+    <div id="link-container">
+      <a href="https://peared.io/" id="logo">Peared.io</a>
+    </div>
+    <h5>sign up!</h5>
+    
+    <!-- Error Message -->
+    <% if (message.length) { %>
+      <div class="alert alert-danger">
+        <span id="error"><%= message %></span>
       </div>
+    <% } %>
+      
+    <!-- Form -->
+    <form action='/signup' method="post">
+      <h4>first name</h4>
+      <input type="text" name="firstName" id="input"></input>
+      <h4>last name</h4>
+      <input type="text" name="lastName" id="input"></input>
+      <h4>email</h4>
+      <input type="text" name="email" id="input"></input>
+      <h4>password</h4>
+      <input id="input" type="password" name="password"></input>
+      <input class='button login' type="submit" value="sign up"></input>
+    </form>
+        
+    <!-- Github Button -->
+    <a href="/auth/github" class="button github">sign in with github</a>
+    
+    <!-- Signup -->
+    <div class='signup-container'>
+      <a href='/login' id="signup-invite">already have an account? <span style="color:black">go to login<span></a>
     </div>
   </div>
 </body>

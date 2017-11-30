@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,700,800');
+
 * {
   box-sizing: border-box;
 }
@@ -6,384 +9,308 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Nunito', sans-serif;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Mobile
+/* -------------------------------------------------------------------------- */
+
+/* Hero */
 
 #hero {
-  background: linear-gradient(to right, rgba(0, 0, 0,0.5), rgba(0, 0, 0,0.5)), url("https://static.pexels.com/photos/247791/pexels-photo-247791.png") center center no-repeat;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://static.pexels.com/photos/247791/pexels-photo-247791.png") center center no-repeat;
   background-size: cover;
-  height: 638px;
-  width: 100%;
-  display: block;
+  flex: 1 100%;
+  height: 514px;
 }
 
-#navigation {
-  position: relative;
-  top: 40px;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 100px;
-  text-align: center;
-}
-
-#nav2 {
-  width: 94%;
-  margin: 0 auto;
-}
 
 #nav {
-  display: inline;
-  text-align: right;
+  position: relative;
+  top: 10px;
+  padding: 0 25px;
+}
+
+#logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 30px;
+  color: white;
+}
+
+.login {
   position: relative;
   float: right;
-  top: 22px;
-}
+  top: 5px;
 
-#head {
-  display: inline;
-}
-
-#screen {
-  position: relative;
-  width: 35%;
-  float: right;
-  display: inline;
-  margin-right: 40px;
-  margin-top: 120px;
-}
-
-
-#navItem {
   border: 2px solid Transparent;
-  display: inline;
   font-size: 13px;
-  font-family: 'Nunito', sans-serif;
   font-weight: 600;
   color: white;
   text-align: right;
   padding: 7px 13px;
+  text-decoration: none;
 }
 
-#navItem:hover {
+.login:hover {
   border-radius: 5px;
   border: 2px solid White;
   transition: all 400ms ease;
 }
 
-#navItem:selected {
+#login:visited {
   text-decoration: none;
-}
-
-#loginstyle {
-  text-decoration: none;
-}
-
-#loginstyle:visited { 
-  text-decoration: none; 
-}
-
-
-#logo {
-  font-size: 30px;
-  font-family: 'Pacifico', cursive;
-  color: white;
-  display: inline;
-  position: relative;
-  top: 5px;
 }
 
 hr {
-    border: 0;
-    height: 2px;
-    background: #333;
-    background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
-}
-
-#headlinecontainer {
-  width: 85%;
-  margin: auto;
-  margin-top: 100px;
-  margin-bottom: 0px;
-  display: block;
-}
-
-#subheadlinecontainer {
-  width: 85%;
+  border: 0;
+  height: 2px;
   margin: 0 auto;
-  margin-top: -40px;
+  background-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
 }
 
+#headline,
 #subheadline {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 200;
-  font-style: italic;
   color: white;
   text-align: center;
-  font-size: 22px;
 }
 
 #headline {
-  font-family: 'Nunito', sans-serif;
+  padding: 0px 30px;
+  margin: 40px 0px 20px 0px;
+
+  font-size: 57px;
   font-weight: 800;
-  text-align: center;
-  /*text-transform:;*/
-  color: white;
-  font-size: 100px;
-  line-height: 100px;
+  line-height: 57px;
 }
 
-#button {
+#subheadline {
+  padding: 0px 35px 25px 35px;
+  margin: auto;
+
+  font-size: 17px;
+  font-weight: 200;
+  font-style: italic;
+}
+
+#button-signup {
   cursor: pointer;
   background-color: transparent;
   color: white;
-  height: 50px;
-  width: 115px;
+  height: 45px;
+  width: 100px;
   margin: 0 auto;
   display: block;
   border-collapse: separate;
-  font-size: 18px;
+  font-size: 16px;
   -moz-border-image: -moz-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
   -webkit-border-image: -webkit-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
   border-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
-
   border-image-slice: 1;
 }
 
-#button:hover {
+#button-signup:hover {
   background: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
-  transition: all 700ms ease;
+  transition: all 500ms ease;
 }
+
+/* What is Peared.io? */
 
 #screenshot {
   width: 100%;
-  height: 800px;
-  background-color: white
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
 }
 
-.row {
-  width: 50%;
-  margin: 60px auto 0 auto;
-}
-
-.display {
-  width: 45%;
-}
-
-.column1 {
-  position: relative;
-  display: inline;
-  width: 50%;
-  height: 100%;
-  justify-content: top;
+#question,
+.featuretitle,
+.featuredescription {
+  color: Black;
+  text-align: center;
+  vertical-align: top;
 }
 
 #question {
-  position: relative;
-  top: 17px;
   text-align: center;
-  color: Black;
-  font-family: 'Nunito', sans-serif;
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 400;
+}
+
+.row {
+  margin-bottom: 50px;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+.display {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.column1 {
+  padding: 0 50px;
 }
 
 .column2 {
-  width: 45%;
-  display: inline;
-  float: right;
-  position: relative;
-  text-align: text-top;
+  height: 100px;
+  padding: 10px 50px;
 }
 
 .featuretitle {
-  position: relative;
-  width: 100%;
-  color: Black;
-  font-family: 'Nunito', sans-serif;
   font-size: 18px;
   font-weight: 600;
-  text-align: left;
-  vertical-align: text-top;
+  margin: 0;
 }
 
 .featuredescription {
-  position: relative;
-  width: 100%;
-  color: Black;
-  font-family: 'Nunito', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  text-align: left;
-  vertical-align: text-top;
-  position: relative;
-  top: -20px;
+  text-align: center;
+  margin: 7px 0;
 }
 
-#info {
-  width: 100%;
-  height: 220px;
-  top: -22px;
-  position: relative;
+/* 3 Main Features */
+
+.features-container {
+  display: flex;
   background-color: black;
+  flex-direction: column;
+  height: 370px;
+  align-items: center;
+  justify-content: center;
 }
 
-
-#features {
-  width: 70%;
-  margin: 0 auto;
-  position: relative;
-  top: 48px;
+.feature {
+  display: flex;
+  padding: 0 40px;
+  margin: 17px 0px;
 }
 
-#feature1 {
-  width: 32.5%;
-  display: inline-block;
-  margin: 0 auto;
+.svg-container {
+  flex: 1;
 }
 
-h4 {
+.feature-description-container {
+  flex: 1.75;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.feature-name, 
+.feature-description {
   color: white;
-  text-align: center;
+  text-align: left;
 }
 
-p {
-  color: white;
-  text-align: center;
-}
-
-.featureTitle {
-  font-family: 'Nunito', sans-serif;
+.feature-name {
   font-weight: 700;
   font-size: 15px;
+  margin: 0px;
 }
 
-#descriptionContainer {
-  width: 80%;
-  margin: 0 auto;
-
-}
-
-.description {
-  font-family: 'Nunito', sans-serif;
+.feature-description {
   font-size: 12px;
   font-weight: 300;
-  margin-top: -14px;
-  text-align: center
-  /*width: 200px;*/
-  border: 2px solid white;
-
+  margin: 0px;
 }
 
 svg {
-  width: 18%;
+  width: 45px;
   display: block;
   margin: auto;
   fill: url(#gradient);
-
 }
 
+/* Meet The Team */
+
 #meet {
-  width: 100%;
-  height: 500px;
-  top: -47px;
-  position: relative;
+  height: 750px;
   background-color: #f5f8fa;
 }
 
-#header {
-  color: Black;
+#team-header,
+#team-description {
   text-align: center;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 600;
-  font-size: 23px;
-  position: relative;
-  top: 65px;
 }
 
-#teamdescription {
-  position: relative;
-  text-align: center;
-  color: Black;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 400;
+#team-header {
+  font-weight: 600;
+  font-size: 23px;
+  margin: 35px 0px 10px 0px;
+}
+
+#team-description {
   font-size: 18px;
-  top: 8px;
+  padding: 0 30px;
+  font-weight: 400;
 }
 
 #team {
-  width: 53%;
-  height: 200px;
+  padding: 0 45px;
   margin: auto;
-  margin-top: 40px;
+
+  display: flex;
+  flex-wrap: wrap;
 }
 
-#teammember {
-  width: 21%;
-  height: 200px;
-  margin: 0 10px;
-  display: inline-block;
+.teammember {
+  padding: 0 18px;
+  flex: 1;
+  margin-top: 20px;
 }
 
 .round {
   display: block;
   border-radius: 50%;
   margin: 0 auto;
-  width: 70%;
+  width: 80px;
 }
 
-.teammembername {
-  font-family: 'Nunito', sans-serif;
+.teammember-name {
   font-size: 14px;
   font-weight: 600;
-  color: black;
+  text-align: center;
+  margin-bottom: 7px;
 }
 
-.teammemberdescription {
-  font-family: 'Nunito', sans-serif;
+.teammember-description {
   font-size: 12px;
   font-weight: 400;
-  color: black; 
   text-align: left;
-  vertical-align: text-top;
-  position: absolute;
+  margin: 0;
 }
 
-.teammemberdescriptioncontainer {
-  position: relative;
-  top: -20px;
-}
+/* Footer */
 
 #footer {
-  width: 100%;
-  height: 30px;
-  top: -47px;
-  background-color: white;
-}
-
-#footercontent {
-  width: 300px;
-  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #copyright {
-  margin-left: 16px;
-  margin-right: 16px;
-  position: relative;
-  bottom: 23px;
-
-  font-family: 'Nunito', sans-serif;
   font-size: 11px;
   font-weight: 400;
-  color: black; 
-  display: inline;
+
+  margin-right: 20px;
 }
 
 #github {
+  margin-left: 20px;
+
   text-decoration: none;
   border: 2px solid black;
   border-radius: 5px;
-  color: black;
   padding: 10px;
 
   font-size: 11px;
@@ -402,10 +329,230 @@ svg {
   color: white;
   background: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%);
   transition: all 400ms ease;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* Tablet
+/* -------------------------------------------------------------------------- */
+
+@media only screen and (min-width: 416px) and (max-width: 800px) {
+  #hero {
+    height: 576px;
+  }
+
+  #headline {
+    padding: 0px 40px;
+    margin: 55px 0px 27px 0px;
+
+    font-size: 78px;
+    line-height: 78px;
+  }
+
+  #subheadline {
+    padding: 0px 57px 25px 57px;
+
+    font-size: 19px;
+  }
+
+  #button-signup {
+    height: 58px;
+    width: 110px;
+    font-size: 18px;
+  }
+
+  #screenshot {
+    height: 920px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .row {
+    margin-bottom: 70px;
+  }
+
+  .display {
+  }
+
+  .column1 {
+    padding: 0 150px;
+  }
+
+  .column2 {
+    padding: 10px 100px;
+  }
+
+  .feature {
+    margin: 21px 0px;
+    padding-left: 25px;
+  }
+
+  #meet {
+    height: 515px;
+  }
+
+  #team-description {
+    padding: 0 60px;
+  }
+
+  .teammember {
+    padding: 0 12px;
+  }
 
 }
 
 
+/* -------------------------------------------------------------------------- */
+/* Laptop
+/* -------------------------------------------------------------------------- */
 
+@media only screen and (min-width: 800px) {
 
+  /* Hero */
+
+  #hero {
+    height: 638px;
+  }
+
+  #headline {
+    padding: 0 80px;
+    margin: 100px 0px 35px 0px;
+
+    font-size: 100px;
+    line-height: 100px;
+  }
+
+  #subheadline {
+    padding: 0 80px 25px 80px;
+
+    font-size: 22px;
+  }
+
+  #button-signup {
+    height: 50px;
+    width: 115px;
+    font-size: 18px;
+  }
+
+  /* What is Peared.io? */
+
+  #screenshot {
+    height: 740px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #question {
+    font-size: 23px;
+    margin-bottom: 60px;
+  }
+
+  .row {
+    width: 600px;
+    height: 160px;
+    margin: 0px auto 30px auto;
+
+    flex-direction: row;
+  }
+
+  .column1 {
+    justify-content: center;
+    flex: 1;
+    padding: 0px 10px 0px 0px;
+  }
+
+  .column2 {
+    flex: 1;
+    padding: 0px 0px 0px 10px;
+  }
+
+  .featuretitle {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  .featuredescription {
+    width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  /* 3 Main Features */
+
+  .features-container {
+    margin: 0 auto;
+    padding: 0px 120px;
+    justify-content: center;
+    flex-direction: row;
+    height: 220px;
+  }
+
+  .feature {
+    flex: 1;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 15px;
+  }
+
+  .svg-container {
+    margin-bottom: 15px;
+  }
+
+  .feature-description-container {
+    flex: 1 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .feature-name,
+  .feature-description {
+    text-align: center;
+  }
+
+  .feature-name {
+  }
+
+  .feature-description {
+
+  }
+
+  svg {
+  }
+
+  /* Meet The Team */
+
+  #meet {
+    height: 440px;
+  }
+
+  #team-header {
+  }
+
+  #team-description {
+    font-size: 18px;
+  }
+
+  #team {
+    padding: 0px 160px;
+  }
+
+  .teammember {
+    padding: 0px 23px;
+  }
+
+  .round {
+  }
+
+  .teammember-name {
+  }
+
+  .teammember-description {
+  }
+
+  /* Footer */
+
+}
 
